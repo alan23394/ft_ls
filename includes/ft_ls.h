@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/14 23:36:47 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/15 00:09:27 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,13 @@ typedef struct			s_binarytree
 ** Allowed functions from string.h:
 ** strerror
 */
+
+
+t_binarytree	*new_item(const char *item);
+void			print_tree(t_binarytree *files);
+void			insert_tree(t_binarytree *files, const char *insert,
+					int (*compare)(const char *str1, const char *str2));
+void			insert_tree_reverse(t_binarytree *files, const char *insert,
+					int (*compare)(const char *str1, const char *str2));
 
 #endif
