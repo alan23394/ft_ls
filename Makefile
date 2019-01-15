@@ -6,7 +6,7 @@
 #    By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:13:28 by abarnett          #+#    #+#              #
-#    Updated: 2019/01/07 19:11:35 by abarnett         ###   ########.fr        #
+#    Updated: 2019/01/14 22:24:11 by abarnett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LDFLAGS +=		-L./libft -lftprintf
 .PHONY:			all clean fclean re
 
 all: $(LIB) $(NAME)
+	@ctags -R
 
 $(LIB):
 	make -C libft
