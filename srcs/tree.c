@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 02:20:02 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 02:43:20 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ t_binarytree	*new_item(const char *item)
 
 void			print_tree(t_binarytree *files)
 {
-	if (files->left)
-	{
-		print_tree(files->left);
-	}
 	if (files)
-		ft_printf("%s\n", files->string);
-	if (files->right)
 	{
-		print_tree(files->right);
+		if (files->left)
+		{
+			print_tree(files->left);
+		}
+		ft_printf("%s\n", files->string);
+		if (files->right)
+		{
+			print_tree(files->right);
+		}
 	}
 }
 
@@ -47,7 +49,7 @@ void			insert_tree(t_binarytree *files, const char *insert,
 			if (files->right == 0)
 			{
 				files->right = new_item(insert);
-				break;
+				break ;
 			}
 			else
 				files = files->right;
@@ -57,7 +59,7 @@ void			insert_tree(t_binarytree *files, const char *insert,
 			if (files->left == 0)
 			{
 				files->left = new_item(insert);
-				break;
+				break ;
 			}
 			else
 				files = files->left;
@@ -70,12 +72,12 @@ void			insert_tree_reverse(t_binarytree *files, const char *insert,
 {
 	while (files)
 	{
- 		if ((compare(insert, files->string) * -1) >= 0)
+		if ((compare(insert, files->string) * -1) >= 0)
 		{
 			if (files->right == 0)
 			{
 				files->right = new_item(insert);
-				break;
+				break ;
 			}
 			else
 				files = files->right;
@@ -85,7 +87,7 @@ void			insert_tree_reverse(t_binarytree *files, const char *insert,
 			if (files->left == 0)
 			{
 				files->left = new_item(insert);
-				break;
+				break ;
 			}
 			else
 				files = files->left;
