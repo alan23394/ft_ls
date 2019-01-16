@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 02:19:20 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 02:29:48 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void			ft_ls(int flags, char **folders)
 	}
 }
 
-char	**get_flags_ls(int *flags, char **argv)
+char			**get_flags_ls(int *flags, char **argv)
 {
 	char	*all_flags;
 	char	*cur;

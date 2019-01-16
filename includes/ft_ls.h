@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 02:19:05 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 02:32:19 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct			s_binarytree
 
 }						t_binarytree;
 
-#include "libftprintf.h"
+# include "libftprintf.h"
 
 /*
 ** libftprintf.h includes libft.h
@@ -36,7 +36,7 @@ typedef struct			s_binarytree
 ** free
 */
 
-#include <dirent.h>
+# include <dirent.h>
 
 /*
 ** Allowed functions from dirent.h:
@@ -45,7 +45,7 @@ typedef struct			s_binarytree
 ** closdir
 */
 
-#include <sys/stat.h>
+# include <sys/stat.h>
 
 /*
 ** Allowed functions from sys/stat.h:
@@ -58,10 +58,10 @@ typedef struct			s_binarytree
 **	lstat does the same as stat, but for a symbolic link
 */
 
-#include <sys/types.h>
-#include <pwd.h>
-#include <uuid/uuid.h>
-#include <grp.h>
+# include <sys/types.h>
+# include <pwd.h>
+# include <uuid/uuid.h>
+# include <grp.h>
 
 /*
 ** Allowed functions from those:
@@ -69,7 +69,7 @@ typedef struct			s_binarytree
 ** getgrgid
 */
 
-#include <sys/xattr.h>
+# include <sys/xattr.h>
 
 /*
 ** Allowed functions from sys/xattr.h:
@@ -77,7 +77,7 @@ typedef struct			s_binarytree
 ** getxattr
 */
 
-#include <time.h>
+# include <time.h>
 
 /*
 ** Allowed functions from time.h:
@@ -85,27 +85,27 @@ typedef struct			s_binarytree
 ** ctime
 */
 
-#include <stdio.h>
+# include <stdio.h>
 
 /*
 ** Allowed functions from stdio.h:
 ** perror
 */
 
-#include <string.h>
+# include <string.h>
 
 /*
 ** Allowed functions from string.h:
 ** strerror
 */
 
-
-t_binarytree	*new_item(const char *item);
-void			print_tree(t_binarytree *files);
-void			insert_tree(t_binarytree *files, const char *insert,
-					int (*compare)(const char *str1, const char *str2));
-void			insert_tree_reverse(t_binarytree *files, const char *insert,
-					int (*compare)(const char *str1, const char *str2));
-void			delete_tree(t_binarytree **tree);
+t_binarytree			*new_item(const char *item);
+void					print_tree(t_binarytree *files);
+void					insert_tree(t_binarytree *files, const char *insert,
+							int (*compare)(const char *str1, const char *str2));
+void					insert_tree_reverse(t_binarytree *files,
+							const char *insert, int (*compare)(const char *str1,
+							const char *str2));
+void					delete_tree(t_binarytree **tree);
 
 #endif
