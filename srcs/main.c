@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 01:58:01 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 02:19:20 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void			ft_ls(int flags, char **folders)
 	{
 		folder = load_tree(".", flags, ft_strcmp);
 		print_tree(folder);
+		delete_tree(&folder);
 	}
 	else
 	{
@@ -62,6 +63,7 @@ void			ft_ls(int flags, char **folders)
 		{
 			folder = load_tree(*folders, flags, ft_strcmp);
 			print_tree(folder);
+			delete_tree(&folder);
 			++folders;
 		}
 	}

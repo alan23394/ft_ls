@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/15 00:11:40 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 02:20:02 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,22 @@ void			insert_tree_reverse(t_binarytree *files, const char *insert,
 			else
 				files = files->left;
 		}
+	}
+}
+
+void			delete_tree(t_binarytree **tree)
+{
+	if (*tree)
+	{
+		if ((*tree)->left)
+		{
+			delete_tree(&(*tree)->left);
+		}
+		if ((*tree)->right)
+		{
+			delete_tree(&(*tree)->left);
+		}
+		ft_strdel(&(*tree)->string);
+		ft_memdel((void **)tree);
 	}
 }
