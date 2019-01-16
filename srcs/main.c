@@ -6,21 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 02:29:48 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 08:46:56 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-#define ALL_FLAGS "alrRt"
-#define F_ALL(f) (f & 0x1)
-#define F_LONG(f) (f & 0x2)
-#define F_REV(f) (f & 0x4)
-#define F_RECUR(f) (f & 0x8)
-#define F_TIME(f) (f & 0x10)
-
-t_binarytree	*load_tree(char *dir_str, int flags,
-			int (*compare)(const char *str1, const char *str2))
+t_binarytree	*load_tree(char *dir_str, int flags, int (*compare)())
 {
 	DIR				*dir_p;
 	struct dirent	*dir_ent;
@@ -28,6 +20,8 @@ t_binarytree	*load_tree(char *dir_str, int flags,
 
 	files = 0;
 	dir_p = opendir(dir_str);
+	if (!dir_p)
+		return (0);
 	while ((dir_ent = readdir(dir_p)) != 0)
 	{
 		if (!F_ALL(flags) && dir_ent->d_name[0] == '.')
@@ -46,27 +40,81 @@ t_binarytree	*load_tree(char *dir_str, int flags,
 	return (files);
 }
 
-void			ft_ls(int flags, char **folders)
+void			print_dirs(t_dirtree *dirs, int flags, int (*compare)())
 {
 	t_binarytree	*folder;
 
 	folder = 0;
-	if (*folders == 0)
+	if (dirs->left)
+		print_dirs(dirs->left, flags, compare);
+	folder = load_tree(dirs->dirname, flags, compare);
+	if (!folder)
 	{
-		folder = load_tree(".", flags, ft_strcmp);
+		ft_printfd(2, "ft_ls: %s: Not a file or directory", dirs->dirname);
+	}
+	else
+	{
 		print_tree(folder);
 		delete_tree(&folder);
+	}
+	if (dirs->right)
+		print_dirs(dirs->right, flags, compare);
+}
+
+/*
+** sort incoming folders into a directory tree
+** put bad folders into a bad tree to print alphabetically
+*/
+
+t_dirtree		*get_dirs(char **folders, int (*compare)())
+{
+	t_dirtree		*dirs;
+	t_binarytree	*bad_dirs;
+	struct stat		stats;
+
+	dirs = 0;
+	bad_dirs = new_item("in_function");
+	if (!folders)
+	{
+		insert_dir(&dirs, ".", compare);
 	}
 	else
 	{
 		while (*folders)
 		{
-			folder = load_tree(*folders, flags, ft_strcmp);
-			print_tree(folder);
-			delete_tree(&folder);
+			if (stat(*folders, &stats) == 0 && S_ISDIR(stats.st_mode))
+				insert_dir(&dirs, *folders, compare);
+			else
+				insert_tree(bad_dirs, *folders, compare);
 			++folders;
 		}
 	}
+	return (dirs);
+}
+
+typedef int		(*sort_func)();
+
+sort_func		get_sort_function(int flags)
+{
+	int	(*funcs[0x20])();
+	int	(*func)();
+
+	funcs[0] = ft_strcmp;
+	//funcs[F_REV(1)] = ft_strcmp_rev;
+	//funcs[F_REV(1) | F_TIME(1)] = ft_timecmp_rev();
+	//func = funcs[F_REV(flags) | F_TIME(flags)];
+	func = funcs[F_REV(flags)];
+	return (func);
+}
+
+void			ft_ls(int flags, char **folders)
+{
+	int				(*compare)();
+	t_dirtree		*dirs;
+
+	compare = get_sort_function(flags);
+	dirs = get_dirs(folders, compare);
+	print_dirs(dirs, flags, compare);
 }
 
 char			**get_flags_ls(int *flags, char **argv)

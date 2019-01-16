@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 02:43:20 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 08:21:54 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			print_tree(t_binarytree *files)
 }
 
 void			insert_tree(t_binarytree *files, const char *insert,
-					int (*compare)(const char *str1, const char *str2))
+					int (*compare)())
 {
 	while (files)
 	{
@@ -68,7 +68,7 @@ void			insert_tree(t_binarytree *files, const char *insert,
 }
 
 void			insert_tree_reverse(t_binarytree *files, const char *insert,
-					int (*compare)(const char *str1, const char *str2))
+					int (*compare)())
 {
 	while (files)
 	{

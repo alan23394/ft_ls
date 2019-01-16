@@ -6,20 +6,12 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 02:32:19 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 08:44:46 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
-
-typedef struct			s_binarytree
-{
-	char				*string;
-	struct s_binarytree	*left;
-	struct s_binarytree	*right;
-
-}						t_binarytree;
 
 # include "libftprintf.h"
 
@@ -99,13 +91,39 @@ typedef struct			s_binarytree
 ** strerror
 */
 
+# define ALL_FLAGS "alrRt"
+# define F_ALL(f) (f & 0x1)
+# define F_LONG(f) (f & 0x2)
+# define F_REV(f) (f & 0x4)
+# define F_RECUR(f) (f & 0x8)
+# define F_TIME(f) (f & 0x10)
+
+typedef struct			s_binarytree
+{
+	char				*string;
+	struct s_binarytree	*left;
+	struct s_binarytree	*right;
+
+}						t_binarytree;
+
 t_binarytree			*new_item(const char *item);
 void					print_tree(t_binarytree *files);
 void					insert_tree(t_binarytree *files, const char *insert,
-							int (*compare)(const char *str1, const char *str2));
+							int (*compare)());
 void					insert_tree_reverse(t_binarytree *files,
-							const char *insert, int (*compare)(const char *str1,
-							const char *str2));
+							const char *insert, int (*compare)());
 void					delete_tree(t_binarytree **tree);
+
+typedef struct			s_dirtree
+{
+	char				*dirname;
+	struct s_binarytree	*files;
+	struct s_dirtree	*left;
+	struct s_dirtree	*right;
+}						t_dirtree;
+
+t_dirtree				*new_dir(const char *item);
+void					insert_dir(t_dirtree **dirs, const char *insert,
+							int (*compare)());
 
 #endif
