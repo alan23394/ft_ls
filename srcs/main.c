@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/15 02:52:56 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 01:58:01 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ t_binarytree	*load_tree(char *dir_str, int flags,
 			continue;
 		if (!files)
 		{
-			files = new_item(dir_ent->d_name);
+			files = new_item(ft_strdup(dir_ent->d_name));
 			continue;
 		}
 		if (F_REV(flags))
-			insert_tree_reverse(files, (const char *)dir_ent->d_name, compare);
+			insert_tree_reverse(files, ft_strdup(dir_ent->d_name), compare);
 		else
-			insert_tree(files, (const char *)dir_ent->d_name, compare);
+			insert_tree(files, ft_strdup(dir_ent->d_name), compare);
 	}
 	closedir(dir_p);
 	return (files);
