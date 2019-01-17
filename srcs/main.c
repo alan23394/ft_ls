@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 08:46:56 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/16 23:54:18 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			print_dirs(t_dirtree *dirs, int flags, int (*compare)())
 	folder = load_tree(dirs->dirname, flags, compare);
 	if (!folder)
 	{
-		ft_printfd(2, "ft_ls: %s: Not a file or directory", dirs->dirname);
+		ft_printfd(2, "print_dirs: ft_ls: %s: No such file or directory", dirs->dirname);
 	}
 	else
 	{
@@ -74,7 +74,7 @@ t_dirtree		*get_dirs(char **folders, int (*compare)())
 
 	dirs = 0;
 	bad_dirs = new_item("in_function");
-	if (!folders)
+	if (!*folders)
 	{
 		insert_dir(&dirs, ".", compare);
 	}
