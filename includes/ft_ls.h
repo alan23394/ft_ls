@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 08:44:46 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:11:58 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,8 @@ typedef struct			s_binarytree
 
 t_binarytree			*new_item(const char *item);
 void					print_tree(t_binarytree *files);
-void					insert_tree(t_binarytree *files, const char *insert,
+void					insert_tree(t_binarytree **files, const char *insert,
 							int (*compare)());
-void					insert_tree_reverse(t_binarytree *files,
-							const char *insert, int (*compare)());
 void					delete_tree(t_binarytree **tree);
 
 typedef struct			s_dirtree
