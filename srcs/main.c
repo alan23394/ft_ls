@@ -6,17 +6,21 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 23:54:18 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/17 03:37:23 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_binarytree	*load_tree(char *dir_str, int flags, int (*compare)())
+static int		check_print_dirname = 0;
+
+t_binarytree	*load_tree(t_dirtree *dirtree, char *dir_str, int flags,
+					int (*compare)())
 {
 	DIR				*dir_p;
 	struct dirent	*dir_ent;
 	t_binarytree	*files;
+	struct stat		stats;
 
 	files = 0;
 	dir_p = opendir(dir_str);
@@ -26,15 +30,10 @@ t_binarytree	*load_tree(char *dir_str, int flags, int (*compare)())
 	{
 		if (!F_ALL(flags) && dir_ent->d_name[0] == '.')
 			continue;
-		if (!files)
-		{
-			files = new_item(ft_strdup(dir_ent->d_name));
-			continue;
-		}
-		if (F_REV(flags))
-			insert_tree_reverse(files, ft_strdup(dir_ent->d_name), compare);
-		else
-			insert_tree(files, ft_strdup(dir_ent->d_name), compare);
+		insert_tree(&files, ft_strdup(dir_ent->d_name), compare);
+		if (F_RECUR(flags) && stat(dir_ent->d_name, &stats) == 0 &&
+				S_ISDIR(stats.st_mode))
+			insert_dir(&(dirtree->right), ft_strdup(dir_ent->d_name), compare);
 	}
 	closedir(dir_p);
 	return (files);
@@ -47,18 +46,30 @@ void			print_dirs(t_dirtree *dirs, int flags, int (*compare)())
 	folder = 0;
 	if (dirs->left)
 		print_dirs(dirs->left, flags, compare);
-	folder = load_tree(dirs->dirname, flags, compare);
-	if (!folder)
-	{
-		ft_printfd(2, "print_dirs: ft_ls: %s: No such file or directory", dirs->dirname);
-	}
-	else
-	{
-		print_tree(folder);
-		delete_tree(&folder);
-	}
+	folder = load_tree(dirs, dirs->dirname, flags, compare);
+	ft_printf("%s:\n", dirs->dirname);
+	print_tree(folder);
+	delete_tree(&folder);
 	if (dirs->right)
 		print_dirs(dirs->right, flags, compare);
+}
+
+void			print_bad_dirs(t_binarytree *bad_dirs)
+{
+	if (bad_dirs)
+	{
+		if (check_print_dirname == 0)
+			check_print_dirname = 1;
+		if (bad_dirs->left)
+		{
+			print_bad_dirs(bad_dirs->left);
+		}
+		ft_printf("ft_ls: %s: No such file or directory\n", bad_dirs->string);
+		if (bad_dirs->right)
+		{
+			print_bad_dirs(bad_dirs->right);
+		}
+	}
 }
 
 /*
@@ -73,7 +84,7 @@ t_dirtree		*get_dirs(char **folders, int (*compare)())
 	struct stat		stats;
 
 	dirs = 0;
-	bad_dirs = new_item("in_function");
+	bad_dirs = 0;
 	if (!*folders)
 	{
 		insert_dir(&dirs, ".", compare);
@@ -85,10 +96,11 @@ t_dirtree		*get_dirs(char **folders, int (*compare)())
 			if (stat(*folders, &stats) == 0 && S_ISDIR(stats.st_mode))
 				insert_dir(&dirs, *folders, compare);
 			else
-				insert_tree(bad_dirs, *folders, compare);
+				insert_tree(&bad_dirs, *folders, compare);
 			++folders;
 		}
 	}
+	print_bad_dirs(bad_dirs);
 	return (dirs);
 }
 
