@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 08:21:54 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/17 00:48:06 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,61 +39,26 @@ void			print_tree(t_binarytree *files)
 	}
 }
 
-void			insert_tree(t_binarytree *files, const char *insert,
+void			insert_tree(t_binarytree **files, const char *insert,
 					int (*compare)())
 {
-	while (files)
+	if (!*files)
 	{
-		if (compare(insert, files->string) >= 0)
+		*files = new_item(insert);
+	}
+	else
+	{
+		if (compare(insert, (*files)->string) >= 0)
 		{
-			if (files->right == 0)
-			{
-				files->right = new_item(insert);
-				break ;
-			}
-			else
-				files = files->right;
+			insert_tree(&(*files)->right, insert, compare);
 		}
 		else
 		{
-			if (files->left == 0)
-			{
-				files->left = new_item(insert);
-				break ;
-			}
-			else
-				files = files->left;
+			insert_tree(&(*files)->left, insert, compare);
 		}
 	}
 }
 
-void			insert_tree_reverse(t_binarytree *files, const char *insert,
-					int (*compare)())
-{
-	while (files)
-	{
-		if ((compare(insert, files->string) * -1) >= 0)
-		{
-			if (files->right == 0)
-			{
-				files->right = new_item(insert);
-				break ;
-			}
-			else
-				files = files->right;
-		}
-		else
-		{
-			if (files->left == 0)
-			{
-				files->left = new_item(insert);
-				break ;
-			}
-			else
-				files = files->left;
-		}
-	}
-}
 
 void			delete_tree(t_binarytree **tree)
 {
