@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 08:44:25 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/21 06:05:51 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ t_dirtree	*new_dir(const char *item)
 	leaf->left = 0;
 	leaf->right = 0;
 	return (leaf);
+}
+
+char			*get_dirname(char *cur, char *new)
+{
+	int		len_of_cur;
+	int		len_of_new;
+	char	*newdir;
+
+	len_of_cur = ft_strlen(cur);
+	len_of_new = ft_strlen(new);
+	newdir = ft_strnew(len_of_cur + 1 + len_of_new);
+	ft_strncpy(newdir, cur, len_of_cur);
+	newdir[len_of_cur] = '/';
+	ft_strncpy(newdir + len_of_cur + 1, new, len_of_new);
+	return (newdir);
 }
 
 void			insert_dir(t_dirtree **dirs, const char *insert,
