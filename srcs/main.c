@@ -6,13 +6,44 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/17 03:37:23 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/21 04:10:20 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
 static int		check_print_dirname = 0;
+static int		check_print_separator = 0;
+
+char			*get_dirname(char *cur, char *new)
+{
+	int		len_of_cur;
+	int		len_of_new;
+	char	*newdir;
+
+	len_of_cur = ft_strlen(cur);
+	len_of_new = ft_strlen(new);
+	newdir = ft_strnew(len_of_cur + 1 + len_of_new);
+	ft_strncpy(newdir, cur, len_of_cur);
+	newdir[len_of_cur] = '/';
+	ft_strncpy(newdir + len_of_cur + 1, new, len_of_new);
+	return (newdir);
+}
+
+/*
+** Things to preserve in directory struct
+** total blocks
+** width of longest name
+**
+** Things to preserve in filename struct
+** name
+** rights stuff?
+** user name
+** group name
+** links
+** # of bytes
+** date modified
+*/
 
 t_binarytree	*load_tree(t_dirtree *dirtree, char *dir_str, int flags,
 					int (*compare)())
@@ -21,6 +52,7 @@ t_binarytree	*load_tree(t_dirtree *dirtree, char *dir_str, int flags,
 	struct dirent	*dir_ent;
 	t_binarytree	*files;
 	struct stat		stats;
+	char			*new_dname;
 
 	files = 0;
 	dir_p = opendir(dir_str);
@@ -31,9 +63,12 @@ t_binarytree	*load_tree(t_dirtree *dirtree, char *dir_str, int flags,
 		if (!F_ALL(flags) && dir_ent->d_name[0] == '.')
 			continue;
 		insert_tree(&files, ft_strdup(dir_ent->d_name), compare);
-		if (F_RECUR(flags) && stat(dir_ent->d_name, &stats) == 0 &&
+		new_dname = get_dirname(dirtree->dirname, dir_ent->d_name);
+		if (F_RECUR(flags) && stat(new_dname, &stats) == 0 &&
 				S_ISDIR(stats.st_mode))
-			insert_dir(&(dirtree->right), ft_strdup(dir_ent->d_name), compare);
+			insert_dir(&(dirtree->right), new_dname, compare);
+		else
+			ft_strdel(&new_dname);
 	}
 	closedir(dir_p);
 	return (files);
@@ -47,8 +82,15 @@ void			print_dirs(t_dirtree *dirs, int flags, int (*compare)())
 	if (dirs->left)
 		print_dirs(dirs->left, flags, compare);
 	folder = load_tree(dirs, dirs->dirname, flags, compare);
-	ft_printf("%s:\n", dirs->dirname);
+	if (check_print_separator)
+		ft_putchar('\n');
+	if (check_print_dirname)
+		ft_printf("%s:\n", dirs->dirname);
 	print_tree(folder);
+	if (!check_print_separator)
+		check_print_separator = 1;
+	if (!check_print_dirname)
+		check_print_dirname = 1;
 	delete_tree(&folder);
 	if (dirs->right)
 		print_dirs(dirs->right, flags, compare);
@@ -58,8 +100,6 @@ void			print_bad_dirs(t_binarytree *bad_dirs)
 {
 	if (bad_dirs)
 	{
-		if (check_print_dirname == 0)
-			check_print_dirname = 1;
 		if (bad_dirs->left)
 		{
 			print_bad_dirs(bad_dirs->left);
@@ -98,8 +138,12 @@ t_dirtree		*get_dirs(char **folders, int (*compare)())
 			else
 				insert_tree(&bad_dirs, *folders, compare);
 			++folders;
+			if (*folders)
+				check_print_dirname = 1;
 		}
 	}
+	if (bad_dirs && check_print_dirname == 0)
+		check_print_dirname = 1;
 	print_bad_dirs(bad_dirs);
 	return (dirs);
 }
