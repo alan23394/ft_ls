@@ -1,0 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   binarytree.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/01/22 00:28:11 by abarnett          #+#    #+#             */
+/*   Updated: 2019/01/22 00:34:24 by abarnett         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+typedef struct	s_binarytree
+{
+	void		*content;
+}				t_binarytree;
+
+void			ft_treeinsert(t_binarytree **tree, void *insert,
+					int (*compare)());
+void			ft_treeiter_ltor(t_binarytree *tree, void (*f)());
+void			ft_treeiter_rtol(t_binarytree *tree, void (*f)());
+void			ft_treedel(t_binarytree **tree, void (*del)(void *content));
