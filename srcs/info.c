@@ -6,27 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 08:32:08 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 13:51:44 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <time.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <pwd.h>
-#include <grp.h>
-#include "ft_printf.h"
+#include "ft_ls.h"
 
 # define SECONDS_IN_A_YEAR (15778476)
-
-typedef struct			s_dir
-{
-	char				*path;
-	unsigned int		username_len;
-	unsigned int		groupname_len;
-	unsigned int		links_len;
-	unsigned int		bytes_len;
-}						t_dir;
 
 static char		*get_rights(struct stat stats)
 {
@@ -64,12 +50,10 @@ void			get_info(t_file *file, char *path)
 		return ;
 	file->rights = get_rights(stats);
 	file->links = stats.st_nlink;
-	file->username = (getpwuid(stats.st_uid))->pw_name;
-	file->groupname = (getgrgid(stats.st_gid))->gr_name;
+	file->user = (getpwuid(stats.st_uid))->pw_name;
+	file->group = (getgrgid(stats.st_gid))->gr_name;
 	file->bytes = stats.st_size;
 	file->date = get_date(stats);
-	file->name = (ft_strrchr(path, '/')) ? ft_strrchr(path, '/') : path;
-	file->path = path;
 }
 
 void			print_info(t_file file)
@@ -79,8 +63,8 @@ void			print_info(t_file file)
 //		stats.st_size, ctime(&(stats.st_mtime)), path);
 	ft_printf("|%s| ", file.rights);
 	ft_printf("|%d| ", file.links);
-	ft_printf("|%s| ", file.username);
-	ft_printf("|%s| ", file.groupname);
+	ft_printf("|%s| ", file.user);
+	ft_printf("|%s| ", file.group);
 	ft_printf("|%d| ", file.bytes);
 	ft_printf("|%s| ", file.date);
 	ft_printf("|%s| ", file.name);
