@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 08:32:14 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 13:59:48 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,24 +107,34 @@ typedef struct			s_file
 	unsigned long int	bytes;
 }						t_file;
 
-t_binarytree			*new_item(const char *item);
-void					print_tree(t_binarytree *files);
-void					insert_tree(t_binarytree **files, const char *insert,
-							int (*compare)());
-void					delete_file(t_binarytree **tree);
+# define T_FILE(t) ((t_file *)((t)->content))
+
+t_file					*new_file(char *filename);
+void					print_files(t_binarytree *files);
+void					insert_file(t_binarytree **files, char *insert,
+							int (*compare)(char *s1, char *s2));
+t_binarytree			*load_tree(t_binarytree *dirtree, int flags,
+							int (*compare)(char *s1, char *s2));
+void					delete_file(t_file *file);
 
 typedef struct			s_dir
 {
-	char				*d_name;
-	struct s_binarytree	*files;
+	char				*name;
+	unsigned int		user_maxlen;
+	unsigned int		group_maxlen;
+	unsigned int		links_maxlen;
+	unsigned int		bytes_maxlen;
 }						t_dir;
+
+
+# define T_DIR(t) ((t_dir *)((t)->content))
 
 t_dir					*new_dir(char *item);
 void					insert_dir(t_binarytree **dirs, char *insert,
 							int (*compare)(char *s1, char *s2));
 void					delete_dir(t_dir *dir);
 char					*get_dirname(char *cur, char *add);
-void					print_dirs(t_dirtree *dirs, int flags,
+void					print_dirs(t_binarytree *dirs, int flags,
 							int (*compare)(char *s1, char *s2));
 t_binarytree			*get_dirs(char **folders,
 							int (*compare)(char *s1, char *s2));
