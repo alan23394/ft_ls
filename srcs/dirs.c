@@ -6,11 +6,11 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 08:32:03 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 14:02:03 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_ls.h"
 
 static int		check_print_dirname = 0;
 static int		check_print_separator = 0;
@@ -42,11 +42,11 @@ void			print_dirs(t_binarytree *dirs, int flags,
 	if (check_print_separator)
 		ft_putchar('\n');
 	if (check_print_dirname)
-		ft_printf("%s:\n", dirs->dirname);
-	print_tree(folder);
+		ft_printf("%s:\n", T_DIR(dirs)->name);
+	print_files(folder);
 	check_print_separator = 1;
 	check_print_dirname = 1;
-	delete_tree(&folder);
+	//delete_file(&folder);
 	if (dirs->right)
 		print_dirs(dirs->right, flags, compare);
 }
@@ -60,7 +60,7 @@ static void		print_bad_dirs(t_binarytree *bad_dirs)
 			print_bad_dirs(bad_dirs->left);
 		}
 		ft_printf("ft_ls: %s: No such file or directory\n",
-				bad_dirs->content->d_name);
+				T_DIR(bad_dirs)->name);
 		if (bad_dirs->right)
 		{
 			print_bad_dirs(bad_dirs->right);
