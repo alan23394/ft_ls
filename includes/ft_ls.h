@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/17 00:11:58 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 00:33:58 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,9 @@
 /*
 ** Allowed functions from sys/stat.h:
 ** stat
-**	int stat(const char *restrict path, struct stat *restrict buf);
 **	stat obtains information about the file pointed to by path
 **
 ** lstat
-**	int lstat(const char *restrict path, struct stat *restrict buf);
 **	lstat does the same as stat, but for a symbolic link
 */
 
@@ -98,27 +96,22 @@
 # define F_RECUR(f) (f & 0x8)
 # define F_TIME(f) (f & 0x10)
 
-typedef struct			s_binarytree
+typedef struct			s_file
 {
-	char				*string;
-	struct s_binarytree	*left;
-	struct s_binarytree	*right;
-
-}						t_binarytree;
+	char				*name;
+}						t_file;
 
 t_binarytree			*new_item(const char *item);
 void					print_tree(t_binarytree *files);
 void					insert_tree(t_binarytree **files, const char *insert,
 							int (*compare)());
-void					delete_tree(t_binarytree **tree);
+void					delete_file(t_binarytree **tree);
 
-typedef struct			s_dirtree
+typedef struct			s_dir
 {
-	char				*dirname;
+	char				*name;
 	struct s_binarytree	*files;
-	struct s_dirtree	*left;
-	struct s_dirtree	*right;
-}						t_dirtree;
+}						t_dir;
 
 t_dirtree				*new_dir(const char *item);
 void					insert_dir(t_dirtree **dirs, const char *insert,
