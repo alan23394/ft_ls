@@ -6,11 +6,11 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 00:29:03 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 00:29:40 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 07:38:44 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "binarytree.h"
+#include "ft_binarytree.h"
 
 /*
 ** Insert into the tree based on the return of a compare function, that takes
@@ -34,11 +34,11 @@ void			ft_treeinsert(t_binarytree **tree, void *insert,
 	{
 		if (compare(insert, (*tree)->content) >= 0)
 		{
-			insert_tree(&(*tree)->right, insert, compare);
+			ft_treeinsert(&(*tree)->right, insert, compare);
 		}
 		else
 		{
-			insert_tree(&(*tree)->left, insert, compare);
+			ft_treeinsert(&(*tree)->left, insert, compare);
 		}
 	}
 }

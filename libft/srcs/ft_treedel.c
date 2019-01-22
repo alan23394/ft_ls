@@ -6,11 +6,11 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 00:16:22 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 00:28:27 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 07:36:56 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "binarytree.h"
+#include "ft_binarytree.h"
 
 /*
 ** Function for deleting a single node from a binary tree, using a function
@@ -24,8 +24,8 @@ static void		ft_treedelone(t_binarytree **node, void (*del)(void *content))
 {
 	if (*node)
 	{
-		del(node->content);
-		ft_memdel(node);
+		del((*node)->content);
+		ft_memdel((void **)node);
 	}
 }
 
@@ -42,12 +42,12 @@ void			ft_treedel(t_binarytree **tree, void (*del)(void *content))
 	{
 		if ((*tree)->left)
 		{
-			ft_treedel(&(*tree)->left);
+			ft_treedel(&(*tree)->left, del);
 		}
 		if ((*tree)->right)
 		{
-			ft_treedel(&(*tree)->left);
+			ft_treedel(&(*tree)->left, del);
 		}
-		ft_treedelone(node, del);
+		ft_treedelone(tree, del);
 	}
 }

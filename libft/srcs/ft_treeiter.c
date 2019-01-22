@@ -6,11 +6,11 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 00:30:16 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 00:31:07 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 07:39:47 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "binarytree.h"
+#include "ft_binarytree.h"
 
 /*
 ** Run function f on each item in the tree, moving from left to right
@@ -22,12 +22,12 @@ void			ft_treeiter_ltor(t_binarytree *tree, void (*f)())
 	{
 		if (tree->left)
 		{
-			ft_treeiter_ltor(tree->left);
+			ft_treeiter_ltor(tree->left, f);
 		}
 		f(tree->content);
 		if (tree->right)
 		{
-			ft_treeiter_ltor(tree->right);
+			ft_treeiter_ltor(tree->right, f);
 		}
 	}
 }
@@ -42,12 +42,12 @@ void			ft_treeiter_rtol(t_binarytree *tree, void (*f)())
 	{
 		if (tree->right)
 		{
-			ft_treeiter_ltor(tree->left);
+			ft_treeiter_ltor(tree->left, f);
 		}
 		f(tree->content);
 		if (tree->left)
 		{
-			ft_treeiter_ltor(tree->right);
+			ft_treeiter_ltor(tree->right, f);
 		}
 	}
 }

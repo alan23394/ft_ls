@@ -6,7 +6,7 @@
 /*   By: abarnett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 13:56:25 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/16 23:59:37 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 05:27:22 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include "ft_binarytree.h"
 
 typedef struct		s_list
 {

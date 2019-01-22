@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   binarytree.h                                       :+:      :+:    :+:   */
+/*   ft_treenew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/22 00:28:11 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 00:34:24 by abarnett         ###   ########.fr       */
+/*   Created: 2019/01/21 22:59:57 by abarnett          #+#    #+#             */
+/*   Updated: 2019/01/22 07:33:54 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_binarytree.h"
+#include <stdlib.h>
 
-typedef struct	s_binarytree
+/*
+** stdlib for malloc
+*/
+
+t_binarytree	*ft_treenew(void *item)
 {
-	void		*content;
-}				t_binarytree;
+	t_binarytree	*leaf;
 
-void			ft_treeinsert(t_binarytree **tree, void *insert,
-					int (*compare)());
-void			ft_treeiter_ltor(t_binarytree *tree, void (*f)());
-void			ft_treeiter_rtol(t_binarytree *tree, void (*f)());
-void			ft_treedel(t_binarytree **tree, void (*del)(void *content));
+	leaf = (t_binarytree *)malloc(sizeof(t_binarytree));
+	leaf->content = item;
+	leaf->left = 0;
+	leaf->right = 0;
+	return (leaf);
+}
