@@ -6,11 +6,16 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 05:37:41 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 14:14:18 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+/*
+** This function needs a typedef because it returns a function pointer, and
+** apparently you need to use a typedef to return a function pointer.
+*/
 
 typedef int		(*sort_func)();
 
@@ -20,9 +25,9 @@ sort_func		get_sort_function(int flags)
 	int	(*func)();
 
 	funcs[0] = ft_strcmp;
-	funcs[F_REV(1)] = ft_strcmp_rev;
-	//funcs[F_TIME(1)] = files_cmp_time;
-	//funcs[F_REV(1) | F_TIME(1)] = files_cmp_time_rev();
+	funcs[F_REV(0xFF)] = ft_strcmp_rev;
+	//funcs[F_TIME(0xFF)] = files_cmp_time;
+	//funcs[F_REV(0xFF) | F_TIME(0xFF)] = files_cmp_time_rev();
 	//func = funcs[F_REV(flags) | F_TIME(flags)];
 	func = funcs[F_REV(flags)];
 	return (func);
@@ -31,7 +36,7 @@ sort_func		get_sort_function(int flags)
 void			ft_ls(int flags, char **folders)
 {
 	int				(*compare)();
-	t_dirtree		*dirs;
+	t_binarytree	*dirs;
 
 	compare = get_sort_function(flags);
 	dirs = get_dirs(folders, compare);
