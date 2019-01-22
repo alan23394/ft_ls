@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/21 06:05:57 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 05:37:41 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ sort_func		get_sort_function(int flags)
 	int	(*func)();
 
 	funcs[0] = ft_strcmp;
-	//funcs[F_REV(1)] = ft_strcmp_rev;
-	//funcs[F_REV(1) | F_TIME(1)] = ft_timecmp_rev();
+	funcs[F_REV(1)] = ft_strcmp_rev;
+	//funcs[F_TIME(1)] = files_cmp_time;
+	//funcs[F_REV(1) | F_TIME(1)] = files_cmp_time_rev();
 	//func = funcs[F_REV(flags) | F_TIME(flags)];
 	func = funcs[F_REV(flags)];
 	return (func);
