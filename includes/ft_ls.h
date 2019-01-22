@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 00:33:58 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 08:32:14 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@
 typedef struct			s_file
 {
 	char				*name;
+	char				*rights;
+	char				*user;
+	char				*group;
+	char				*date;
+	unsigned int		links;
+	unsigned long int	bytes;
 }						t_file;
 
 t_binarytree			*new_item(const char *item);
@@ -109,12 +115,18 @@ void					delete_file(t_binarytree **tree);
 
 typedef struct			s_dir
 {
-	char				*name;
+	char				*d_name;
 	struct s_binarytree	*files;
 }						t_dir;
 
-t_dirtree				*new_dir(const char *item);
-void					insert_dir(t_dirtree **dirs, const char *insert,
-							int (*compare)());
+t_dir					*new_dir(char *item);
+void					insert_dir(t_binarytree **dirs, char *insert,
+							int (*compare)(char *s1, char *s2));
+void					delete_dir(t_dir *dir);
+char					*get_dirname(char *cur, char *add);
+void					print_dirs(t_dirtree *dirs, int flags,
+							int (*compare)(char *s1, char *s2));
+t_binarytree			*get_dirs(char **folders,
+							int (*compare)(char *s1, char *s2));
 
 #endif

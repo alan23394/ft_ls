@@ -6,90 +6,47 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/21 06:05:51 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 07:16:23 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_dirtree	*new_dir(const char *item)
+t_dir	*new_dir(char *item)
 {
-	t_dirtree	*leaf;
+	t_dir	*dir;
 
-	leaf = (t_dirtree *)malloc(sizeof(t_dirtree));
-	leaf->dirname = (char *)item;
-	leaf->files = 0;
-	leaf->left = 0;
-	leaf->right = 0;
-	return (leaf);
+	dir = (t_dir *)malloc(sizeof(t_dir));
+	dir->name = item;
+	dir->files = 0;
+	return (dir);
 }
 
-char			*get_dirname(char *cur, char *new)
+void	insert_dir(t_binarytree **dirs, char *insert,
+			int (*compare)(char *s1, char *s2))
 {
-	int		len_of_cur;
-	int		len_of_new;
-	char	*newdir;
-
-	len_of_cur = ft_strlen(cur);
-	len_of_new = ft_strlen(new);
-	newdir = ft_strnew(len_of_cur + 1 + len_of_new);
-	ft_strncpy(newdir, cur, len_of_cur);
-	newdir[len_of_cur] = '/';
-	ft_strncpy(newdir + len_of_cur + 1, new, len_of_new);
-	return (newdir);
-}
-
-void			insert_dir(t_dirtree **dirs, const char *insert,
-					int (*compare)())
-{
-	t_dirtree	*cur;
-
 	if (!*dirs)
 	{
-		*dirs = new_dir(insert);
-		return ;
+		*dirs = ft_treenew(new_dir(insert));
 	}
-	cur = *dirs;
-	while (cur)
+	else
 	{
-		if (compare(insert, cur->dirname) >= 0)
+		if (compare(insert, (*dirs)->content->d_name) >= 0)
 		{
-			if (cur->right == 0)
-			{
-				cur->right = new_dir(insert);
-				break ;
-			}
-			else
-				cur = cur->right;
+			insert_dirs(&(*dirs)->right, insert, compare);
 		}
 		else
 		{
-			if (cur->left == 0)
-			{
-				cur->left = new_dir(insert);
-				break ;
-			}
-			else
-				cur = cur->left;
+			insert_dirs(&(*dirs)->left, insert, compare);
 		}
 	}
 }
 
-/*
-void			delete_tree(t_binarytree **tree)
+void	delete_dir(t_dir *dir)
 {
-	if (*tree)
+	if (dir)
 	{
-		if ((*tree)->left)
-		{
-			delete_tree(&(*tree)->left);
-		}
-		if ((*tree)->right)
-		{
-			delete_tree(&(*tree)->left);
-		}
-		ft_strdel(&(*tree)->string);
-		ft_memdel((void **)tree);
+		ft_strdel(&(*dir)->name);
+		ft_memdel((void **)&dir);
 	}
 }
-*/
