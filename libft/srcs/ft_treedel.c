@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 00:16:22 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 07:36:56 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:00:32 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** referenced after this.
 */
 
-static void		ft_treedelone(t_binarytree **node, void (*del)(void *content))
+static void		ft_treedelone(t_binarytree **node, void (*del)())
 {
 	if (*node)
 	{
@@ -36,7 +36,7 @@ static void		ft_treedelone(t_binarytree **node, void (*del)(void *content))
 ** the tree.
 */
 
-void			ft_treedel(t_binarytree **tree, void (*del)(void *content))
+void			ft_treedel(t_binarytree **tree, void (*del)())
 {
 	if (*tree)
 	{
