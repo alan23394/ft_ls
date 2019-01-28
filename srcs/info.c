@@ -6,13 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 13:51:44 by alan             ###   ########.fr       */
+/*   Updated: 2019/01/22 15:45:00 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-# define SECONDS_IN_A_YEAR (15778476)
+# define SIX_MONTHS_SECONDS (15778476)
 
 static char		*get_rights(struct stat stats)
 {
@@ -20,12 +20,15 @@ static char		*get_rights(struct stat stats)
 	unsigned int	bits;
 	int				i;
 
-	i = 10;
-	bits = (stats.st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO);
 	rights = ft_strdup("-rwxrwxrwx");
-	while (--i >= 0)
-		if (!((bits >> i) & 1))
-			rights[9 - i] = '-';
+	bits = (stats.st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO);
+	i = 0;
+	while (i < 9)
+	{
+		if (!(bits & (1 << i)))
+			rights[i] = '-';
+		++i;
+	}
 	return (rights);
 }
 
@@ -34,11 +37,10 @@ static char		*get_date(struct stat stats)
 	char	*date;
 
 	date = ctime(&stats.st_mtime);
-	if ((time(NULL) - stats.st_mtime) > SECONDS_IN_A_YEAR)
+	if ((time(NULL) - stats.st_mtime) > SIX_MONTHS_SECONDS)
 		ft_sprintf(&date, "%-8.6s%.4s", date + 4, date + 20);
 	else
 		ft_sprintf(&date, "%.12s", date + 4);
-//		date = ft_crop(&(date), 4, 12);
 	return (date);
 }
 
@@ -54,19 +56,4 @@ void			get_info(t_file *file, char *path)
 	file->group = (getgrgid(stats.st_gid))->gr_name;
 	file->bytes = stats.st_size;
 	file->date = get_date(stats);
-}
-
-void			print_info(t_file file)
-{
-//	ft_printf("%s%*d%-*s%-*s%*d%*s%s\n", "rights", stats.st_nlink,
-//		(getpwuid(stats.st_uid))->pw_name, (getgrgid(stats.st_gid))->gr_name,
-//		stats.st_size, ctime(&(stats.st_mtime)), path);
-	ft_printf("|%s| ", file.rights);
-	ft_printf("|%d| ", file.links);
-	ft_printf("|%s| ", file.user);
-	ft_printf("|%s| ", file.group);
-	ft_printf("|%d| ", file.bytes);
-	ft_printf("|%s| ", file.date);
-	ft_printf("|%s| ", file.name);
-	ft_printf("\n");
 }
