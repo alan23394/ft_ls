@@ -6,53 +6,32 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 14:07:15 by alan             ###   ########.fr       */
+/*   Updated: 2019/01/22 16:29:55 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_file			*new_file(char *filename)
+t_file			*new_file(char *filename, char *path)
 {
 	t_file	*file;
 
 	file = (t_file *)malloc(sizeof(t_file));
 	file->name = filename;
-	file->rights = 0;
-	file->user = 0;
-	file->group = 0;
-	file->date = 0;
-	file->links = 0;
-	file->bytes = 0;
+	get_info(file, path);
 	return (file);
 }
 
-void			print_files(t_binarytree *files)
-{
-	if (files)
-	{
-		if (files->left)
-		{
-			print_files(files->left);
-		}
-		ft_printf("%s\n", T_FILE(files)->name);
-		if (files->right)
-		{
-			print_files(files->right);
-		}
-	}
-}
-
-void			insert_file(t_binarytree **files, char *insert,
+void			insert_file(t_binarytree **files, t_file *insert,
 					int (*compare)(char *s1, char *s2))
 {
 	if (!*files)
 	{
-		*files = ft_treenew(new_file(insert));
+		*files = ft_treenew(insert);
 	}
 	else
 	{
-		if (compare(insert, T_FILE(*files)->name) >= 0)
+		if (compare(insert->name, T_FILE(*files)->name) >= 0)
 		{
 			insert_file(&(*files)->right, insert, compare);
 		}
@@ -95,9 +74,10 @@ t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
 	{
 		if (!F_ALL(flags) && dir_ent->d_name[0] == '.')
 			continue;
-		insert_file(&files, ft_strdup(dir_ent->d_name), compare);
 		path = get_dirname(T_DIR(dirtree)->name, dir_ent->d_name);
-		if (F_RECUR(flags) && stat(path, &stats) == 0 &&
+		insert_file(&files,
+				new_file(ft_strdup(dir_ent->d_name), path), compare);
+		if (F_RECUR(flags) && lstat(path, &stats) == 0 &&
 				S_ISDIR(stats.st_mode))
 			insert_dir(&(dirtree->right), path, compare);
 		else
@@ -107,7 +87,26 @@ t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
 	return (files);
 }
 
+void			print_files(t_binarytree *files)
+{
+	if (files)
+	{
+		if (files->left)
+		{
+			print_files(files->left);
+		}
+		ft_printf("%s\n", T_FILE(files)->name);
+		if (files->right)
+		{
+			print_files(files->right);
+		}
+	}
+}
+
 void			delete_file(t_file *file)
 {
-	(void)file;
+	ft_strdel(&(file->name));
+	ft_strdel(&(file->rights));
+	ft_strdel(&(file->date));
+	ft_memdel((void **)&file);
 }
