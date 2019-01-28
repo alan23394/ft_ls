@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 13:59:48 by alan             ###   ########.fr       */
+/*   Updated: 2019/01/22 16:10:11 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,13 @@ typedef struct			s_file
 
 # define T_FILE(t) ((t_file *)((t)->content))
 
-t_file					*new_file(char *filename);
-void					print_files(t_binarytree *files);
-void					insert_file(t_binarytree **files, char *insert,
-							int (*compare)(char *s1, char *s2));
+t_file					*new_file(char *filename, char *path);
+void					get_info(t_file *file, char *path);
 t_binarytree			*load_tree(t_binarytree *dirtree, int flags,
 							int (*compare)(char *s1, char *s2));
+void					insert_file(t_binarytree **files, t_file *insert,
+							int (*compare)(char *s1, char *s2));
+void					print_files(t_binarytree *files);
 void					delete_file(t_file *file);
 
 typedef struct			s_dir
@@ -130,13 +131,13 @@ typedef struct			s_dir
 # define T_DIR(t) ((t_dir *)((t)->content))
 
 t_dir					*new_dir(char *item);
-void					insert_dir(t_binarytree **dirs, char *insert,
-							int (*compare)(char *s1, char *s2));
-void					delete_dir(t_dir *dir);
 char					*get_dirname(char *cur, char *add);
-void					print_dirs(t_binarytree *dirs, int flags,
-							int (*compare)(char *s1, char *s2));
 t_binarytree			*get_dirs(char **folders,
 							int (*compare)(char *s1, char *s2));
+void					insert_dir(t_binarytree **dirs, char *insert,
+							int (*compare)(char *s1, char *s2));
+void					print_dirs(t_binarytree *dirs, int flags,
+							int (*compare)(char *s1, char *s2));
+void					delete_dir(t_dir *dir);
 
 #endif
