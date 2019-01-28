@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 14:02:03 by alan             ###   ########.fr       */
+/*   Updated: 2019/01/28 11:24:04 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			print_dirs(t_binarytree *dirs, int flags,
 	print_files(folder);
 	check_print_separator = 1;
 	check_print_dirname = 1;
-	//delete_file(&folder);
+	ft_treedel(&folder, delete_file);
 	if (dirs->right)
 		print_dirs(dirs->right, flags, compare);
 }
@@ -69,33 +69,40 @@ static void		print_bad_dirs(t_binarytree *bad_dirs)
 }
 
 /*
-** sort incoming folders into a directory tree
+** sort incoming parameters into trees
+** put files into a files tree
+** put directories into the starting directory tree
 ** put bad folders into a bad tree to print alphabetically
 */
 
-t_binarytree	*get_dirs(char **folders, int (*compare)(char *s1, char *s2))
+t_binarytree	*get_dirs(char **params, int (*compare)(char *s1, char *s2))
 {
+	t_binarytree	*files;
 	t_binarytree	*dirs;
 	t_binarytree	*bad_dirs;
 	struct stat		stats;
 
+	files = 0;
 	dirs = 0;
 	bad_dirs = 0;
-	if (!*folders)
-		insert_dir(&dirs, ".", compare);
-	else
+	while (*params)
 	{
-		while (*folders)
+		if (lstat(*params, &stats) == 0)
 		{
-			if (stat(*folders, &stats) == 0 && S_ISDIR(stats.st_mode))
-				insert_dir(&dirs, *folders, compare);
+			if (S_ISDIR(stats.st_mode))
+				insert_dir(&dirs, *params, compare);
 			else
-				insert_dir(&bad_dirs, *folders, compare);
-			++folders;
+				insert_file(&files, *params, compare);
 		}
+		else
+			insert_dir(&bad_dirs, *params, ft_strcmp);
+		++params;
 	}
 	if (bad_dirs || dirs->left || dirs->right)
 		check_print_dirname = 1;
 	print_bad_dirs(bad_dirs);
+	delete_tree(bad_dirs);
+	print_files(files);
+	delete_tree(files);
 	return (dirs);
 }

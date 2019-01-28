@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 14:14:18 by alan             ###   ########.fr       */
+/*   Updated: 2019/01/28 11:21:31 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ sort_func		get_sort_function(int flags)
 
 	funcs[0] = ft_strcmp;
 	funcs[F_REV(0xFF)] = ft_strcmp_rev;
-	//funcs[F_TIME(0xFF)] = files_cmp_time;
-	//funcs[F_REV(0xFF) | F_TIME(0xFF)] = files_cmp_time_rev();
+	//funcs[F_TIME(0xFF)] = cmp_time;
+	//funcs[F_REV(0xFF) | F_TIME(0xFF)] = cmp_time_rev;
 	//func = funcs[F_REV(flags) | F_TIME(flags)];
 	func = funcs[F_REV(flags)];
 	return (func);
@@ -39,7 +39,10 @@ void			ft_ls(int flags, char **folders)
 	t_binarytree	*dirs;
 
 	compare = get_sort_function(flags);
-	dirs = get_dirs(folders, compare);
+	if (folders)
+		dirs = get_dirs(folders, compare);
+	else
+		insert_dir(&dirs, ".", compare);
 	print_dirs(dirs, flags, compare);
 }
 
