@@ -6,12 +6,12 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 16:56:42 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 14:17:29 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "files.h"
-#include "libftprintf.h"
+#include "libft.h"
 
 t_file			*new_file(char *filename, char *path_to_file)
 {
@@ -40,14 +40,6 @@ void			insert_file(t_binarytree **files, t_file *new_file,
 		{
 			insert_file(&(*files)->left, new_file, compare);
 		}
-	}
-}
-
-void			print_file(t_file *file)
-{
-	if (file)
-	{
-		ft_printf("%s\n", file->name);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 12:57:09 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 14:18:34 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,27 +87,27 @@ void			print_permission_denied(char *folder)
 }
 
 void			print_dirs(t_binarytree *dirs, int flags,
-					int (*compare)(char *s1, char *s2))
+					int (*compare)(char *s1, char *s2), void (*print)())
 {
 	t_binarytree	*folder;
 
 	folder = 0;
 	if (dirs->left)
-		print_dirs(dirs->left, flags, compare);
+		print_dirs(dirs->left, flags, compare, print);
 	folder = load_tree(dirs, flags, compare);
 	if (g_check_print_separator)
 		ft_putchar('\n');
 	if (g_check_print_dirname)
 		ft_printf("%s:\n", T_DIR(dirs)->name);
 	if (folder)
-		ft_treeiter_ltor(folder, print_file);
+		ft_treeiter_ltor(folder, print);
 	else
 		print_permission_denied(T_DIR(dirs)->name);
 	g_check_print_separator = 1;
 	g_check_print_dirname = 1;
 	ft_treedel(&folder, delete_file);
 	if (dirs->right)
-		print_dirs(dirs->right, flags, compare);
+		print_dirs(dirs->right, flags, compare, print);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 17:00:10 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 14:19:59 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void					get_info(t_file *file, char *path);
 void					insert_file(t_binarytree **files, t_file *insert,
 							int (*compare)(char *s1, char *s2));
 void					print_file(t_file *file);
+void					print_file_long(t_file *file);
 void					delete_file(t_file *file);
 
 #endif

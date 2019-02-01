@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 17:04:08 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 14:24:02 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,34 @@ sort_func		get_sort_function(int flags)
 	return (func);
 }
 
+typedef void	(*print_func)();
+
+print_func		get_print_func(int flags)
+{
+	void (*funcs[0xF])();
+	void (*func)();
+
+	funcs[0] = print_file;
+	funcs[F_LONG(0xF)] = print_file_long;
+	func = funcs[F_LONG(flags)];
+	return (func);
+}
+
 void			ft_ls(int flags, char **folders)
 {
 	int				(*compare)();
+	void			(*print)();
 	t_binarytree	*dirs;
 
 	compare = get_sort_function(flags);
+	print = get_print_func(flags);
 	dirs = 0;
 	if (*folders)
 		dirs = get_dirs(folders, compare);
 	else
 		insert_dir(&dirs, ".", compare);
 	if (dirs)
-		print_dirs(dirs, flags, compare);
+		print_dirs(dirs, flags, compare, print);
 }
 
 char			**get_flags_ls(int *flags, char **argv)
