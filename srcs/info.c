@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 15:45:00 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/31 16:56:24 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static char		*get_date(struct stat stats)
 	return (date);
 }
 
-void			get_info(t_file *file, char *path)
+void			get_file_info(t_file *file, char *path_to_file)
 {
 	struct stat		stats;
 
-	if (lstat(path, &stats))
+	if (lstat(path_to_file, &stats))
 		return ;
 	file->rights = get_rights(stats);
 	file->links = stats.st_nlink;
