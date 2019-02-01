@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 17:18:31 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/31 17:26:43 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,16 @@ void			print_dirs(t_binarytree *dirs, int flags,
 	if (dirs->left)
 		print_dirs(dirs->left, flags, compare);
 	folder = load_tree(dirs, flags, compare);
-	if (check_print_separator)
+	if (g_check_print_separator)
 		ft_putchar('\n');
-	if (check_print_dirname)
+	if (g_check_print_dirname)
 		ft_printf("%s:\n", T_DIR(dirs)->name);
 	if (folder)
 		ft_treeiter_ltor(folder, print_file);
 	else
 		print_permission_denied(T_DIR(dirs)->name);
-	check_print_separator = 1;
-	check_print_dirname = 1;
+	g_check_print_separator = 1;
+	g_check_print_dirname = 1;
 	ft_treedel(&folder, delete_file);
 	if (dirs->right)
 		print_dirs(dirs->right, flags, compare);
@@ -140,7 +140,7 @@ t_binarytree	*get_dirs(char **params, int (*compare)(char *s1, char *s2))
 		++params;
 	}
 	if (bad || dirs->left || dirs->right)
-		check_print_dirname = 1;
+		g_check_print_dirname = 1;
 	ft_treeiter_ltor(bad, print_bad);
 	ft_treedel(&bad, delete_bad);
 	ft_treeiter_ltor(files, print_file);
