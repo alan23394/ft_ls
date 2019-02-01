@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 17:26:43 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 12:57:09 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,12 @@ t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
 
 void			print_permission_denied(char *folder)
 {
+	char	*error;
 	char	*last_part_of_path;
 
+	error = strerror(errno);
 	last_part_of_path = ft_strrchr(folder, '/') + 1;
-	ft_printfd(2, "ft_ls: %s: Permission denied\n", last_part_of_path);
+	ft_printfd(2, "ft_ls: %s: %s\n", last_part_of_path, error);
 }
 
 void			print_dirs(t_binarytree *dirs, int flags,
