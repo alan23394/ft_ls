@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/28 11:21:31 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/01/31 17:04:08 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ void			ft_ls(int flags, char **folders)
 	t_binarytree	*dirs;
 
 	compare = get_sort_function(flags);
-	if (folders)
+	dirs = 0;
+	if (*folders)
 		dirs = get_dirs(folders, compare);
 	else
 		insert_dir(&dirs, ".", compare);
-	print_dirs(dirs, flags, compare);
+	if (dirs)
+		print_dirs(dirs, flags, compare);
 }
 
 char			**get_flags_ls(int *flags, char **argv)
