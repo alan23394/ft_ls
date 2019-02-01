@@ -6,12 +6,12 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:17:50 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 13:00:01 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 15:19:15 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BAD_DIRS_H
-# define BAD_DIRS_H
+#ifndef BAD_H
+# define BAD_H
 
 typedef struct s_binarytree	t_binarytree;
 
