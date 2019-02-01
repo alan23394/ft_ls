@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 14:07:50 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 15:21:42 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
 void			print_dirs(t_binarytree *dirs, int flags,
 					int (*compare)(char *s1, char *s2), void (*print)());
 
-t_binarytree	*get_dirs(char **folders,
-					int (*compare)(char *s1, char *s2));
+t_binarytree	*get_dirs(char **folders, int (*compare)(char *s1, char *s2));
 
 #endif
