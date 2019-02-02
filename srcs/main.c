@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 14:24:02 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 16:11:19 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ typedef int		(*sort_func)();
 
 sort_func		get_sort_function(int flags)
 {
-	int	(*funcs[0x20])();
-	int	(*func)();
+	int			(*func)();
+	static int	(*funcs[0x20])() =
+	{
+		[0] = ft_strcmp,
+		[OP_REV] = ft_strcmp_rev
+		//funcs[OP_TIME] = cmp_time;
+		//funcs[OP_REV | OP_TIME] = cmp_time_rev;
+	};
 
-	funcs[0] = ft_strcmp;
-	funcs[F_REV(0xFF)] = ft_strcmp_rev;
-	//funcs[F_TIME(0xFF)] = cmp_time;
-	//funcs[F_REV(0xFF) | F_TIME(0xFF)] = cmp_time_rev;
 	//func = funcs[F_REV(flags) | F_TIME(flags)];
 	func = funcs[F_REV(flags)];
 	return (func);
@@ -37,11 +39,13 @@ typedef void	(*print_func)();
 
 print_func		get_print_func(int flags)
 {
-	void (*funcs[0xF])();
-	void (*func)();
+	void		(*func)();
+	static void	(*funcs[0xF])() =
+	{
+		[0] = print_file,
+		[OP_LONG] = print_file_long
+	};
 
-	funcs[0] = print_file;
-	funcs[F_LONG(0xF)] = print_file_long;
 	func = funcs[F_LONG(flags)];
 	return (func);
 }
