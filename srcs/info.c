@@ -6,13 +6,65 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 16:56:24 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 15:07:50 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
 # define SIX_MONTHS_SECONDS (15778476)
+
+/*
+** The file mode printed under the -l option consists of the entry type, owner
+** permissions, and group permissions.  The entry type character describes the
+** type of file, as follows:
+**
+** 		b	Block special file
+** 		c	Character special file
+** 		d	Directory
+** 		l	Symbolic link
+** 		s	Socket link
+** 		p	FIFO
+** 		-	Regular file
+**
+** The next three fields are three characters each: owner permissions, group
+** permissions, and other permissions.  Each field has three character
+** positions:
+**
+** 		1.	If r, the file is readable; if -, it is not readable.
+**
+** 		2.	If w, the file is writable; if -, it is not writable.
+**
+** 		3.	The first of the following that applies:
+**
+** 			S	If in the owner permissions, the file is not executable
+** 				and set-user-ID mode is set.  If in the group permissions, the
+** 				file is not executable and set-group-ID mode is set.
+**
+** 			s	If in the owner permissions, the file is executable and
+** 				set-user-ID mode is set.  If in the group permissions, the file
+** 				is executable and setgroup-ID mode is set.
+**
+** 			x	The file is executable or the directory is searchable.
+**
+** 			-	The file is neither readable, writable, executable, nor
+** 				set-user-ID nor set-group-ID mode, nor sticky.	(See below.)
+**
+** 			These next two apply only to the third character in the last group
+** 			(other permissions).
+**
+** 			T	The sticky bit is set (mode 1000), but not execute or
+** 				search permission.	(See chmod(1) or sticky(8).)
+**
+** 			t	The sticky bit is set (mode 1000), and is searchable or
+** 				executable.  (See chmod(1) or sticky(8).)
+*/
+
+static char		type_letter(int mode)
+{
+	(void)mode;
+	return ('d');
+}
 
 static char		*get_rights(struct stat stats)
 {
@@ -26,9 +78,10 @@ static char		*get_rights(struct stat stats)
 	while (i < 9)
 	{
 		if (!(bits & (1 << i)))
-			rights[i] = '-';
+			rights[9 - i] = '-';
 		++i;
 	}
+	rights[0] = type_letter(stats.st_mode);
 	return (rights);
 }
 
