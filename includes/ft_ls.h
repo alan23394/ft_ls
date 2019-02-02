@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 15:21:42 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 16:10:26 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,18 @@
 # include "bad.h"
 
 # define ALL_FLAGS "alrRt"
-# define F_ALL(f) (f & 0x1)
-# define F_LONG(f) (f & 0x2)
-# define F_REV(f) (f & 0x4)
-# define F_RECUR(f) (f & 0x8)
-# define F_TIME(f) (f & 0x10)
+
+# define OP_ALL (0x1)
+# define OP_LONG (0x2)
+# define OP_REV (0x4)
+# define OP_RECUR (0x8)
+# define OP_TIME (0x10)
+
+# define F_ALL(f) (f & OP_ALL)
+# define F_LONG(f) (f & OP_LONG)
+# define F_REV(f) (f & OP_REV)
+# define F_RECUR(f) (f & OP_RECUR)
+# define F_TIME(f) (f & OP_TIME)
 
 char			*get_dirname(char *cur, char *add);
 t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
