@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 15:07:50 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/01 18:37:16 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,25 @@
 
 static char		type_letter(int mode)
 {
-	(void)mode;
-	return ('d');
+	char	mode_char;
+
+	if (S_ISBLK(mode))
+		mode_char = 'b';
+	if (S_ISCHR(mode))
+		mode_char = 'c';
+	if (S_ISDIR(mode))
+		mode_char = 'd';
+	if (S_ISLNK(mode))
+		mode_char = 'l';
+	/*
+	   if (s_is(mode))
+	   mode_char = 's';
+	   */
+	if (S_ISFIFO(mode))
+		mode_char = 'p';
+	if (S_ISREG(mode))
+		mode_char = '-';
+	return (mode_char);
 }
 
 static char		*get_rights(struct stat stats)
@@ -101,6 +118,7 @@ void			get_file_info(t_file *file, char *path_to_file)
 {
 	struct stat		stats;
 
+	// TODO make sure leaving here doesn't cause problems when deleting files
 	if (lstat(path_to_file, &stats))
 		return ;
 	file->rights = get_rights(stats);
