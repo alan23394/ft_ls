@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 14:18:34 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/02 19:04:21 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,24 @@ char			*get_dirname(char *cur, char *add)
 	return (newdir);
 }
 
+static void		process_file(t_binarytree *files, int flags,
+					int (*compare)(char *s1, char *s2), char *filename)
+{
+	char	*path;
+	t_file	*file;
+
+	if (!F_ALL(flags) && filename[0] == '.')
+		return ;
+	path = get_dirname(T_DIR(dirtree)->name, filename);
+	file = new_file(ft_strdup(filename), path);
+	insert_file(&files, file, compare);
+	if (F_RECUR(flags) && file->rights[0] == 'd' &&
+		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
+		insert_dir(&(dirtree->right), path, compare);
+	else
+		ft_strdel(&path);
+}
+
 /*
 ** Things to preserve in directory struct
 ** total blocks
@@ -52,8 +70,6 @@ t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
 	DIR				*dir_p;
 	struct dirent	*dir_ent;
 	t_binarytree	*files;
-	char			*path;
-	struct stat		stats;
 
 	dir_p = opendir(T_DIR(dirtree)->name);
 	if (!dir_p)
@@ -61,16 +77,7 @@ t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
 	files = 0;
 	while ((dir_ent = readdir(dir_p)) != 0)
 	{
-		if (!F_ALL(flags) && dir_ent->d_name[0] == '.')
-			continue;
-		path = get_dirname(T_DIR(dirtree)->name, dir_ent->d_name);
-		insert_file(&files, new_file(ft_strdup(dir_ent->d_name), path),
-				compare);
-		if (F_RECUR(flags) && lstat(path, &stats) == 0 &&
-				S_ISDIR(stats.st_mode))
-			insert_dir(&(dirtree->right), path, compare);
-		else
-			ft_strdel(&path);
+		process_file(files, flags, compare, dir_ent->d_name);
 	}
 	closedir(dir_p);
 	return (files);
