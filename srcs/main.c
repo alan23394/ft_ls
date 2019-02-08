@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 16:11:19 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/07 18:31:53 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,44 +50,42 @@ print_func		get_print_func(int flags)
 	return (func);
 }
 
-void			ft_ls(int flags, char **folders)
+void			ft_ls(t_flags *flags, char **folders)
 {
-	int				(*compare)();
-	void			(*print)();
 	t_binarytree	*dirs;
 
-	compare = get_sort_function(flags);
-	print = get_print_func(flags);
+	flags->compare = get_sort_function(flags->options);
+	flags->print = get_print_func(flags->options);
 	dirs = 0;
 	if (*folders)
-		dirs = get_dirs(folders, compare);
+		dirs = get_dirs(folders, flags->compare);
 	else
-		insert_dir(&dirs, ".", compare);
+		insert_dir(&dirs, ".", flags->compare);
 	if (dirs)
-		print_dirs(dirs, flags, compare, print);
+		print_dirs(dirs, flags);
 }
 
-char			**get_flags_ls(int *flags, char **argv)
+static char		**get_options_ls(int *options, char **argv)
 {
-	char	*all_flags;
+	char	*all_options;
 	char	*cur;
 	int		i;
 
-	*flags = 0;
-	all_flags = ALL_FLAGS;
-	while ((*flags != -1) && *(++argv) && (*argv[0] == '-'))
+	*options = 0;
+	all_options = ALL_OPTIONS;
+	while ((*options != -1) && *(++argv) && (*argv[0] == '-'))
 	{
 		i = 1;
 		if (ft_strequ(*argv, "--"))
 			return (++argv);
-		while (((*argv)[i]) && (*flags != -1))
+		while (((*argv)[i]) && (*options != -1))
 		{
-			cur = ft_strchr(all_flags, (*argv)[i]);
-			*flags = (cur) ? (*flags | (1 << (cur - all_flags))) : -1;
+			cur = ft_strchr(all_options, (*argv)[i]);
+			*options = (cur) ? (*options | (1 << (cur - all_options))) : -1;
 			++i;
 		}
 	}
-	if (*flags == -1)
+	if (*options == -1)
 		ft_printf("-%c is no good\n", (*argv)[i - 1]);
 	// TODO fix that segfault
 	//ft_printf("-%s is no good\n", (*argv)[i - 1]);
@@ -96,12 +94,13 @@ char			**get_flags_ls(int *flags, char **argv)
 
 int				main(int argc, char **argv)
 {
-	int				flags;
+	t_flags			flags;
 
 	(void)argc;
-	argv = get_flags_ls(&flags, argv);
-	if (flags == -1)
+	// make get_flags_ls return flags
+	argv = get_options_ls(&flags.options, argv);
+	if (flags.options == -1)
 		return (-1);
-	ft_ls(flags, argv);
+	ft_ls(&flags, argv);
 	return (0);
 }

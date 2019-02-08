@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/02 19:04:21 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:09:35 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,20 @@ char			*get_dirname(char *cur, char *add)
 	return (newdir);
 }
 
-static void		process_file(t_binarytree *files, int flags,
-					int (*compare)(char *s1, char *s2), char *filename)
+static void		process_file(char *filename, t_binarytree **files,
+					t_flags *flags, t_binarytree *dirtree)
 {
 	char	*path;
 	t_file	*file;
 
-	if (!F_ALL(flags) && filename[0] == '.')
+	if (!F_ALL(flags->options) && filename[0] == '.')
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
 	file = new_file(ft_strdup(filename), path);
-	insert_file(&files, file, compare);
-	if (F_RECUR(flags) && file->rights[0] == 'd' &&
+	insert_file(files, file, flags->compare);
+	if (F_RECUR(flags->options) && file->rights[0] == 'd' &&
 		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
-		insert_dir(&(dirtree->right), path, compare);
+		insert_dir(&(dirtree->right), path, flags->compare);
 	else
 		ft_strdel(&path);
 }
@@ -64,8 +64,7 @@ static void		process_file(t_binarytree *files, int flags,
 ** date modified
 */
 
-t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
-					int (*compare)(char *s1, char *s2))
+t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc)
 {
 	DIR				*dir_p;
 	struct dirent	*dir_ent;
@@ -73,48 +72,54 @@ t_binarytree	*load_tree(t_binarytree *dirtree, int flags,
 
 	dir_p = opendir(T_DIR(dirtree)->name);
 	if (!dir_p)
+	{
+		*bad_acc = 1;
 		return (0);
+	}
 	files = 0;
 	while ((dir_ent = readdir(dir_p)) != 0)
 	{
-		process_file(files, flags, compare, dir_ent->d_name);
+		process_file(dir_ent->d_name, &files, flags, dirtree);
 	}
 	closedir(dir_p);
 	return (files);
 }
 
-void			print_permission_denied(char *folder)
+void			print_error(char *folder, char *error)
 {
-	char	*error;
 	char	*last_part_of_path;
 
-	error = strerror(errno);
 	last_part_of_path = ft_strrchr(folder, '/') + 1;
 	ft_printfd(2, "ft_ls: %s: %s\n", last_part_of_path, error);
 }
 
-void			print_dirs(t_binarytree *dirs, int flags,
-					int (*compare)(char *s1, char *s2), void (*print)())
+void			print_dirs(t_binarytree *dirs, t_flags *flags)
 {
 	t_binarytree	*folder;
+	char			*error;
+	int				bad_acc;
 
-	folder = 0;
 	if (dirs->left)
-		print_dirs(dirs->left, flags, compare, print);
-	folder = load_tree(dirs, flags, compare);
+		print_dirs(dirs->left, flags);
+	folder = 0;
+	error = 0;
+	bad_acc = 0;
+	folder = load_tree(dirs, flags, &bad_acc);
+	if (bad_acc)
+		error = strerror(errno);
 	if (g_check_print_separator)
 		ft_putchar('\n');
 	if (g_check_print_dirname)
 		ft_printf("%s:\n", T_DIR(dirs)->name);
-	if (folder)
-		ft_treeiter_ltor(folder, print);
+	if (bad_acc)
+		print_error(T_DIR(dirs)->name, error);
 	else
-		print_permission_denied(T_DIR(dirs)->name);
+		ft_treeiter_ltor(folder, flags->print);
 	g_check_print_separator = 1;
 	g_check_print_dirname = 1;
 	ft_treedel(&folder, delete_file);
 	if (dirs->right)
-		print_dirs(dirs->right, flags, compare, print);
+		print_dirs(dirs->right, flags);
 }
 
 /*
