@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/07 19:09:35 by alan             ###   ########.fr       */
+/*   Updated: 2019/02/11 18:44:24 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ static void		process_file(char *filename, t_binarytree **files,
 	if (!F_ALL(flags->options) && filename[0] == '.')
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
-	file = new_file(ft_strdup(filename), path);
+	file = new_file(ft_strdup(filename), path, F_LONG(flags->options));
 	insert_file(files, file, flags->compare);
 	if (F_RECUR(flags->options) && file->rights[0] == 'd' &&
 		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
-		insert_dir(&(dirtree->right), path, flags->compare);
-	else
-		ft_strdel(&path);
+		insert_dir(&(dirtree->right), ft_strdup(path), flags->compare);
 }
 
 /*
@@ -146,7 +144,7 @@ t_binarytree	*get_dirs(char **params, int (*compare)(char *s1, char *s2))
 			if (S_ISDIR(stats.st_mode))
 				insert_dir(&dirs, ft_strdup(*params), compare);
 			else
-				insert_file(&files, new_file(ft_strdup(*params), *params),
+				insert_file(&files, new_file(ft_strdup(*params), *params, 0),
 						compare);
 		}
 		else
