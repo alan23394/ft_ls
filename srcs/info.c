@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/01 18:37:16 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/11 18:43:52 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,8 @@ static char		type_letter(int mode)
 		mode_char = 'd';
 	if (S_ISLNK(mode))
 		mode_char = 'l';
-	/*
-	   if (s_is(mode))
+	if (S_ISSOCK(mode))
 	   mode_char = 's';
-	   */
 	if (S_ISFIFO(mode))
 		mode_char = 'p';
 	if (S_ISREG(mode))
@@ -123,8 +121,8 @@ void			get_file_info(t_file *file, char *path_to_file)
 		return ;
 	file->rights = get_rights(stats);
 	file->links = stats.st_nlink;
-	file->user = (getpwuid(stats.st_uid))->pw_name;
-	file->group = (getgrgid(stats.st_gid))->gr_name;
+	file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
+	file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
 	file->bytes = stats.st_size;
 	file->date = get_date(stats);
 }
