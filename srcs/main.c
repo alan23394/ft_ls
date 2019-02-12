@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/07 18:31:53 by alan             ###   ########.fr       */
+/*   Updated: 2019/02/11 13:55:51 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,33 @@ void			ft_ls(t_flags *flags, char **folders)
 		print_dirs(dirs, flags);
 }
 
-static char		**get_options_ls(int *options, char **argv)
+int				get_options(char ***argv)
 {
-	char	*all_options;
+	int		options;
 	char	*cur;
 	int		i;
 
-	*options = 0;
-	all_options = ALL_OPTIONS;
-	while ((*options != -1) && *(++argv) && (*argv[0] == '-'))
+	options = 0;
+	while ((options != -1) && *(++(*argv)) && (***argv == '-' && (**argv)[1]))
 	{
-		i = 1;
-		if (ft_strequ(*argv, "--"))
-			return (++argv);
-		while (((*argv)[i]) && (*options != -1))
+		if (ft_strequ(**argv, "--"))
 		{
-			cur = ft_strchr(all_options, (*argv)[i]);
-			*options = (cur) ? (*options | (1 << (cur - all_options))) : -1;
+			++(*argv);
+			return (options);
+		}
+		i = 1;
+		while (((**argv)[i]) && (options != -1))
+		{
+			cur = ft_strchr(ALL_OPTIONS, (**argv)[i]);
+			options = (cur) ? (options | (1 << (cur - ALL_OPTIONS))) : -1;
 			++i;
 		}
 	}
-	if (*options == -1)
-		ft_printf("-%c is no good\n", (*argv)[i - 1]);
-	// TODO fix that segfault
-	//ft_printf("-%s is no good\n", (*argv)[i - 1]);
-	return (argv);
+	if (options == -1)
+		ft_printfd(2,
+			"ft_ls: illegal option -- %c\nusage: ft_ls [-alrRt] [file ...]\n",
+			(**argv)[i - 1]);
+	return (options);
 }
 
 int				main(int argc, char **argv)
@@ -97,8 +99,7 @@ int				main(int argc, char **argv)
 	t_flags			flags;
 
 	(void)argc;
-	// make get_flags_ls return flags
-	argv = get_options_ls(&flags.options, argv);
+	flags.options = get_options(&argv);
 	if (flags.options == -1)
 		return (-1);
 	ft_ls(&flags, argv);
