@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:53:28 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 12:55:11 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/13 13:45:40 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_binarytree	t_binarytree;
 typedef struct		s_dir
 {
 	char			*name;
+	t_binarytree	*files;
 	unsigned int	user_maxlen;
 	unsigned int	group_maxlen;
 	unsigned int	links_maxlen;
