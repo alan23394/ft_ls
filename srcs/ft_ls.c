@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/11 18:44:24 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/13 13:44:38 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,23 @@ char			*get_dirname(char *cur, char *add)
 	return (newdir);
 }
 
+static void		update_dir(t_dir *dir, t_file *file)
+{
+	unsigned int	temp;
+
+	dir->total_size += file->bytes;
+	temp = ft_strlen(file->user);
+	if (temp > dir->user_maxlen)
+		dir->user_maxlen = temp;
+	temp = ft_strlen(file->group);
+	if (temp > dir->group_maxlen)
+		dir->group_maxlen = temp;
+	if (file->links > dir->links_maxlen)
+		dir->links_maxlen = file->links;
+	if (file->bytes > dir->bytes_maxlen)
+		dir->bytes_maxlen = file->bytes;
+}
+
 static void		process_file(char *filename, t_binarytree **files,
 					t_flags *flags, t_binarytree *dirtree)
 {
@@ -41,6 +58,8 @@ static void		process_file(char *filename, t_binarytree **files,
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
 	file = new_file(ft_strdup(filename), path, F_LONG(flags->options));
+	if (F_LONG(flags->options))
+		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
 	if (F_RECUR(flags->options) && file->rights[0] == 'd' &&
 		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
@@ -99,7 +118,7 @@ void			print_dirs(t_binarytree *dirs, t_flags *flags)
 
 	if (dirs->left)
 		print_dirs(dirs->left, flags);
-	folder = 0;
+	folder = T_DIR(dirs)->files;
 	error = 0;
 	bad_acc = 0;
 	folder = load_tree(dirs, flags, &bad_acc);
@@ -112,7 +131,7 @@ void			print_dirs(t_binarytree *dirs, t_flags *flags)
 	if (bad_acc)
 		print_error(T_DIR(dirs)->name, error);
 	else
-		ft_treeiter_ltor(folder, flags->print);
+		print_dir(T_DIR(dirs), flags);
 	g_check_print_separator = 1;
 	g_check_print_dirname = 1;
 	ft_treedel(&folder, delete_file);
