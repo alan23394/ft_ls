@@ -6,12 +6,11 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/29 18:28:59 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/13 13:47:37 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dirs.h"
-#include "libft.h"
+#include "ft_ls.h"
 
 t_dir	*new_dir(char *new_dirname)
 {
@@ -19,6 +18,7 @@ t_dir	*new_dir(char *new_dirname)
 
 	dir = (t_dir *)malloc(sizeof(t_dir));
 	dir->name = new_dirname;
+	dir->files = 0;
 	dir->user_maxlen = 0;
 	dir->group_maxlen = 0;
 	dir->links_maxlen = 0;
@@ -44,6 +44,21 @@ void	insert_dir(t_binarytree **dirs, char *new_dirname,
 		{
 			insert_dir(&(*dirs)->left, new_dirname, compare);
 		}
+	}
+}
+
+void	print_dir(t_dir *dir, t_flags *flags)
+{
+	t_binarytree *files;
+
+	files = dir->files;
+	if (files)
+	{
+		if (files->left)
+			print_dir(dir, files->left);
+		flags->print(dir);
+		if (files->right)
+			print_dir(dir, files->right);
 	}
 }
 
