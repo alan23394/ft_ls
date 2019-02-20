@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/07 19:10:19 by alan             ###   ########.fr       */
+/*   Updated: 2019/02/14 15:44:45 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct	s_flags
 
 char			*get_dirname(char *cur, char *add);
 t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc);
-void			print_dirs(t_binarytree *dirs, t_flags *flags);
+void			recurse_dirs(t_binarytree *dirs, t_flags *flags);
 t_binarytree	*get_dirs(char **folders, int (*compare)(char *s1, char *s2));
 
 #endif
