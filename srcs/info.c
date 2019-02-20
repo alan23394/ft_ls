@@ -6,13 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/11 18:43:52 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/14 16:27:09 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-# define SIX_MONTHS_SECONDS (15778476)
+#define SIX_MONTHS_SECONDS (15778476)
 
 /*
 ** The file mode printed under the -l option consists of the entry type, owner
@@ -73,7 +73,7 @@ static char		type_letter(int mode)
 	if (S_ISLNK(mode))
 		mode_char = 'l';
 	if (S_ISSOCK(mode))
-	   mode_char = 's';
+		mode_char = 's';
 	if (S_ISFIFO(mode))
 		mode_char = 'p';
 	if (S_ISREG(mode))
