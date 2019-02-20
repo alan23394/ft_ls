@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/11 13:55:51 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/14 16:25:57 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void			ft_ls(t_flags *flags, char **folders)
 	else
 		insert_dir(&dirs, ".", flags->compare);
 	if (dirs)
-		print_dirs(dirs, flags);
+	{
+		recurse_dirs(dirs, flags);
+		//ft_treedel(dirs, delete_dir);
+	}
 }
 
 int				get_options(char ***argv)

@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/13 13:44:38 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/14 16:08:46 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static void		update_dir(t_dir *dir, t_file *file)
 	if (temp > dir->group_maxlen)
 		dir->group_maxlen = temp;
 	if (file->links > dir->links_maxlen)
-		dir->links_maxlen = file->links;
+		dir->links_maxlen = ft_numlen(file->links);
 	if (file->bytes > dir->bytes_maxlen)
-		dir->bytes_maxlen = file->bytes;
+		dir->bytes_maxlen = ft_numlen(file->bytes);
 }
 
 static void		process_file(char *filename, t_binarytree **files,
@@ -110,15 +110,15 @@ void			print_error(char *folder, char *error)
 	ft_printfd(2, "ft_ls: %s: %s\n", last_part_of_path, error);
 }
 
-void			print_dirs(t_binarytree *dirs, t_flags *flags)
+void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 {
 	t_binarytree	*folder;
 	char			*error;
 	int				bad_acc;
 
 	if (dirs->left)
-		print_dirs(dirs->left, flags);
-	folder = T_DIR(dirs)->files;
+		recurse_dirs(dirs->left, flags);
+	folder = 0;
 	error = 0;
 	bad_acc = 0;
 	folder = load_tree(dirs, flags, &bad_acc);
@@ -131,12 +131,12 @@ void			print_dirs(t_binarytree *dirs, t_flags *flags)
 	if (bad_acc)
 		print_error(T_DIR(dirs)->name, error);
 	else
-		print_dir(T_DIR(dirs), flags);
+		print_dir(T_DIR(dirs), folder, flags);
 	g_check_print_separator = 1;
 	g_check_print_dirname = 1;
 	ft_treedel(&folder, delete_file);
 	if (dirs->right)
-		print_dirs(dirs->right, flags);
+		recurse_dirs(dirs->right, flags);
 }
 
 /*
