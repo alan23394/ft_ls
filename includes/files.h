@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/14 16:20:54 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:41:48 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ typedef struct		s_file
 {
 	char			*name;
 	char			*path;
+	unsigned long	tv_sec;
+	unsigned long	tv_nsec;
 	char			*rights;
 	unsigned int	links;
 	char			*user;
 	char			*group;
 	char			*date;
 	unsigned long	bytes;
+	unsigned long	blocks;
 }					t_file;
 
 void				get_file_info(t_file *file, char *path_to_file);
