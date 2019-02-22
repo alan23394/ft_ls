@@ -125,4 +125,7 @@ void			get_file_info(t_file *file, char *path_to_file)
 	file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
 	file->bytes = stats.st_size;
 	file->date = get_date(stats);
+	file->blocks = stats.st_blocks;
+	file->tv_sec = stats.st_mtimespec.tv_sec;
+	file->tv_nsec = stats.st_mtimespec.tv_nsec;
 }

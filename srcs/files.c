@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/11 18:40:20 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:51:13 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ t_file			*new_file(char *filename, char *path_to_file, int info)
 	file->group = 0;
 	file->bytes = 0;
 	file->date = 0;
+	file->blocks = 0;
+	file->tv_sec = 0;
+	file->tv_nsec = 0;
 	if (info)
 		get_file_info(file, path_to_file);
 	return (file);
