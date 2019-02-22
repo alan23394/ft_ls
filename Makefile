@@ -6,12 +6,13 @@
 #    By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:13:28 by abarnett          #+#    #+#              #
-#    Updated: 2019/01/14 22:24:11 by abarnett         ###   ########.fr        #
+#    Updated: 2019/02/21 16:27:31 by abarnett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			ft_ls
 LIB :=			libft/libftprintf.a
+CC :=			gcc
 
 C_OBJS :=		$(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
 
