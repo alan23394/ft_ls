@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/14 15:44:45 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:43:01 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@
 # define F_REV(f) (f & OP_REV)
 # define F_RECUR(f) (f & OP_RECUR)
 # define F_TIME(f) (f & OP_TIME)
+
+typedef void	(*print_func)();
+typedef int		(*sort_func)();
 
 typedef struct	s_flags
 {

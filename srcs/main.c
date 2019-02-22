@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/14 16:25:57 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:43:03 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 ** This function needs a typedef because it returns a function pointer, and
 ** apparently you need to use a typedef to return a function pointer.
 */
-
-typedef int		(*sort_func)();
 
 sort_func		get_sort_function(int flags)
 {
@@ -34,8 +32,6 @@ sort_func		get_sort_function(int flags)
 	func = funcs[F_REV(flags)];
 	return (func);
 }
-
-typedef void	(*print_func)();
 
 print_func		get_print_func(int flags)
 {
