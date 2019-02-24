@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/21 17:43:01 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/21 22:40:03 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,33 +83,11 @@
 ** strerror
 */
 
-# include "dirs.h"
-# include "files.h"
+# include "dir.h"
+# include "file.h"
 # include "bad.h"
-
-# define ALL_OPTIONS "alrRt"
-
-# define OP_ALL (0x1)
-# define OP_LONG (0x2)
-# define OP_REV (0x4)
-# define OP_RECUR (0x8)
-# define OP_TIME (0x10)
-
-# define F_ALL(f) (f & OP_ALL)
-# define F_LONG(f) (f & OP_LONG)
-# define F_REV(f) (f & OP_REV)
-# define F_RECUR(f) (f & OP_RECUR)
-# define F_TIME(f) (f & OP_TIME)
-
-typedef void	(*print_func)();
-typedef int		(*sort_func)();
-
-typedef struct	s_flags
-{
-	int			options;
-	int			(*compare)();
-	void		(*print)();
-}				t_flags;
+# include "compare.h"
+# include "flags.h"
 
 char			*get_dirname(char *cur, char *add);
 t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc);
