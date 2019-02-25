@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/14 16:20:54 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/24 19:01:19 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ typedef struct		s_file
 	char			*group;
 	char			*date;
 	unsigned long	bytes;
+	char			*color;
 }					t_file;
 
-void				get_file_info(t_file *file, char *path_to_file);
-t_file				*new_file(char *filename, char *path_to_file, int info);
+void				get_file_info(t_file *file, int options);
+t_file				*new_file(char *filename, char *path_to_file);
 void				get_info(t_file *file, char *path);
 void				insert_file(t_binarytree **files, t_file *insert,
 						int (*compare)(char *s1, char *s2));
@@ -38,6 +39,8 @@ void				delete_file(t_file *file);
 
 typedef struct s_dir	t_dir;
 void				print_file(t_file *file);
+void				print_file_color(t_file *file);
 void				print_file_long(t_file *file, t_dir *dir);
+void				print_file_long_color(t_file *file, t_dir *dir);
 
 #endif
