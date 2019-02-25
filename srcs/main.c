@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/14 16:25:57 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/24 18:25:09 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ typedef void	(*print_func)();
 print_func		get_print_func(int flags)
 {
 	void		(*func)();
-	static void	(*funcs[0xF])() =
+	static void	(*funcs[7])() =
 	{
 		[0] = print_file,
-		[OP_LONG] = print_file_long
+		[OP_COLOR] = print_file_color,
+		[OP_LONG] = print_file_long,
+		[OP_LONG | OP_COLOR] = print_file_long_color
 	};
 
-	func = funcs[F_LONG(flags)];
+	func = funcs[F_LONG(flags) | F_COLOR(flags)];
 	return (func);
 }
 
