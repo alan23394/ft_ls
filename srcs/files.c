@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/24 18:43:31 by alan             ###   ########.fr       */
+/*   Updated: 2019/02/25 13:44:12 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void			delete_file(t_file *file)
 {
 	if (file)
 	{
-		ft_strdel(&(file->name));
-		ft_strdel(&(file->path));
+		if (file->name)
+			ft_strdel(&(file->name));
+		if (file->path)
+			ft_strdel(&(file->path));
 		if (file->rights)
 			ft_strdel(&(file->rights));
 		if (file->user)
