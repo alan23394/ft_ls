@@ -109,7 +109,7 @@ typedef struct	s_flags
 }				t_flags;
 
 char			*get_dirname(char *cur, char *add);
-t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc);
+t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, char **error);
 void			recurse_dirs(t_binarytree *dirs, t_flags *flags);
 t_binarytree	*get_dirs(char **folders, int (*compare)(char *s1, char *s2));
 

@@ -101,7 +101,7 @@ static void		process_file(char *filename, t_binarytree **files,
 ** date modified
 */
 
-t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc)
+t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, char **error)
 {
 	DIR				*dir_p;
 	struct dirent	*dir_ent;
@@ -110,7 +110,7 @@ t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc)
 	dir_p = opendir(T_DIR(dirtree)->name);
 	if (!dir_p)
 	{
-		*bad_acc = 1;
+		*error = strerror(errno);
 		return (0);
 	}
 	files = 0;
@@ -134,21 +134,17 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 {
 	t_binarytree	*folder;
 	char			*error;
-	int				bad_acc;
 
 	if (dirs->left)
 		recurse_dirs(dirs->left, flags);
 	folder = 0;
 	error = 0;
-	bad_acc = 0;
-	folder = load_tree(dirs, flags, &bad_acc);
-	if (bad_acc)
-		error = strerror(errno);
+	folder = load_tree(dirs, flags, &error);
 	if (g_check_print_separator)
 		ft_putchar('\n');
 	if (g_check_print_dirname)
 		ft_printf("%s:\n", T_DIR(dirs)->name);
-	if (bad_acc)
+	if (error)
 		print_error(T_DIR(dirs)->name, error);
 	else
 		print_dir(T_DIR(dirs), folder, flags);
