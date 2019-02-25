@@ -16,6 +16,14 @@
 static int		g_check_print_dirname = 0;
 static int		g_check_print_separator = 0;
 
+/*
+** This function takes the old path and the new foldername and combines them,
+** with a / inbetween.
+**
+** Fixed to make the / folder not start off with // when recursively making new
+** dirs
+*/
+
 char			*get_dirname(char *cur, char *add)
 {
 	int		len_of_cur;
@@ -24,10 +32,19 @@ char			*get_dirname(char *cur, char *add)
 
 	len_of_cur = ft_strlen(cur);
 	len_of_add = ft_strlen(add);
-	newdir = ft_strnew(len_of_cur + 1 + len_of_add);
-	ft_strncpy(newdir, cur, len_of_cur);
-	newdir[len_of_cur] = '/';
-	ft_strncpy(newdir + len_of_cur + 1, add, len_of_add);
+	if (len_of_cur == 1 && *cur == '/')
+	{
+		newdir = ft_strnew(len_of_cur + len_of_add);
+		newdir[0] = '/';
+		ft_strncpy(newdir + 1, add, len_of_add);
+	}
+	else
+	{
+		newdir = ft_strnew(len_of_cur + 1 + len_of_add);
+		ft_strncpy(newdir, cur, len_of_cur);
+		newdir[len_of_cur] = '/';
+		ft_strncpy(newdir + len_of_cur + 1, add, len_of_add);
+	}
 	return (newdir);
 }
 
