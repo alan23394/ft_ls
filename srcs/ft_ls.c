@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/20 17:49:47 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/24 19:01:56 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ static void		process_file(char *filename, t_binarytree **files,
 	if (!F_ALL(flags->options) && filename[0] == '.')
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
-	file = new_file(ft_strdup(filename), path, F_LONG(flags->options));
+	file = new_file(ft_strdup(filename), path);
+	get_file_info(file, flags->options);
 	if (F_LONG(flags->options))
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
@@ -182,7 +183,7 @@ t_binarytree	*get_dirs(char **params, int (*compare)(char *s1, char *s2))
 			if (S_ISDIR(stats.st_mode))
 				insert_dir(&dirs, ft_strdup(*params), compare);
 			else
-				insert_file(&files, new_file(ft_strdup(*params), *params, 0),
+				insert_file(&files, new_file(ft_strdup(*params), *params),
 						compare);
 		}
 		else
