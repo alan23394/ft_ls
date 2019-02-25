@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/14 15:44:45 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/24 18:27:41 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,17 @@
 # include "files.h"
 # include "bad.h"
 
-# define ALL_OPTIONS "alrRt"
+# define ALL_OPTIONS "aGlrRt"
 
 # define OP_ALL (0x1)
-# define OP_LONG (0x2)
-# define OP_REV (0x4)
-# define OP_RECUR (0x8)
-# define OP_TIME (0x10)
+# define OP_COLOR (0x2)
+# define OP_LONG (0x4)
+# define OP_REV (0x8)
+# define OP_RECUR (0x10)
+# define OP_TIME (0x20)
 
 # define F_ALL(f) (f & OP_ALL)
+# define F_COLOR(f) (f & OP_COLOR)
 # define F_LONG(f) (f & OP_LONG)
 # define F_REV(f) (f & OP_REV)
 # define F_RECUR(f) (f & OP_RECUR)
