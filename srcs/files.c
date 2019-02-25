@@ -6,14 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/11 18:40:20 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/24 18:43:31 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "files.h"
 #include "libft.h"
 
-t_file			*new_file(char *filename, char *path_to_file, int info)
+t_file			*new_file(char *filename, char *path_to_file)
 {
 	t_file	*file;
 
@@ -24,10 +24,9 @@ t_file			*new_file(char *filename, char *path_to_file, int info)
 	file->links = 0;
 	file->user = 0;
 	file->group = 0;
-	file->bytes = 0;
 	file->date = 0;
-	if (info)
-		get_file_info(file, path_to_file);
+	file->bytes = 0;
+	file->color = 0;
 	return (file);
 }
 
