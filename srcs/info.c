@@ -6,11 +6,12 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/14 16:27:09 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:44:26 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "colors.h"
 
 #define SIX_MONTHS_SECONDS (15778476)
 
@@ -112,17 +113,26 @@ static char		*get_date(struct stat stats)
 	return (date);
 }
 
-void			get_file_info(t_file *file, char *path_to_file)
+void			get_file_info(t_file *file, int options)
 {
 	struct stat		stats;
 
-	// TODO make sure leaving here doesn't cause problems when deleting files
-	if (lstat(path_to_file, &stats))
-		return ;
-	file->rights = get_rights(stats);
-	file->links = stats.st_nlink;
-	file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
-	file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
-	file->bytes = stats.st_size;
-	file->date = get_date(stats);
+	if (F_LONG(options) | F_COLOR(options) | F_RECUR(options))
+	{
+		if (lstat(file->path, &stats))
+			return ;
+		file->rights = get_rights(stats);
+		if (F_LONG(options))
+		{
+			file->links = stats.st_nlink;
+			file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
+			file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
+			file->date = get_date(stats);
+			file->bytes = stats.st_size;
+		}
+		if (F_COLOR(options))
+		{
+			file->color = get_color(file);
+		}
+	}
 }
