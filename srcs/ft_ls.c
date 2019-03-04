@@ -56,17 +56,23 @@ static void		process_file(char *filename, t_binarytree **files,
 {
 	char	*path;
 	t_file	*file;
+	t_dir	*dir;
 
 	if (!F_ALL(flags->options) && filename[0] == '.')
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
-	file = new_file(ft_strdup(filename), path, F_LONG(flags->options));
+	file = new_file(ft_strdup(filename), path);
 	if (F_LONG(flags->options))
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
 	if (F_RECUR(flags->options) && file->rights[0] == 'd' &&
 		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
-		insert_dir(&(dirtree->right), ft_strdup(path), flags->compare);
+	{
+		dir = new_dir(ft_strdup(path));
+		dir->tv_sec = file->tv_sec;
+		dir->tv_nsec = file->tv_nsec;
+		insert_dir(&(dirtree->right), dir, flags->compare);
+	}
 }
 
 /*
