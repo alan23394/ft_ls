@@ -6,11 +6,27 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 14:16:52 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/24 18:26:37 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 19:45:58 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "printing.h"
+#include "file.h"
+#include "dir.h"
+#include "flags.h"
+#include "libftprintf.h"
+
+void	print_dir(t_dir *dir, t_binarytree *files, t_flags *flags)
+{
+	if (files)
+	{
+		if (files->left)
+			print_dir(dir, files->left, flags);
+		flags->print(T_FILE(files), dir);
+		if (files->right)
+			print_dir(dir, files->right, flags);
+	}
+}
 
 #define COLOR_NORM "\e[m"
 

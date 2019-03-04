@@ -6,11 +6,12 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/24 19:01:56 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 19:40:29 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "printing.h"
 #include <errno.h>
 
 static int		g_check_print_dirname = 0;
@@ -52,7 +53,7 @@ static void		update_dir(t_dir *dir, t_file *file)
 {
 	unsigned int	temp;
 
-	dir->total_size += file->bytes;
+	dir->total_size += file->blocks;
 	temp = ft_strlen(file->user);
 	if (temp > dir->user_maxlen)
 		dir->user_maxlen = temp;
@@ -72,6 +73,7 @@ static void		process_file(char *filename, t_binarytree **files,
 {
 	char	*path;
 	t_file	*file;
+	t_dir	*dir;
 
 	if (!F_ALL(flags->options) && filename[0] == '.')
 		return ;
@@ -83,7 +85,12 @@ static void		process_file(char *filename, t_binarytree **files,
 	insert_file(files, file, flags->compare);
 	if (F_RECUR(flags->options) && file->rights[0] == 'd' &&
 		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
-		insert_dir(&(dirtree->right), ft_strdup(path), flags->compare);
+	{
+		dir = new_dir(ft_strdup(path));
+		dir->tv_sec = file->tv_sec;
+		dir->tv_nsec = file->tv_nsec;
+		insert_dir(&(dirtree->right), dir, flags->compare);
+	}
 }
 
 /*
@@ -122,7 +129,7 @@ t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, char **error)
 	return (files);
 }
 
-void			print_error(char *folder, char *error)
+static void		print_error(char *folder, char *error)
 {
 	char	*last_part_of_path;
 
@@ -147,7 +154,11 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 	if (error)
 		print_error(T_DIR(dirs)->name, error);
 	else
+	{
+		if (F_LONG(flags->options) && T_DIR(dirs)->total_size != 0)
+			ft_printf("total %lu\n", T_DIR(dirs)->total_size);
 		print_dir(T_DIR(dirs), folder, flags);
+	}
 	g_check_print_separator = 1;
 	g_check_print_dirname = 1;
 	ft_treedel(&folder, delete_file);
@@ -162,7 +173,13 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 ** put bad folders into a bad tree to print alphabetically
 */
 
-t_binarytree	*get_dirs(char **params, int (*compare)(char *s1, char *s2))
+/*
+** TODO
+** make a "directory" for the command line, so the files can have proper
+** spacing with -l from the command line
+*/
+
+t_binarytree	*get_dirs(char **params, int (*compare)())
 {
 	t_binarytree	*files;
 	t_binarytree	*dirs;
@@ -177,17 +194,19 @@ t_binarytree	*get_dirs(char **params, int (*compare)(char *s1, char *s2))
 		if (lstat(*params, &stats) == 0)
 		{
 			if (S_ISDIR(stats.st_mode))
-				insert_dir(&dirs, ft_strdup(*params), compare);
+				insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
 			else
-				insert_file(&files, new_file(ft_strdup(*params), *params),
-						compare);
+				insert_file(&files, new_file(ft_strdup(*params),
+						ft_strdup(*params)), compare);
 		}
 		else
 			insert_bad(&bad, *params, strerror(errno));
 		++params;
 	}
-	if (bad || dirs->left || dirs->right)
+	if (bad || (dirs && (dirs->left || dirs->right)))
 		g_check_print_dirname = 1;
+	if (files)
+		g_check_print_separator = 1;
 	ft_treeiter_ltor(bad, print_bad);
 	ft_treedel(&bad, delete_bad);
 	ft_treeiter_ltor(files, print_file);

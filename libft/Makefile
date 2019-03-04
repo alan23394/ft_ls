@@ -6,11 +6,12 @@
 #    By: abarnett <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/25 22:40:12 by abarnett          #+#    #+#              #
-#    Updated: 2019/01/07 19:11:44 by abarnett         ###   ########.fr        #
+#    Updated: 2019/02/21 16:27:43 by abarnett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			libftprintf.a
+CC :=			gcc
 
 INCLUDE_DIR :=	./includes
 L_OBJS :=		$(patsubst %.c,%.o,$(wildcard ./srcs/*.c))

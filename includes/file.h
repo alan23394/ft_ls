@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files.h                                            :+:      :+:    :+:   */
+/*   file.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/24 19:01:19 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 19:21:21 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILES_H
-# define FILES_H
+#ifndef FILE_H
+# define FILE_H
 
 # define T_FILE(t) ((t_file *)((t)->content))
 
-typedef struct s_binarytree	t_binarytree;
+typedef struct 		s_binarytree t_binarytree;
 
 typedef struct		s_file
 {
 	char			*name;
+	unsigned long	tv_sec;
+	unsigned long	tv_nsec;
 	char			*path;
 	char			*rights;
 	unsigned int	links;
@@ -27,20 +29,13 @@ typedef struct		s_file
 	char			*group;
 	char			*date;
 	unsigned long	bytes;
+	unsigned long	blocks;
 	char			*color;
 }					t_file;
 
-void				get_file_info(t_file *file, int options);
 t_file				*new_file(char *filename, char *path_to_file);
-void				get_info(t_file *file, char *path);
 void				insert_file(t_binarytree **files, t_file *insert,
-						int (*compare)(char *s1, char *s2));
+						int (*compare)());
 void				delete_file(t_file *file);
-
-typedef struct s_dir	t_dir;
-void				print_file(t_file *file);
-void				print_file_color(t_file *file);
-void				print_file_long(t_file *file, t_dir *dir);
-void				print_file_long_color(t_file *file, t_dir *dir);
 
 #endif

@@ -6,12 +6,13 @@
 #    By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:13:28 by abarnett          #+#    #+#              #
-#    Updated: 2019/03/01 21:12:06 by alan             ###   ########.fr        #
+#    Updated: 2019/03/03 19:17:34 by alan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			ft_ls
 LIB :=			libft/libftprintf.a
+CC :=			gcc
 
 SRC_DIR :=		./srcs
 

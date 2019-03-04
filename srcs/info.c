@@ -6,14 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/01 19:40:40 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 19:38:00 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "info.h"
 #include "ft_ls.h"
 #include "colors.h"
 
-#define SIX_MONTHS_SECONDS (15778476)
 
 /*
 ** The file mode printed under the -l option consists of the entry type, owner
@@ -65,20 +65,22 @@ static char		type_letter(int mode)
 {
 	char	mode_char;
 
-	if (S_ISBLK(mode))
-		mode_char = 'b';
-	if (S_ISCHR(mode))
-		mode_char = 'c';
-	if (S_ISDIR(mode))
-		mode_char = 'd';
-	if (S_ISLNK(mode))
-		mode_char = 'l';
-	if (S_ISSOCK(mode))
-		mode_char = 's';
-	if (S_ISFIFO(mode))
-		mode_char = 'p';
 	if (S_ISREG(mode))
 		mode_char = '-';
+	else if (S_ISBLK(mode))
+		mode_char = 'b';
+	else if (S_ISCHR(mode))
+	 	mode_char = 'c';
+	else if (S_ISDIR(mode))
+	 	mode_char = 'd';
+	else if (S_ISLNK(mode))
+	 	mode_char = 'l';
+	else if (S_ISFIFO(mode))
+	 	mode_char = 'p';
+	else if (S_ISSOCK(mode))
+		mode_char = 's';
+	else
+		mode_char = '?';
 	return (mode_char);
 }
 
@@ -113,28 +115,43 @@ static char		*get_date(struct stat stats)
 	return (date);
 }
 
-void			get_file_info(t_file *file, int options)
+static void		get_time(t_file *file, struct stat stats)
+{
+#ifdef __linux__
+	file->tv_sec = stats.st_mtim.tv_sec;
+	file->tv_nsec = stats.st_mtim.tv_nsec;
+# elif defined __APPLE__
+	file->tv_sec = stats.st_mtimespec.tv_sec;
+	file->tv_nsec = stats.st_mtimespec.tv_nsec;
+# else
+	file->tv_sec = 0;
+	file->tv_nsec = 0;
+#endif
+}
+
+int				get_file_info(t_file *file, int options)
 {
 	struct stat		stats;
 
-	if (F_LONG(options) | F_COLOR(options) | F_RECUR(options))
+	if (options & (OP_COLOR | OP_LONG | OP_RECUR | OP_TIME))
 	{
-		if (lstat(file->path, &stats))
-		{
-			return ;
-		}
-		file->rights = get_rights(stats);
-		if (F_LONG(options))
+		if (lstat(file->path, &stats) != 0)
+			return (-1);
+		if (options & (OP_COLOR | OP_LONG | OP_RECUR))
+			file->rights = get_rights(stats);
+		if (options & (OP_COLOR))
+			file->color = get_color(file);
+		if (options & (OP_LONG))
 		{
 			file->links = stats.st_nlink;
 			file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
 			file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
-			file->date = get_date(stats);
 			file->bytes = stats.st_size;
+			file->date = get_date(stats);
+			file->blocks = stats.st_blocks;
 		}
-		if (F_COLOR(options))
-		{
-			file->color = get_color(file);
-		}
+		if (options & (OP_TIME))
+			get_time(file, stats);
 	}
+	return (0);
 }

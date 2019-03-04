@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files.c                                            :+:      :+:    :+:   */
+/*   file.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/25 13:44:12 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 19:21:12 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "file.h"
 #include "libft.h"
 
 t_file			*new_file(char *filename, char *path_to_file)
@@ -26,12 +26,15 @@ t_file			*new_file(char *filename, char *path_to_file)
 	file->group = 0;
 	file->date = 0;
 	file->bytes = 0;
+	file->blocks = 0;
 	file->color = 0;
+	file->tv_sec = 0;
+	file->tv_nsec = 0;
 	return (file);
 }
 
 void			insert_file(t_binarytree **files, t_file *new_file,
-					int (*compare)(char *s1, char *s2))
+					int (*compare)())
 {
 	if (!*files)
 	{
@@ -39,7 +42,7 @@ void			insert_file(t_binarytree **files, t_file *new_file,
 	}
 	else
 	{
-		if (compare(new_file->name, T_FILE(*files)->name) >= 0)
+		if (compare(new_file, T_FILE(*files)) >= 0)
 		{
 			insert_file(&(*files)->right, new_file, compare);
 		}
