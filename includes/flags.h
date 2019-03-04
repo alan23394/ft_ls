@@ -6,14 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:20:13 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:28:02 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 20:14:43 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FLAGS_H
 # define FLAGS_H
 
-# define ALL_OPTIONS "alrRt"
+# define ALL_OPTIONS "aGlrRt"
 
 /*
 ** These are the bit values for the ls flags (OP for option). When you insert
