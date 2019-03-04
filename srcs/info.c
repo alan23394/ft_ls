@@ -6,13 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/21 17:56:00 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/21 22:48:51 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "info.h"
 #include "ft_ls.h"
 
-#define SIX_MONTHS_SECONDS (15778476)
 
 /*
 ** The file mode printed under the -l option consists of the entry type, owner
