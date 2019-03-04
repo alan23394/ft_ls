@@ -6,14 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:38:00 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 20:12:46 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "info.h"
 #include "ft_ls.h"
 #include "colors.h"
-
 
 /*
 ** The file mode printed under the -l option consists of the entry type, owner
