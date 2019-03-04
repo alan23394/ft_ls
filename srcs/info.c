@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/25 13:44:26 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/01 19:40:40 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,9 @@ void			get_file_info(t_file *file, int options)
 	if (F_LONG(options) | F_COLOR(options) | F_RECUR(options))
 	{
 		if (lstat(file->path, &stats))
+		{
 			return ;
+		}
 		file->rights = get_rights(stats);
 		if (F_LONG(options))
 		{
