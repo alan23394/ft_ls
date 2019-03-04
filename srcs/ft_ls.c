@@ -111,7 +111,7 @@ t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc)
 	return (files);
 }
 
-void			print_error(char *folder, char *error)
+static void		print_error(char *folder, char *error)
 {
 	char	*last_part_of_path;
 
@@ -140,7 +140,11 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 	if (bad_acc)
 		print_error(T_DIR(dirs)->name, error);
 	else
+	{
+		if (F_LONG(flags->options) && T_DIR(dirs)->total_size != 0)
+			ft_printf("total %lu\n", T_DIR(dirs)->total_size);
 		print_dir(T_DIR(dirs), folder, flags);
+	}
 	g_check_print_separator = 1;
 	g_check_print_dirname = 1;
 	ft_treedel(&folder, delete_file);
