@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 22:46:27 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:19:29 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 20:07:14 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@
 
 typedef struct	s_file t_file;
 
-void			get_file_info(t_file *file, int options);
+int				get_file_info(t_file *file, int options);
 
 #endif

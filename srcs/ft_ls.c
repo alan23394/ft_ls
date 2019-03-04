@@ -6,12 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:40:29 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 20:07:54 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "printing.h"
+#include "info.h"
 #include <errno.h>
 
 static int		g_check_print_dirname = 0;
@@ -79,7 +80,7 @@ static void		process_file(char *filename, t_binarytree **files,
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
 	file = new_file(ft_strdup(filename), path);
-	get_file_info(file, flags->options);
+	(void)get_file_info(file, flags->options);
 	if (F_LONG(flags->options))
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
