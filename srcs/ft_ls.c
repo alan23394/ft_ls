@@ -36,7 +36,7 @@ static void		update_dir(t_dir *dir, t_file *file)
 {
 	unsigned int	temp;
 
-	dir->total_size += file->bytes;
+	dir->total_size += file->blocks;
 	temp = ft_strlen(file->user);
 	if (temp > dir->user_maxlen)
 		dir->user_maxlen = temp;
