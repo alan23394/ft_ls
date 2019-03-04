@@ -6,11 +6,12 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/20 17:49:47 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/23 19:27:43 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "printing.h"
 #include <errno.h>
 
 static int		g_check_print_dirname = 0;
