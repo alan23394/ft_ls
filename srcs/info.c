@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/21 22:48:51 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/03 19:04:55 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,14 @@ void			get_file_info(t_file *file, char *path_to_file)
 	file->bytes = stats.st_size;
 	file->date = get_date(stats);
 	file->blocks = stats.st_blocks;
+#ifdef __linux__
+	file->tv_sec = stats.st_mtim.tv_sec;
+	file->tv_nsec = stats.st_mtim.tv_nsec;
+# elif defined __APPLE__
 	file->tv_sec = stats.st_mtimespec.tv_sec;
 	file->tv_nsec = stats.st_mtimespec.tv_nsec;
+# else
+	file->tv_sec = 0;
+	file->tv_nsec = 0;
+#endif
 }
