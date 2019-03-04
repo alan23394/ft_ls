@@ -6,11 +6,11 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 16:40:42 by alan              #+#    #+#             */
-/*   Updated: 2019/02/24 18:35:35 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 20:07:27 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "files.h"
+#include "file.h"
 #include "libftprintf.h"
 
 /*
