@@ -159,7 +159,13 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 ** put bad folders into a bad tree to print alphabetically
 */
 
-t_binarytree	*get_dirs(char **params, int (*compare)(char *s1, char *s2))
+/*
+** TODO
+** make a "directory" for the command line, so the files can have proper
+** spacing with -l from the command line
+*/
+
+t_binarytree	*get_dirs(char **params, int (*compare)())
 {
 	t_binarytree	*files;
 	t_binarytree	*dirs;
