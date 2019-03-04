@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/23 19:07:39 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/03 19:44:30 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,21 @@ void			*get_cmp_function(int flags)
 	return (func);
 }
 
+/*
+** TODO Fix magic number in array index (remove entirely)
+*/
+
 void			*get_print_func(int flags)
 {
 	void		(*func)();
-	static void	(*funcs[OP_LONG + 1])() =
+	static void	(*funcs[7])() =
 	{
 		[0] = print_file,
-		[OP_LONG] = print_file_long
+		[OP_COLOR] = print_file_color,
+		[OP_LONG] = print_file_long,
+		[OP_LONG | OP_COLOR] = print_file_long_color
 	};
 
-	func = funcs[F_LONG(flags)];
+	func = funcs[F_LONG(flags) | F_COLOR(flags)];
 	return (func);
 }
