@@ -6,12 +6,11 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/21 22:50:35 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/03 19:21:12 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-#include "info.h"
 #include "libft.h"
 
 t_file			*new_file(char *filename, char *path_to_file)
@@ -25,12 +24,12 @@ t_file			*new_file(char *filename, char *path_to_file)
 	file->links = 0;
 	file->user = 0;
 	file->group = 0;
-	file->bytes = 0;
 	file->date = 0;
+	file->bytes = 0;
 	file->blocks = 0;
+	file->color = 0;
 	file->tv_sec = 0;
 	file->tv_nsec = 0;
-	get_file_info(file, path_to_file);
 	return (file);
 }
 
@@ -58,8 +57,10 @@ void			delete_file(t_file *file)
 {
 	if (file)
 	{
-		ft_strdel(&(file->name));
-		ft_strdel(&(file->path));
+		if (file->name)
+			ft_strdel(&(file->name));
+		if (file->path)
+			ft_strdel(&(file->path));
 		if (file->rights)
 			ft_strdel(&(file->rights));
 		if (file->user)

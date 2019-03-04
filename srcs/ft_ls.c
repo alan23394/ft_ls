@@ -6,16 +6,25 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/23 19:27:43 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/03 20:07:54 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "printing.h"
+#include "info.h"
 #include <errno.h>
 
 static int		g_check_print_dirname = 0;
 static int		g_check_print_separator = 0;
+
+/*
+** This function takes the old path and the new foldername and combines them,
+** with a / inbetween.
+**
+** Fixed to make the / folder not start off with // when recursively making new
+** dirs
+*/
 
 char			*get_dirname(char *cur, char *add)
 {
@@ -25,10 +34,19 @@ char			*get_dirname(char *cur, char *add)
 
 	len_of_cur = ft_strlen(cur);
 	len_of_add = ft_strlen(add);
-	newdir = ft_strnew(len_of_cur + 1 + len_of_add);
-	ft_strncpy(newdir, cur, len_of_cur);
-	newdir[len_of_cur] = '/';
-	ft_strncpy(newdir + len_of_cur + 1, add, len_of_add);
+	if (len_of_cur == 1 && *cur == '/')
+	{
+		newdir = ft_strnew(len_of_cur + len_of_add);
+		newdir[0] = '/';
+		ft_strncpy(newdir + 1, add, len_of_add);
+	}
+	else
+	{
+		newdir = ft_strnew(len_of_cur + 1 + len_of_add);
+		ft_strncpy(newdir, cur, len_of_cur);
+		newdir[len_of_cur] = '/';
+		ft_strncpy(newdir + len_of_cur + 1, add, len_of_add);
+	}
 	return (newdir);
 }
 
@@ -62,6 +80,7 @@ static void		process_file(char *filename, t_binarytree **files,
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
 	file = new_file(ft_strdup(filename), path);
+	(void)get_file_info(file, flags->options);
 	if (F_LONG(flags->options))
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
@@ -90,7 +109,7 @@ static void		process_file(char *filename, t_binarytree **files,
 ** date modified
 */
 
-t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc)
+t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, char **error)
 {
 	DIR				*dir_p;
 	struct dirent	*dir_ent;
@@ -99,7 +118,7 @@ t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, int *bad_acc)
 	dir_p = opendir(T_DIR(dirtree)->name);
 	if (!dir_p)
 	{
-		*bad_acc = 1;
+		*error = strerror(errno);
 		return (0);
 	}
 	files = 0;
@@ -123,21 +142,17 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 {
 	t_binarytree	*folder;
 	char			*error;
-	int				bad_acc;
 
 	if (dirs->left)
 		recurse_dirs(dirs->left, flags);
 	folder = 0;
 	error = 0;
-	bad_acc = 0;
-	folder = load_tree(dirs, flags, &bad_acc);
-	if (bad_acc)
-		error = strerror(errno);
+	folder = load_tree(dirs, flags, &error);
 	if (g_check_print_separator)
 		ft_putchar('\n');
 	if (g_check_print_dirname)
 		ft_printf("%s:\n", T_DIR(dirs)->name);
-	if (bad_acc)
+	if (error)
 		print_error(T_DIR(dirs)->name, error);
 	else
 	{

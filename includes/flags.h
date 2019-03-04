@@ -6,11 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:20:13 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/23 17:43:25 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/03 19:28:02 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define ALL_OPTIONS "alrRt"
+#ifndef FLAGS_H
+# define FLAGS_H
+
+# define ALL_OPTIONS "alrRt"
 
 /*
 ** These are the bit values for the ls flags (OP for option). When you insert
@@ -27,11 +30,12 @@
 
 enum {
 	OP_ALL = 0x1,
-	OP_LONG = 0x2,
-	OP_REV = 0x4,
-	OP_RECUR = 0x8,
-	OP_TIME = 0x10,
-	OP_MAX_OPS = 0x20,
+	OP_COLOR = 0x2,
+	OP_LONG = 0x4,
+	OP_REV = 0x8,
+	OP_RECUR = 0x10,
+	OP_TIME = 0x20,
+	OP_MAX_OPS = 0x40,
 };
 
 /*
@@ -41,11 +45,12 @@ enum {
 ** readable code.
 */
 
-#define F_ALL(f) (f & OP_ALL)
-#define F_LONG(f) (f & OP_LONG)
-#define F_REV(f) (f & OP_REV)
-#define F_RECUR(f) (f & OP_RECUR)
-#define F_TIME(f) (f & OP_TIME)
+# define F_ALL(f) (f & OP_ALL)
+# define F_COLOR(f) (f & OP_COLOR)
+# define F_LONG(f) (f & OP_LONG)
+# define F_REV(f) (f & OP_REV)
+# define F_RECUR(f) (f & OP_RECUR)
+# define F_TIME(f) (f & OP_TIME)
 
 typedef struct	s_flags
 {
@@ -57,3 +62,5 @@ typedef struct	s_flags
 int				get_options(char ***argv);
 void			*get_cmp_function(int flags);
 void			*get_print_func(int flags);
+
+#endif

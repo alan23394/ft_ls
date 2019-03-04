@@ -1,2 +1,5 @@
+ft_ls
 *.o
+*.d
+.vimsession
 tags

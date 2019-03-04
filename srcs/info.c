@@ -6,12 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:04:55 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/03 19:38:00 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "info.h"
 #include "ft_ls.h"
+#include "colors.h"
 
 
 /*
@@ -114,20 +115,8 @@ static char		*get_date(struct stat stats)
 	return (date);
 }
 
-void			get_file_info(t_file *file, char *path_to_file)
+static void		get_time(t_file *file, struct stat stats)
 {
-	struct stat		stats;
-
-	// TODO make sure leaving here doesn't cause problems when deleting files
-	if (lstat(path_to_file, &stats))
-		return ;
-	file->rights = get_rights(stats);
-	file->links = stats.st_nlink;
-	file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
-	file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
-	file->bytes = stats.st_size;
-	file->date = get_date(stats);
-	file->blocks = stats.st_blocks;
 #ifdef __linux__
 	file->tv_sec = stats.st_mtim.tv_sec;
 	file->tv_nsec = stats.st_mtim.tv_nsec;
@@ -138,4 +127,31 @@ void			get_file_info(t_file *file, char *path_to_file)
 	file->tv_sec = 0;
 	file->tv_nsec = 0;
 #endif
+}
+
+int				get_file_info(t_file *file, int options)
+{
+	struct stat		stats;
+
+	if (options & (OP_COLOR | OP_LONG | OP_RECUR | OP_TIME))
+	{
+		if (lstat(file->path, &stats) != 0)
+			return (-1);
+		if (options & (OP_COLOR | OP_LONG | OP_RECUR))
+			file->rights = get_rights(stats);
+		if (options & (OP_COLOR))
+			file->color = get_color(file);
+		if (options & (OP_LONG))
+		{
+			file->links = stats.st_nlink;
+			file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
+			file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
+			file->bytes = stats.st_size;
+			file->date = get_date(stats);
+			file->blocks = stats.st_blocks;
+		}
+		if (options & (OP_TIME))
+			get_time(file, stats);
+	}
+	return (0);
 }
