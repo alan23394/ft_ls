@@ -6,19 +6,19 @@
 /*   By: abarnett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/17 13:56:25 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/22 05:27:22 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/03 00:34:57 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define INTMAX 2147483647
-# define INTMIN -2147483648
-
 # include <stdlib.h>
 # include <unistd.h>
 # include "ft_binarytree.h"
+
+# define INTMAX 2147483647
+# define INTMIN -2147483648
 
 typedef struct		s_list
 {
@@ -59,7 +59,6 @@ void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memchr(const void *s, int c, size_t n);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t				ft_strlen(const char *str);
-size_t				ft_wstrlen(const wchar_t *str);
 char				*ft_strdup(const char *s1);
 char				*ft_strndup(const char *s1, size_t len);
 char				*ft_strcpy(char *dst, const char *src);
@@ -149,6 +148,7 @@ long				ft_round(double roundee);
 ** Unicode
 */
 
+size_t				ft_wstrlen(const wchar_t *str);
 char				*conv_utf8_str(wchar_t *wstr);
 char				*conv_utf8_char(wchar_t wchar, char *str);
 
