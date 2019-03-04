@@ -29,35 +29,6 @@ void			ft_ls(t_flags *flags, char **folders)
 	}
 }
 
-int				get_options(char ***argv)
-{
-	int		options;
-	char	*cur;
-	int		i;
-
-	options = 0;
-	while ((options != -1) && *(++(*argv)) && (***argv == '-' && (**argv)[1]))
-	{
-		if (ft_strequ(**argv, "--"))
-		{
-			++(*argv);
-			return (options);
-		}
-		i = 1;
-		while (((**argv)[i]) && (options != -1))
-		{
-			cur = ft_strchr(ALL_OPTIONS, (**argv)[i]);
-			options = (cur) ? (options | (1 << (cur - ALL_OPTIONS))) : -1;
-			++i;
-		}
-	}
-	if (options == -1)
-		ft_printfd(2,
-			"ft_ls: illegal option -- %c\nusage: ft_ls [-alrRt] [file ...]\n",
-			(**argv)[i - 1]);
-	return (options);
-}
-
 int				main(int argc, char **argv)
 {
 	t_flags			flags;
@@ -66,6 +37,33 @@ int				main(int argc, char **argv)
 	flags.options = get_options(&argv);
 	if (flags.options == -1)
 		return (-1);
+	flags.compare = get_cmp_function(flags.options);
+	flags.print = get_print_func(flags.options);
 	ft_ls(&flags, argv);
+	return (0);
+}
+*/
+
+int				main(int argc, char **argv)
+{
+	t_flags			flags;
+	t_binarytree	*dirs;
+
+	(void)argc;
+	flags.options = get_options(&argv);
+	if (flags.options == -1)
+		return (-1);
+	flags.compare = get_cmp_function(flags.options);
+	flags.print = get_print_func(flags.options);
+	dirs = 0;
+	if (*argv)
+		dirs = get_dirs(argv, flags.compare);
+	else
+		insert_dir(&dirs, new_dir(ft_strdup(".")), flags.compare);
+	if (dirs)
+	{
+		recurse_dirs(dirs, &flags);
+		//ft_treedel(dirs, delete_dir);
+	}
 	return (0);
 }
