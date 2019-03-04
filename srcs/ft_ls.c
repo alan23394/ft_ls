@@ -180,17 +180,19 @@ t_binarytree	*get_dirs(char **params, int (*compare)())
 		if (lstat(*params, &stats) == 0)
 		{
 			if (S_ISDIR(stats.st_mode))
-				insert_dir(&dirs, ft_strdup(*params), compare);
+				insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
 			else
-				insert_file(&files, new_file(ft_strdup(*params), *params, 0),
-						compare);
+				insert_file(&files, new_file(ft_strdup(*params),
+						ft_strdup(*params)), compare);
 		}
 		else
 			insert_bad(&bad, *params, strerror(errno));
 		++params;
 	}
-	if (bad || dirs->left || dirs->right)
+	if (bad || (dirs && (dirs->left || dirs->right)))
 		g_check_print_dirname = 1;
+	if (files)
+		g_check_print_separator = 1;
 	ft_treeiter_ltor(bad, print_bad);
 	ft_treedel(&bad, delete_bad);
 	ft_treeiter_ltor(files, print_file);
