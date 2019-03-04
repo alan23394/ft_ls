@@ -6,57 +6,22 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/21 17:43:03 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/02/21 21:39:12 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
 /*
-** This function needs a typedef because it returns a function pointer, and
-** apparently you need to use a typedef to return a function pointer.
-*/
-
-sort_func		get_sort_function(int flags)
-{
-	int			(*func)();
-	static int	(*funcs[0x20])() =
-	{
-		[0] = ft_strcmp,
-		[OP_REV] = ft_strcmp_rev
-		//funcs[OP_TIME] = cmp_time;
-		//funcs[OP_REV | OP_TIME] = cmp_time_rev;
-	};
-
-	//func = funcs[F_REV(flags) | F_TIME(flags)];
-	func = funcs[F_REV(flags)];
-	return (func);
-}
-
-print_func		get_print_func(int flags)
-{
-	void		(*func)();
-	static void	(*funcs[0xF])() =
-	{
-		[0] = print_file,
-		[OP_LONG] = print_file_long
-	};
-
-	func = funcs[F_LONG(flags)];
-	return (func);
-}
-
 void			ft_ls(t_flags *flags, char **folders)
 {
 	t_binarytree	*dirs;
 
-	flags->compare = get_sort_function(flags->options);
-	flags->print = get_print_func(flags->options);
 	dirs = 0;
 	if (*folders)
 		dirs = get_dirs(folders, flags->compare);
 	else
-		insert_dir(&dirs, ".", flags->compare);
+		insert_dir(&dirs, new_dir(ft_strdup(".")), flags->compare);
 	if (dirs)
 	{
 		recurse_dirs(dirs, flags);
