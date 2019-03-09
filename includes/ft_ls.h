@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 13:56:28 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 15:08:06 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,13 @@ typedef struct		s_cli
 	t_binarytree	*bad;
 }					t_cli;
 
-void			sort_commandline(char *param, t_cli *trees, int (*compare)());
+void			sort_commandline(char *param, t_cli *trees, t_flags *flags,
+					t_dir *files_dir);
 
 char			*get_dirname(char *cur, char *add);
 void			update_dir(t_dir *dir, t_file *file);
 t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, char **error);
 void			recurse_dirs(t_binarytree *dirs, t_flags *flags);
-t_binarytree	*get_dirs(char **folders, int (*compare)(char *s1, char *s2));
+t_binarytree	*get_dirs(char **folders, t_flags *flags);
 
 #endif
