@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/08 23:41:46 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/08 23:57:41 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 ** spacing with -l from the command line
 */
 
+/*
 t_binarytree	*get_dirs(char **params, int (*compare)())
 {
 	t_binarytree	*files;
@@ -71,6 +72,47 @@ t_binarytree	*get_dirs(char **params, int (*compare)())
 	bad = 0;
 	while (*params)
 	{
+		if (lstat(*params, &stats) == 0)
+		{
+			if (S_ISDIR(stats.st_mode))
+				insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
+			else
+				insert_file(&files, new_file(ft_strdup(*params),
+						ft_strdup(*params)), compare);
+		}
+		else
+			insert_bad(&bad, *params, strerror(errno));
+		++params;
+	}
+	if (bad || (dirs && (dirs->left || dirs->right)))
+		g_check_print_dirname = 1;
+	if (files)
+		g_check_print_separator = 1;
+	ft_treeiter_ltor(bad, print_bad);
+	ft_treedel(&bad, delete_bad);
+	ft_treeiter_ltor(files, print_file);
+	ft_treedel(&files, delete_file);
+	return (dirs);
+}
+*/
+
+t_binarytree	*get_dirs(char **params, int (*compare)())
+{
+	t_dir			*input_dir;
+	t_file			*tmp_file;
+	t_binarytree	*files;
+	t_binarytree	*dirs;
+	t_binarytree	*bad;
+	struct stat		stats;
+
+	input_dir = 0;
+	tmp_file = 0;
+	files = 0;
+	dirs = 0;
+	bad = 0;
+	while (*params)
+	{
+		tmp_file = new_file(ft_strdup(param), 0);
 		if (lstat(*params, &stats) == 0)
 		{
 			if (S_ISDIR(stats.st_mode))
