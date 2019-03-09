@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/08 23:38:21 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 15:13:19 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ void	delete_dir(t_dir *dir)
 {
 	if (dir)
 	{
-		ft_strdel(&(dir->name));
+		if (dir->name)
+		{
+			ft_strdel(&(dir->name));
+		}
 		ft_memdel((void **)&dir);
 	}
 }
