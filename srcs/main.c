@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:45:01 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 14:28:20 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				main(int argc, char **argv)
 	flags.print = get_print_func(flags.options);
 	dirs = 0;
 	if (*argv)
-		dirs = get_dirs(argv, flags.compare);
+		dirs = get_dirs(argv, &flags);
 	else
 		insert_dir(&dirs, new_dir(ft_strdup(".")), flags.compare);
 	if (dirs)
