@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 00:00:52 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 01:25:29 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ t_binarytree	*get_dirs(char **params, int (*compare)())
 			if (S_ISDIR(stats.st_mode))
 				insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
 			else
-				insert_file(&files, new_file(ft_strdup(*params),
-						ft_strdup(*params)), compare);
+				insert_file(&files, new_file_full_name(ft_strdup(*params)),
+						compare);
 		}
 		else
 			insert_bad(&bad, *params, strerror(errno));
