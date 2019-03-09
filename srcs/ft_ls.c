@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 13:57:00 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 15:35:55 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 		recurse_dirs(dirs->right, flags);
 }
 
-t_binarytree	*get_dirs(char **params, int (*compare)())
+t_binarytree	*get_dirs(char **params, t_flags *flags)
 {
+	t_dir	*input_dir;
 	t_cli	trees;
-	//t_dir	*input_dir;
 
-	//input_dir = 0;
+	input_dir = new_dir(0);
 	trees.files = 0;
 	trees.dirs = 0;
 	trees.bad = 0;
 	while (*params)
 	{
-		sort_commandline(*params, &trees, compare);
+		sort_commandline(*params, &trees, flags, input_dir);
 		++params;
 	}
 	if (trees.bad || (trees.dirs && (trees.dirs->left || trees.dirs->right)))
@@ -67,7 +67,7 @@ t_binarytree	*get_dirs(char **params, int (*compare)())
 		g_check_print_separator = 1;
 	ft_treeiter_ltor(trees.bad, print_bad);
 	ft_treedel(&(trees.bad), delete_bad);
-	ft_treeiter_ltor(trees.files, print_file);
+	print_dir(input_dir, trees.files, flags->print);
 	ft_treedel(&(trees.files), delete_file);
 	return (trees.dirs);
 }
