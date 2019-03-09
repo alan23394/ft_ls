@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 15:13:19 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 15:54:28 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,13 @@ void	insert_dir(t_binarytree **dirs, t_dir *new_dir, int (*compare)())
 	}
 	else
 	{
-		if (ft_ccount(new_dir->name, '/') > ft_ccount(T_DIR(*dirs)->name, '/'))
+		if (compare(new_dir, T_DIR(*dirs)) >= 0)
 		{
-			insert_dir(&(*dirs)->left, new_dir, compare);
+			insert_dir(&(*dirs)->right, new_dir, compare);
 		}
 		else
 		{
-			if (compare(new_dir, T_DIR(*dirs)) >= 0)
-			{
-				insert_dir(&(*dirs)->right, new_dir, compare);
-			}
-			else
-			{
-				insert_dir(&(*dirs)->left, new_dir, compare);
-			}
+			insert_dir(&(*dirs)->left, new_dir, compare);
 		}
 	}
 }

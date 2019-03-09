@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 05:27:05 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/22 18:38:41 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/09 15:53:35 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,27 @@
 
 int		cmp_name(t_cmp *c1, t_cmp *c2)
 {
-	return (ft_strcmp(c1->name, c2->name));
+	char	*s1;
+	char	*s2;
+
+	s1 = c1->name;
+	s2 = c2->name;
+	while (s1 && s2 && *s1 == *s2)
+	{
+		++s1;
+		++s2;
+	}
+	if (*s1 == '/')
+		return (-1);
+	else if (*s2 == '/')
+		return (1);
+	else
+		return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
 int		cmp_name_rev(t_cmp *c1, t_cmp *c2)
 {
-	return (ft_strcmp(c2->name, c1->name));
+	return (cmp_name(c2, c1));
 }
 
 int		cmp_time(t_cmp *c1, t_cmp *c2)
