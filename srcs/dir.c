@@ -6,11 +6,12 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/21 22:44:45 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/08 23:38:21 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dir.h"
+#include "file.h"
 #include "libft.h"
 
 t_dir	*new_dir(char *new_dirname)
@@ -27,6 +28,15 @@ t_dir	*new_dir(char *new_dirname)
 	dir->tv_sec = 0;
 	dir->tv_nsec = 0;
 	return (dir);
+}
+
+void	delete_dir(t_dir *dir)
+{
+	if (dir)
+	{
+		ft_strdel(&(dir->name));
+		ft_memdel((void **)&dir);
+	}
 }
 
 void	insert_dir(t_binarytree **dirs, t_dir *new_dir, int (*compare)())
@@ -55,11 +65,14 @@ void	insert_dir(t_binarytree **dirs, t_dir *new_dir, int (*compare)())
 	}
 }
 
-void	delete_dir(t_dir *dir)
+void	print_dir(t_dir *dir, t_binarytree *files, void (*print)())
 {
-	if (dir)
+	if (files)
 	{
-		ft_strdel(&(dir->name));
-		ft_memdel((void **)&dir);
+		if (files->left)
+			print_dir(dir, files->left, print);
+		print(T_FILE(files), dir);
+		if (files->right)
+			print_dir(dir, files->right, print);
 	}
 }

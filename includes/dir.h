@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:53:28 by abarnett          #+#    #+#             */
-/*   Updated: 2019/02/21 22:45:05 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/08 23:38:46 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define T_DIR(t) ((t_dir *)((t)->content))
 
-typedef struct s_binarytree	t_binarytree;
+typedef struct		s_binarytree	t_binarytree;
 
 typedef struct		s_dir
 {
@@ -30,8 +30,9 @@ typedef struct		s_dir
 }					t_dir;
 
 t_dir				*new_dir(char *new_dirname);
+void				delete_dir(t_dir *dir);
 void				insert_dir(t_binarytree **dirs, t_dir *new_dir,
 						int (*compare)());
-void				delete_dir(t_dir *dir);
+void				print_dir(t_dir *dir, t_binarytree *files, void (*print)());
 
 #endif
