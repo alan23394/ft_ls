@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:21:12 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/08 23:44:51 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,6 @@ t_file			*new_file(char *filename, char *path_to_file)
 	return (file);
 }
 
-void			insert_file(t_binarytree **files, t_file *new_file,
-					int (*compare)())
-{
-	if (!*files)
-	{
-		*files = ft_treenew(new_file);
-	}
-	else
-	{
-		if (compare(new_file, T_FILE(*files)) >= 0)
-		{
-			insert_file(&(*files)->right, new_file, compare);
-		}
-		else
-		{
-			insert_file(&(*files)->left, new_file, compare);
-		}
-	}
-}
-
 void			delete_file(t_file *file)
 {
 	if (file)
@@ -70,5 +50,25 @@ void			delete_file(t_file *file)
 		if (file->date)
 			ft_strdel(&(file->date));
 		ft_memdel((void **)&file);
+	}
+}
+
+void			insert_file(t_binarytree **files, t_file *new_file,
+					int (*compare)())
+{
+	if (!*files)
+	{
+		*files = ft_treenew(new_file);
+	}
+	else
+	{
+		if (compare(new_file, T_FILE(*files)) >= 0)
+		{
+			insert_file(&(*files)->right, new_file, compare);
+		}
+		else
+		{
+			insert_file(&(*files)->left, new_file, compare);
+		}
 	}
 }
