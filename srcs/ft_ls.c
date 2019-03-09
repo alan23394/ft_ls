@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 09:41:34 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 13:57:00 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,94 +47,27 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 		recurse_dirs(dirs->right, flags);
 }
 
-/*
-** sort incoming parameters into trees
-** put files into a files tree
-** put directories into the starting directory tree
-** put bad folders into a bad tree to print alphabetically
-*/
-
-/*
-** TODO
-** make a "directory" for the command line, so the files can have proper
-** spacing with -l from the command line
-*/
-
-/*
 t_binarytree	*get_dirs(char **params, int (*compare)())
 {
-	t_binarytree	*files;
-	t_binarytree	*dirs;
-	t_binarytree	*bad;
-	struct stat		stats;
-
-	files = 0;
-	dirs = 0;
-	bad = 0;
-	while (*params)
-	{
-		if (lstat(*params, &stats) == 0)
-		{
-			if (S_ISDIR(stats.st_mode))
-				insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
-			else
-				insert_file(&files, new_file(ft_strdup(*params),
-						ft_strdup(*params)), compare);
-		}
-		else
-			insert_bad(&bad, *params, strerror(errno));
-		++params;
-	}
-	if (bad || (dirs && (dirs->left || dirs->right)))
-		g_check_print_dirname = 1;
-	if (files)
-		g_check_print_separator = 1;
-	ft_treeiter_ltor(bad, print_bad);
-	ft_treedel(&bad, delete_bad);
-	ft_treeiter_ltor(files, print_file);
-	ft_treedel(&files, delete_file);
-	return (dirs);
-}
-*/
-
-t_binarytree	*get_dirs(char **params, int (*compare)())
-{
-	//t_dir			*input_dir;
-	t_file			*tmp_file;
-	t_binarytree	*files;
-	t_binarytree	*dirs;
-	t_binarytree	*bad;
-	//struct stat		stats;
+	t_cli	trees;
+	//t_dir	*input_dir;
 
 	//input_dir = 0;
-	tmp_file = 0;
-	files = 0;
-	dirs = 0;
-	bad = 0;
+	trees.files = 0;
+	trees.dirs = 0;
+	trees.bad = 0;
 	while (*params)
 	{
-		tmp_file = new_file(ft_strdup(*params));
-		if (get_file_info(tmp_file, OP_RECUR) == -1)
-		{
-			insert_bad(&bad, *params, strerror(errno));
-			delete_file(tmp_file);
-			++params;
-			continue ;
-		}
-		if (tmp_file->rights[0] == 'd')
-			insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
-		else
-			insert_file(&files, new_file_full_name(ft_strdup(*params)),
-					compare);
+		sort_commandline(*params, &trees, compare);
 		++params;
 	}
-	if (bad || (dirs && (dirs->left || dirs->right)))
+	if (trees.bad || (trees.dirs && (trees.dirs->left || trees.dirs->right)))
 		g_check_print_dirname = 1;
-	if (files)
+	if (trees.files)
 		g_check_print_separator = 1;
-	ft_treeiter_ltor(bad, print_bad);
-	ft_treedel(&bad, delete_bad);
-	ft_treeiter_ltor(files, print_file);
-	ft_treedel(&files, delete_file);
-	return (dirs);
+	ft_treeiter_ltor(trees.bad, print_bad);
+	ft_treedel(&(trees.bad), delete_bad);
+	ft_treeiter_ltor(trees.files, print_file);
+	ft_treedel(&(trees.files), delete_file);
+	return (trees.dirs);
 }
