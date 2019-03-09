@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/08 23:57:41 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 00:05:18 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,21 +98,22 @@ t_binarytree	*get_dirs(char **params, int (*compare)())
 
 t_binarytree	*get_dirs(char **params, int (*compare)())
 {
-	t_dir			*input_dir;
+	//t_dir			*input_dir;
 	t_file			*tmp_file;
 	t_binarytree	*files;
 	t_binarytree	*dirs;
 	t_binarytree	*bad;
 	struct stat		stats;
 
-	input_dir = 0;
+	//input_dir = 0;
 	tmp_file = 0;
 	files = 0;
 	dirs = 0;
 	bad = 0;
 	while (*params)
 	{
-		tmp_file = new_file(ft_strdup(param), 0);
+		tmp_file = new_file(ft_strdup(*params), 0);
+		(void)tmp_file;
 		if (lstat(*params, &stats) == 0)
 		{
 			if (S_ISDIR(stats.st_mode))
