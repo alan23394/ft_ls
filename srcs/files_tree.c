@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/03/09 00:00:56 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 02:37:53 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,10 @@ static void		process_file(char *filename, t_binarytree **files,
 	if (!F_ALL(flags->options) && filename[0] == '.')
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
-	file = new_file(ft_strdup(filename), path);
+	file = new_file(path);
 	if (get_file_info(file, flags->options) == -1)
 	{
 		delete_file(file);
-		ft_strdel(&path);
 		return ;
 	}
 	if (F_LONG(flags->options))
