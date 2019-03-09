@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/03/09 02:37:53 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 12:16:06 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char			*get_dirname(char *cur, char *add)
 	return (newdir);
 }
 
-static void		update_dir(t_dir *dir, t_file *file)
+void			update_dir(t_dir *dir, t_file *file)
 {
 	unsigned int	temp;
 

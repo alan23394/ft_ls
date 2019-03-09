@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:38:28 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 12:15:36 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@
 # include "flags.h"
 
 char			*get_dirname(char *cur, char *add);
+void			update_dir(t_dir *dir, t_file *file);
 t_binarytree	*load_tree(t_binarytree *dirtree, t_flags *flags, char **error);
 void			recurse_dirs(t_binarytree *dirs, t_flags *flags);
 t_binarytree	*get_dirs(char **folders, int (*compare)(char *s1, char *s2));
