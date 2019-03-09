@@ -6,12 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 00:05:18 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 09:41:34 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "printing.h"
+#include "info.h"
 #include <errno.h>
 
 static int		g_check_print_dirname = 0;
@@ -103,7 +104,7 @@ t_binarytree	*get_dirs(char **params, int (*compare)())
 	t_binarytree	*files;
 	t_binarytree	*dirs;
 	t_binarytree	*bad;
-	struct stat		stats;
+	//struct stat		stats;
 
 	//input_dir = 0;
 	tmp_file = 0;
@@ -112,18 +113,19 @@ t_binarytree	*get_dirs(char **params, int (*compare)())
 	bad = 0;
 	while (*params)
 	{
-		tmp_file = new_file(ft_strdup(*params), 0);
-		(void)tmp_file;
-		if (lstat(*params, &stats) == 0)
+		tmp_file = new_file(ft_strdup(*params));
+		if (get_file_info(tmp_file, OP_RECUR) == -1)
 		{
-			if (S_ISDIR(stats.st_mode))
-				insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
-			else
-				insert_file(&files, new_file(ft_strdup(*params),
-						ft_strdup(*params)), compare);
-		}
-		else
 			insert_bad(&bad, *params, strerror(errno));
+			delete_file(tmp_file);
+			++params;
+			continue ;
+		}
+		if (tmp_file->rights[0] == 'd')
+			insert_dir(&dirs, new_dir(ft_strdup(*params)), compare);
+		else
+			insert_file(&files, new_file_full_name(ft_strdup(*params)),
+					compare);
 		++params;
 	}
 	if (bad || (dirs && (dirs->left || dirs->right)))

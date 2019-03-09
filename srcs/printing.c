@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 14:16:52 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/08 23:28:15 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 00:33:38 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_error(char *folder, char *error)
 {
 	char	*last_part_of_path;
 
-	last_part_of_path = ft_strrchr(folder, '/') + 1;
+	last_part_of_path = get_name_from_path(folder);
 	ft_printfd(2, "ft_ls: %s: %s\n", last_part_of_path, error);
 }
 
