@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/08 23:43:50 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 01:25:02 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ typedef struct		s_file
 	char			*color;
 }					t_file;
 
-t_file				*new_file(char *filename, char *path_to_file);
+t_file				*new_file(char *path_to_file);
+t_file				*new_file_full_name(char *path_to_file);
 void				delete_file(t_file *file);
+char				*get_name_from_path(char *path);
 void				insert_file(t_binarytree **files, t_file *insert,
 						int (*compare)());
 
