@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 02:02:27 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 19:16:50 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_file			*new_file(char *path_to_file)
 	file->name = get_name_from_path(path_to_file);
 	file->path = path_to_file;
 	file->rights = 0;
+	file->ex_attr = ' ';
 	file->links = 0;
 	file->user = 0;
 	file->group = 0;
@@ -55,6 +56,7 @@ t_file			*new_file_full_name(char *path_to_file)
 	file->name = path_to_file;
 	file->path = path_to_file;
 	file->rights = 0;
+	file->ex_attr = ' ';
 	file->links = 0;
 	file->user = 0;
 	file->group = 0;

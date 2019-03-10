@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 01:25:02 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 19:17:08 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct		s_file
 	unsigned long	tv_nsec;
 	char			*path;
 	char			*rights;
+	char			ex_attr;
 	unsigned int	links;
 	char			*user;
 	char			*group;
