@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 16:09:43 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 19:11:38 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@
 */
 
 # include <sys/xattr.h>
+# include <sys/acl.h>
 
 /*
 ** Allowed functions from sys/xattr.h:
