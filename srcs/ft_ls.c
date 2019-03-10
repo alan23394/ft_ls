@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 16:11:20 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 19:35:11 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 		ft_printf("%s:\n", T_DIR(dirs)->name);
 	if (error)
 		print_error(T_DIR(dirs)->name, error);
-	else
+	else if (folder)
 	{
-		if (F_LONG(flags->options) && T_DIR(dirs)->total_size != 0)
+		if (F_LONG(flags->options))
 			ft_printf("total %lu\n", T_DIR(dirs)->total_size);
 		print_dir(T_DIR(dirs), folder, flags->print);
 	}
