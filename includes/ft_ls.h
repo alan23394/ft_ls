@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 15:08:06 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 16:09:43 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,6 @@
 # include "bad.h"
 # include "compare.h"
 # include "flags.h"
-
-/*
-** TODO definitely this gets it's own folder
-*/
-
-typedef struct		s_cli
-{
-	t_binarytree	*files;
-	t_binarytree	*dirs;
-	t_binarytree	*bad;
-}					t_cli;
-
-void			sort_commandline(char *param, t_cli *trees, t_flags *flags,
-					t_dir *files_dir);
 
 char			*get_dirname(char *cur, char *add);
 void			update_dir(t_dir *dir, t_file *file);

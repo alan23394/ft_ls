@@ -6,13 +6,15 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 15:35:55 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 16:11:20 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "printing.h"
 #include "info.h"
+#include "flags.h"
+#include "args.h"
 #include <errno.h>
 
 static int		g_check_print_dirname = 0;
@@ -47,19 +49,19 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 		recurse_dirs(dirs->right, flags);
 }
 
-t_binarytree	*get_dirs(char **params, t_flags *flags)
+t_binarytree	*get_dirs(char **args, t_flags *flags)
 {
 	t_dir	*input_dir;
-	t_cli	trees;
+	t_args	trees;
 
 	input_dir = new_dir(0);
 	trees.files = 0;
 	trees.dirs = 0;
 	trees.bad = 0;
-	while (*params)
+	while (*args)
 	{
-		sort_commandline(*params, &trees, flags, input_dir);
-		++params;
+		process_arg(*args, &trees, flags, input_dir);
+		++args;
 	}
 	if (trees.bad || (trees.dirs && (trees.dirs->left || trees.dirs->right)))
 		g_check_print_dirname = 1;

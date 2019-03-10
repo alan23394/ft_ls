@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commandline.c                                      :+:      :+:    :+:   */
+/*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 21:59:01 by alan              #+#    #+#             */
-/*   Updated: 2019/03/09 15:08:36 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 16:11:37 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "file.h"
 #include "info.h"
+#include "args.h"
 #include <errno.h>
 
 /*
@@ -21,16 +23,15 @@
 ** put bad folders into a bad tree to print alphabetically
 */
 
-void	sort_commandline(char *param, t_cli *trees, t_flags *flags,
-				t_dir *files_dir)
+void	process_arg(char *arg, t_args *trees, t_flags *flags, t_dir *files_dir)
 {
 	t_file	*file;
 	t_dir	*dir;
 
-	file = new_file_full_name(ft_strdup(param));
+	file = new_file_full_name(ft_strdup(arg));
 	if (get_file_info(file, flags->options) == -1)
 	{
-		insert_bad(&trees->bad, param, strerror(errno));
+		insert_bad(&trees->bad, arg, strerror(errno));
 		delete_file(file);
 		return ;
 	}
@@ -38,7 +39,7 @@ void	sort_commandline(char *param, t_cli *trees, t_flags *flags,
 		update_dir(files_dir, file);
 	if (file->rights[0] == 'd')
 	{
-		dir = new_dir(ft_strdup(param));
+		dir = new_dir(ft_strdup(arg));
 		dir->tv_sec = file->tv_sec;
 		dir->tv_nsec = file->tv_nsec;
 		insert_dir(&(trees->dirs), dir, flags->compare);
