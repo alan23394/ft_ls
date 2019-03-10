@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 20:12:46 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/09 19:20:10 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,37 @@ static char		type_letter(int mode)
 	return (mode_char);
 }
 
+char			get_extended_attributes(char *filename)
+{
+	acl_t		acl;
+	acl_entry_t	dummy;
+	ssize_t		xattr;
+
+	acl = acl_get_link_np(filename, ACL_TYPE_EXTENDED);
+	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &dummy) == -1)
+	{
+		acl_free(acl);
+		acl = 0;
+	}
+	xattr = listxattr(filename, 0, 0, XATTR_NOFOLLOW);
+	if (xattr < 0)
+	{
+		xattr = 0;
+	}
+	if (xattr > 0)
+	{
+		return ('@');
+	}
+	else if (acl != NULL)
+	{
+		return ('+');
+	}
+	else
+	{
+		return (' ');
+	}
+}
+
 static char		*get_rights(struct stat stats)
 {
 	char			*rights;
@@ -142,6 +173,7 @@ int				get_file_info(t_file *file, int options)
 			file->color = get_color(file);
 		if (options & (OP_LONG))
 		{
+			file->ex_attr = get_extended_attributes(file->path);
 			file->links = stats.st_nlink;
 			file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
 			file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
