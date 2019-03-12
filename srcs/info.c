@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 19:20:10 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/16 22:17:49 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,16 +147,8 @@ static char		*get_date(struct stat stats)
 
 static void		get_time(t_file *file, struct stat stats)
 {
-#ifdef __linux__
-	file->tv_sec = stats.st_mtim.tv_sec;
-	file->tv_nsec = stats.st_mtim.tv_nsec;
-# elif defined __APPLE__
 	file->tv_sec = stats.st_mtimespec.tv_sec;
 	file->tv_nsec = stats.st_mtimespec.tv_nsec;
-# else
-	file->tv_sec = 0;
-	file->tv_nsec = 0;
-#endif
 }
 
 int				get_file_info(t_file *file, int options)
