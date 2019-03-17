@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 19:44:30 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/16 23:52:59 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,6 @@ int				get_options(char ***argv)
 			++i;
 		}
 	}
-	if (options == -1)
-		ft_printfd(2,
-			"ft_ls: illegal option -- %c\nusage: ft_ls [-alrRt] [file ...]\n",
-			(**argv)[i - 1]);
 	return (options);
 }
 
