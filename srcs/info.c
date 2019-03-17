@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/11 17:32:29 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/17 03:21:53 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,15 +161,15 @@ static void		get_time(t_file *file, struct stat stats)
 #endif
 }
 
-int				get_file_info(t_file *file, int options)
+int				get_file_info(t_file *file, int options, int link)
 {
 	struct stat		stats;
 
-	if (options & (OP_COLOR | OP_LONG | OP_RECUR | OP_TIME))
+	if (options & (OP_COLOR | OP_LONG | OP_RECUR | OP_TIME | FLAG_CLI))
 	{
-		if (lstat(file->path, &stats) != 0)
+		if ((link ? lstat(file->path, &stats) : stat(file->path, &stats)) != 0)
 			return (-1);
-		if (options & (OP_COLOR | OP_LONG | OP_RECUR))
+		if (options & (OP_COLOR | OP_LONG | OP_RECUR | FLAG_CLI))
 			file->rights = get_rights(stats);
 		if (options & (OP_COLOR))
 			file->color = get_color(file);
