@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 21:59:01 by alan              #+#    #+#             */
-/*   Updated: 2019/03/09 16:11:37 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/16 22:38:50 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	process_arg(char *arg, t_args *trees, t_flags *flags, t_dir *files_dir)
 	t_dir	*dir;
 
 	file = new_file_full_name(ft_strdup(arg));
-	if (get_file_info(file, flags->options) == -1)
+	if (get_file_info(file, flags->options, 0) == -1)
 	{
 		insert_bad(&trees->bad, arg, strerror(errno));
 		delete_file(file);
