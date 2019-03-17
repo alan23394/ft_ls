@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/16 23:52:59 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/17 03:50:51 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int				get_options(char ***argv)
 {
 	int		options;
 	char	*cur;
-	int		i;
 
 	options = 0;
 	while ((options != -1) && *(++(*argv)) && (***argv == '-' && (**argv)[1]))
@@ -44,12 +43,11 @@ int				get_options(char ***argv)
 			++(*argv);
 			return (options);
 		}
-		i = 1;
-		while (((**argv)[i]) && (options != -1))
+		while (*(**argv + 1) && (options != -1))
 		{
-			cur = ft_strchr(ALL_OPTIONS, (**argv)[i]);
+			++(**argv);
+			cur = ft_strchr(ALL_OPTIONS, (***argv));
 			options = (cur) ? (options | (1 << (cur - ALL_OPTIONS))) : -1;
-			++i;
 		}
 	}
 	return (options);
