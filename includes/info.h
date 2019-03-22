@@ -13,7 +13,7 @@
 #ifndef INFO_H
 # define INFO_H
 
-# define SIX_MONTHS_SECONDS (15778476)
+# define SIX_MONTHS_SECONDS (15724800)
 # define MAJ(num) (((num) & 0xFF00) >> 8)
 # define MIN(num) ((num) & 0xFF)
 
