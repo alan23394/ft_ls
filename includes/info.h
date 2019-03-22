@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 22:46:27 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/21 20:17:25 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/21 20:40:29 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 # define INFO_H
 
 # define SIX_MONTHS_SECONDS (15724800)
-# define MAJ(num) (((num) & 0xFF00) >> 8)
-# define MIN(num) ((num) & 0xFF)
+
+# ifdef __linux__
+#  define MAJ(num) (((num) & 0xFF00) >> 8)
+#  define MIN(num) ((num) & 0xFF)
+# elif defined __APPLE__
+#  define MAJ(num) (((num) & 0xFE000000) >> 25)
+#  define MIN(num) ((num) & 0x01FFFFFF)
+# endif
 
 typedef struct	s_file t_file;
 
