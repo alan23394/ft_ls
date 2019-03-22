@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/17 03:21:53 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/21 20:17:08 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,28 +102,22 @@ char			get_extended_attributes(char *filename)
 		xattr = 0;
 	}
 	if (xattr > 0)
-	{
 		return ('@');
-	}
 	else if (acl != NULL)
-	{
 		return ('+');
-	}
 	else
-	{
 		return (' ');
-	}
 }
 #endif
 
-static char		*get_rights(struct stat stats)
+static char		*get_rights(struct stat *stats)
 {
 	char			*rights;
 	unsigned int	bits;
 	int				i;
 
 	rights = ft_strdup("-rwxrwxrwx");
-	bits = (stats.st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO);
+	bits = (stats->st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO);
 	i = 0;
 	while (i < 9)
 	{
@@ -131,30 +125,30 @@ static char		*get_rights(struct stat stats)
 			rights[9 - i] = '-';
 		++i;
 	}
-	rights[0] = type_letter(stats.st_mode);
+	rights[0] = type_letter(stats->st_mode);
 	return (rights);
 }
 
-static char		*get_date(struct stat stats)
+static char		*get_date(struct stat *stats)
 {
 	char	*date;
 
-	date = ctime(&stats.st_mtime);
-	if ((time(NULL) - stats.st_mtime) > SIX_MONTHS_SECONDS)
+	date = ctime(&(stats->st_mtime));
+	if ((time(NULL) - stats->st_mtime) > SIX_MONTHS_SECONDS)
 		ft_sprintf(&date, "%-8.6s%.4s", date + 4, date + 20);
 	else
 		ft_sprintf(&date, "%.12s", date + 4);
 	return (date);
 }
 
-static void		get_time(t_file *file, struct stat stats)
+static void		get_time(t_file *file, struct stat *stats)
 {
 #ifdef __linux__
-	file->tv_sec = stats.st_mtim.tv_sec;
-	file->tv_nsec = stats.st_mtim.tv_nsec;
+	file->tv_sec = stats->st_mtim.tv_sec;
+	file->tv_nsec = stats->st_mtim.tv_nsec;
 # elif defined __APPLE__
-	file->tv_sec = stats.st_mtimespec.tv_sec;
-	file->tv_nsec = stats.st_mtimespec.tv_nsec;
+	file->tv_sec = stats->st_mtimespec.tv_sec;
+	file->tv_nsec = stats->st_mtimespec.tv_nsec;
 # else
 	file->tv_sec = 0;
 	file->tv_nsec = 0;
@@ -170,7 +164,7 @@ int				get_file_info(t_file *file, int options, int link)
 		if ((link ? lstat(file->path, &stats) : stat(file->path, &stats)) != 0)
 			return (-1);
 		if (options & (OP_COLOR | OP_LONG | OP_RECUR | FLAG_CLI))
-			file->rights = get_rights(stats);
+			file->rights = get_rights(&stats);
 		if (options & (OP_COLOR))
 			file->color = get_color(file);
 		if (options & (OP_LONG))
@@ -181,12 +175,12 @@ int				get_file_info(t_file *file, int options, int link)
 			file->links = stats.st_nlink;
 			file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
 			file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
-			file->bytes = stats.st_size;
-			file->date = get_date(stats);
+			file->size = get_size_majmin_nbr(&stats);
+			file->date = get_date(&stats);
 			file->blocks = stats.st_blocks;
 		}
 		if (options & (OP_TIME))
-			get_time(file, stats);
+			get_time(file, &stats);
 	}
 	return (0);
 }
