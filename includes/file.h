@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 19:17:08 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/21 17:20:07 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct		s_file
 	char			*user;
 	char			*group;
 	char			*date;
-	unsigned long	bytes;
+	char			*size;
 	unsigned long	blocks;
 	char			*color;
 }					t_file;

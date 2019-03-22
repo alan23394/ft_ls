@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 15:54:28 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/21 17:36:37 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_dir	*new_dir(char *new_dirname)
 	dir->user_maxlen = 0;
 	dir->group_maxlen = 0;
 	dir->links_maxlen = 0;
-	dir->bytes_maxlen = 0;
+	dir->size_maxlen = 0;
 	dir->total_size = 0;
 	dir->tv_sec = 0;
 	dir->tv_nsec = 0;

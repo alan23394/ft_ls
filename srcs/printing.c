@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 14:16:52 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 19:23:28 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/21 17:37:39 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ void	print_file_long(t_file *file, t_dir *dir)
 			if (size_of_link != -1)
 			{
 				link[size_of_link] = 0;
-				ft_printf("%s%c %*u %-*s  %-*s  %*lu %s %s -> %s\n",
+				ft_printf("%s%c %*u %-*s  %-*s  %*s %s %s -> %s\n",
 					file->rights, file->ex_attr, dir->links_maxlen, file->links,
 					dir->user_maxlen, file->user, dir->group_maxlen,
-					file->group, dir->bytes_maxlen, file->bytes, file->date,
+					file->group, dir->size_maxlen, file->size, file->date,
 					file->name, link);
 			}
 		}
 		else
-			ft_printf("%s%c %*u %-*s  %-*s  %*lu %s %s\n",
+			ft_printf("%s%c %*u %-*s  %-*s  %*s %s %s\n",
 				file->rights, file->ex_attr, dir->links_maxlen, file->links,
 				dir->user_maxlen, file->user, dir->group_maxlen, file->group,
-				dir->bytes_maxlen, file->bytes, file->date, file->name);
+				dir->size_maxlen, file->size, file->date, file->name);
 	}
 }
 
@@ -83,18 +83,18 @@ void	print_file_long_color(t_file *file, t_dir *dir)
 			if (size_of_link != -1)
 			{
 				link[size_of_link] = 0;
-				ft_printf("%s%c %*u %-*s  %-*s  %*lu %s %s%s%s -> %s\n",
+				ft_printf("%s%c %*u %-*s  %-*s  %*s %s %s%s%s -> %s\n",
 					file->rights, file->ex_attr, dir->links_maxlen, file->links,
 					dir->user_maxlen, file->user, dir->group_maxlen,
-					file->group, dir->bytes_maxlen, file->bytes, file->date,
+					file->group, dir->size_maxlen, file->size, file->date,
 					file->color, file->name, COLOR_NORM, link);
 			}
 		}
 		else
-			ft_printf("%s%c %*u %-*s  %-*s  %*lu %s %s%s%s\n",
+			ft_printf("%s%c %*u %-*s  %-*s  %*s %s %s%s%s\n",
 				file->rights, file->ex_attr,dir->links_maxlen, file->links,
 				dir->user_maxlen, file->user, dir->group_maxlen, file->group,
-				dir->bytes_maxlen, file->bytes, file->date, file->color,
+				dir->size_maxlen, file->size, file->date, file->color,
 				file->name, COLOR_NORM);
 	}
 }

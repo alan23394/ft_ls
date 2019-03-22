@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 19:16:50 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/21 17:20:04 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_file			*new_file(char *path_to_file)
 	file->user = 0;
 	file->group = 0;
 	file->date = 0;
-	file->bytes = 0;
+	file->size = 0;
 	file->blocks = 0;
 	file->color = 0;
 	file->tv_sec = 0;
@@ -61,7 +61,7 @@ t_file			*new_file_full_name(char *path_to_file)
 	file->user = 0;
 	file->group = 0;
 	file->date = 0;
-	file->bytes = 0;
+	file->size = 0;
 	file->blocks = 0;
 	file->color = 0;
 	file->tv_sec = 0;
@@ -86,6 +86,8 @@ void			delete_file(t_file *file)
 			ft_strdel(&(file->user));
 		if (file->group)
 			ft_strdel(&(file->group));
+		if (file->size)
+			ft_strdel(&(file->size));
 		if (file->date)
 			ft_strdel(&(file->date));
 		ft_memdel((void **)&file);

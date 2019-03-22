@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/03/16 22:39:07 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/21 17:37:58 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void			update_dir(t_dir *dir, t_file *file)
 	temp = ft_numlen(file->links);
 	if (temp > dir->links_maxlen)
 		dir->links_maxlen = temp;
-	temp = ft_numlen(file->bytes);
-	if (temp > dir->bytes_maxlen)
-		dir->bytes_maxlen = temp;
+	temp = ft_strlen(file->size);
+	if (temp > dir->size_maxlen)
+		dir->size_maxlen = temp;
 }
 
 static void		process_file(char *filename, t_binarytree **files,

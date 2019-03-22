@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:53:28 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/08 23:38:46 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/21 17:36:45 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct		s_dir
 	unsigned int	links_maxlen;
 	unsigned int	user_maxlen;
 	unsigned int	group_maxlen;
-	unsigned int	bytes_maxlen;
+	unsigned int	size_maxlen;
 	unsigned long	total_size;
 }					t_dir;
 
