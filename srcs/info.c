@@ -84,7 +84,7 @@ static char		type_letter(int mode)
 }
 
 #ifdef __APPLE__
-char			get_extended_attributes(char *filename)
+static char		get_extended_attributes(char *filename)
 {
 	acl_t		acl;
 	acl_entry_t	dummy;
@@ -153,6 +153,22 @@ static void		get_time(t_file *file, struct stat *stats)
 	file->tv_sec = 0;
 	file->tv_nsec = 0;
 #endif
+}
+
+static char		*get_size_majmin_nbr(struct stat *stats)
+{
+	char	*maj_min_nbrs;
+
+	if (S_ISBLK(stats->st_mode) || S_ISCHR(stats->st_mode))
+	{
+		ft_sprintf(&maj_min_nbrs, "%3d, %3d",
+				MAJ(stats->st_rdev), MIN(stats->st_rdev));
+	}
+	else
+	{
+		maj_min_nbrs = ft_itoa(stats->st_size);
+	}
+	return (maj_min_nbrs);
 }
 
 int				get_file_info(t_file *file, int options, int link)
