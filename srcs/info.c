@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/21 20:17:08 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/21 20:54:55 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static char		type_letter(int mode)
 	return (mode_char);
 }
 
-#ifdef __APPLE__
 static char		get_extended_attributes(char *filename)
 {
 	acl_t		acl;
@@ -108,7 +107,6 @@ static char		get_extended_attributes(char *filename)
 	else
 		return (' ');
 }
-#endif
 
 static char		*get_rights(struct stat *stats)
 {
@@ -143,16 +141,8 @@ static char		*get_date(struct stat *stats)
 
 static void		get_time(t_file *file, struct stat *stats)
 {
-#ifdef __linux__
-	file->tv_sec = stats->st_mtim.tv_sec;
-	file->tv_nsec = stats->st_mtim.tv_nsec;
-# elif defined __APPLE__
 	file->tv_sec = stats->st_mtimespec.tv_sec;
 	file->tv_nsec = stats->st_mtimespec.tv_nsec;
-# else
-	file->tv_sec = 0;
-	file->tv_nsec = 0;
-#endif
 }
 
 static char		*get_size_majmin_nbr(struct stat *stats)
@@ -185,9 +175,7 @@ int				get_file_info(t_file *file, int options, int link)
 			file->color = get_color(file);
 		if (options & (OP_LONG))
 		{
-#ifdef __APPLE__
 			file->ex_attr = get_extended_attributes(file->path);
-#endif
 			file->links = stats.st_nlink;
 			file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
 			file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
