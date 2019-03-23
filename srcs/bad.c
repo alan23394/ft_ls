@@ -6,18 +6,21 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:17:03 by abarnett          #+#    #+#             */
-/*   Updated: 2019/01/31 13:02:25 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/23 07:29:51 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bad.h"
-#include "libftprintf.h"
+#include "ft_mem.h"
+#include "ft_string.h"
+#include "ft_printf.h"
+#include "ft_binarytree.h"
 
 t_bad	*new_bad(char *bad_name, char *errormsg)
 {
 	t_bad	*bad;
 
-	bad = (t_bad *)malloc(sizeof(t_bad));
+	bad = (t_bad *)ft_memalloc(sizeof(t_bad));
 	bad->name = bad_name;
 	bad->errormsg = errormsg;
 	return (bad);
