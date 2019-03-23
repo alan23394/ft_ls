@@ -6,12 +6,15 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/03/21 17:37:58 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/23 07:32:55 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "info.h"
+#include "ft_utils.h"
+#include "ft_string.h"
+#include "ft_binarytree.h"
 #include <errno.h>
 
 /*
