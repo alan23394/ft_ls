@@ -6,14 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/17 03:50:51 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/23 07:16:16 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "flags.h"
 #include "printing.h"
 #include "compare.h"
-#include "libftprintf.h"
+#include "ft_string.h"
 
 /*
 ** while ((options != -1) && *(++(*argv)) && (***argv == '-' && (**argv)[1]))
