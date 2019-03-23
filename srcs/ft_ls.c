@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 19:35:11 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/23 07:33:29 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 #include "info.h"
 #include "flags.h"
 #include "args.h"
+#include "ft_put.h"
+#include "ft_printf.h"
+#include "ft_binarytree.h"
 #include <errno.h>
 
 static int		g_check_print_dirname = 0;
