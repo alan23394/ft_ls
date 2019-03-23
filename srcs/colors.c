@@ -6,12 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 15:17:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/03 20:07:44 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/23 07:31:11 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-#include "libftprintf.h"
+#include "ft_string.h"
+#include "ft_printf.h"
 
 /*
 ** The value of this variable describes what color to use for which attribute
