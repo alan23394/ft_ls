@@ -6,12 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/21 17:20:04 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/23 07:25:23 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "file.h"
-#include "libft.h"
+#include "ft_mem.h"
+#include "ft_string.h"
+#include "ft_binarytree.h"
 
 /*
 ** This function, by default, sets the name variable in the file struct to be a
@@ -23,7 +25,7 @@ t_file			*new_file(char *path_to_file)
 {
 	t_file	*file;
 
-	file = (t_file *)malloc(sizeof(t_file));
+	file = (t_file *)ft_memalloc(sizeof(t_file));
 	file->name = get_name_from_path(path_to_file);
 	file->path = path_to_file;
 	file->rights = 0;
@@ -52,7 +54,7 @@ t_file			*new_file_full_name(char *path_to_file)
 {
 	t_file	*file;
 
-	file = (t_file *)malloc(sizeof(t_file));
+	file = (t_file *)ft_memalloc(sizeof(t_file));
 	file->name = path_to_file;
 	file->path = path_to_file;
 	file->rights = 0;
