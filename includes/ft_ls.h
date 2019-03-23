@@ -6,23 +6,24 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:23:26 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 19:11:38 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/23 07:15:46 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_LS_H
 # define FT_LS_H
 
-# include "libftprintf.h"
+# include <unistd.h>
 
 /*
-** libftprintf.h includes libft.h
-** libft.h includes unistd.h and stdlib.h
-**
 ** Allowed functions from unistd.h:
 ** readlink
 ** write
-**
+*/
+
+# include <stdlib.h>
+
+/*
 ** Allowed functions from stdlib.h:
 ** malloc
 ** free
