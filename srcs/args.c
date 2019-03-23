@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 21:59:01 by alan              #+#    #+#             */
-/*   Updated: 2019/03/17 01:12:54 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/23 07:16:37 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "file.h"
 #include "info.h"
 #include "args.h"
+#include "ft_string.h"
 #include <errno.h>
 
 /*
