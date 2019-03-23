@@ -6,19 +6,21 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/21 17:36:37 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/23 07:07:58 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dir.h"
 #include "file.h"
-#include "libft.h"
+#include "ft_mem.h"
+#include "ft_string.h"
+#include "ft_binarytree.h"
 
 t_dir	*new_dir(char *new_dirname)
 {
 	t_dir	*dir;
 
-	dir = (t_dir *)malloc(sizeof(t_dir));
+	dir = (t_dir *)ft_memalloc(sizeof(t_dir));
 	dir->name = new_dirname;
 	dir->user_maxlen = 0;
 	dir->group_maxlen = 0;
