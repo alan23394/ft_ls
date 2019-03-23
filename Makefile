@@ -6,7 +6,7 @@
 #    By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:13:28 by abarnett          #+#    #+#              #
-#    Updated: 2019/03/03 19:17:34 by alan             ###   ########.fr        #
+#    Updated: 2019/03/23 07:12:51 by alan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ $(NAME): $(LIB) $(C_OBJS)
 -include $(DEPENDS)
 
 clean:
-	@- $(RM) $(C_OBJS)
+	@- $(RM) $(C_OBJS) $(DEPENDS)
 	@- make -C libft clean
 
 fclean: clean
