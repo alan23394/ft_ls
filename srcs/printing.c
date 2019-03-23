@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 14:16:52 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/21 17:37:39 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/23 07:14:42 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "file.h"
 #include "dir.h"
 #include "flags.h"
-#include "libftprintf.h"
+#include "ft_printf.h"
+#include <unistd.h>
 
 #define COLOR_NORM "\e[m"
 
