@@ -6,11 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/17 03:40:25 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/23 07:28:42 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "ft_string.h"
+#include "ft_printf.h"
 
 int		print_illegal_option(char illegal_op)
 {
