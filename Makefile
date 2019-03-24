@@ -6,12 +6,12 @@
 #    By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:13:28 by abarnett          #+#    #+#              #
-#    Updated: 2019/03/23 07:33:41 by alan             ###   ########.fr        #
+#    Updated: 2019/03/23 18:30:09 by alan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			ft_ls
-LIB :=			libft/libftprintf.a
+LIB :=			libft/libft.a
 CC :=			gcc
 
 SRC_DIR :=		./srcs
@@ -28,10 +28,10 @@ LDFLAGS +=		-L./libft -lft
 .PHONY:			all clean fclean re
 
 all: $(NAME)
-	@ctags -R
+	@- ctags -R
 
 $(LIB):
-	make -C libft
+	@ make --no-print-directory -C libft
 
 $(NAME): $(LIB) $(C_OBJS)
 	$(CC) $(CFLAGS) $(C_OBJS) -o $(NAME) $(LDFLAGS)
@@ -42,11 +42,11 @@ $(NAME): $(LIB) $(C_OBJS)
 -include $(DEPENDS)
 
 clean:
-	@- $(RM) $(C_OBJS) $(DEPENDS)
-	@- make -C libft clean
+	@- make --no-print-directory -C libft clean
+	- $(RM) $(C_OBJS) $(DEPENDS)
 
 fclean: clean
-	@- $(RM) $(NAME)
-	@- make -C libft fclean
+	@- make --no-print-directory -C libft fclean
+	- $(RM) $(NAME)
 
 re: fclean all
