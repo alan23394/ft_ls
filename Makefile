@@ -6,7 +6,7 @@
 #    By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:13:28 by abarnett          #+#    #+#              #
-#    Updated: 2019/03/24 19:36:02 by alan             ###   ########.fr        #
+#    Updated: 2019/03/24 20:43:15 by abarnett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,13 @@ LIB :=			$(LIB_DIR)/$(LIB_NAME)
 
 .PHONY:			all clean fclean re
 
-all: $(NAME)
+all: tags $(NAME)
+
+tags: $(C_SRCS) $(LIB_SRCS)
 	@- ctags -R
 
-$(LIB):
-	$(MAKE_LIBRARY)
+$(LIB): $(LIB_SRCS)
+	@ $(MAKE_LIBRARY)
 
 $(NAME): $(LIB) $(C_OBJS)
 	$(CC) $(CFLAGS) $(C_OBJS) -o $(NAME) $(LDFLAGS)
