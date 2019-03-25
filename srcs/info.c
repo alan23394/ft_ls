@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:24:32 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/24 19:17:28 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,12 @@ static char		*get_rights(struct stat *stats)
 		++i;
 	}
 	rights[0] = type_letter(stats->st_mode);
+	if (S_ISUID & stats->st_mode)
+		rights[3] = (rights[3] == '-') ? 'S' : 's';
+	if (S_ISGID & stats->st_mode)
+		rights[6] = (rights[6] == '-') ? 'S' : 's';
+	if (S_ISVTX & stats->st_mode)
+		rights[9] = (rights[9] == '-') ? 'T' : 't';
 	return (rights);
 }
 
