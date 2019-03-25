@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:16:16 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/24 21:40:05 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int				get_options(char ***argv)
 void			*get_cmp_function(int flags)
 {
 	int			(*func)();
-	static int	(*funcs[OP_MAX_OPS])() =
+	static int	(*funcs[])() =
 	{
 		[0] = cmp_name,
 		[OP_REV] = cmp_name_rev,
@@ -68,14 +68,10 @@ void			*get_cmp_function(int flags)
 	return (func);
 }
 
-/*
-** TODO Fix magic number in array index (remove entirely)
-*/
-
 void			*get_print_func(int flags)
 {
 	void		(*func)();
-	static void	(*funcs[7])() =
+	static void	(*funcs[])() =
 	{
 		[0] = print_file,
 		[OP_COLOR] = print_file_color,
