@@ -6,13 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:28:42 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/24 20:09:08 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "ft_string.h"
 #include "ft_printf.h"
+#include "ft_binarytree.h"
 
 int		print_illegal_option(char illegal_op)
 {
@@ -41,7 +42,7 @@ int		main(int argc, char **argv)
 	if (dirs)
 	{
 		recurse_dirs(dirs, &flags);
-		//ft_treedel(dirs, delete_dir);
+		ft_treedel(&dirs, delete_dir);
 	}
 	return (0);
 }
