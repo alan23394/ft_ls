@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:33:29 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/24 21:08:34 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ t_binarytree	*get_dirs(char **args, t_flags *flags)
 	ft_treedel(&(trees.bad), delete_bad);
 	print_dir(input_dir, trees.files, flags->print);
 	ft_treedel(&(trees.files), delete_file);
+	delete_dir(input_dir);
 	return (trees.dirs);
 }
