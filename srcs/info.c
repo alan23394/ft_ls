@@ -176,7 +176,7 @@ static char		*get_size_majmin_nbr(struct stat *stats)
 	}
 	else
 	{
-		maj_min_nbrs = ft_itoa(stats->st_size);
+		ft_sprintf(&maj_min_nbrs, "%lu", stats->st_size);
 	}
 	return (maj_min_nbrs);
 }
