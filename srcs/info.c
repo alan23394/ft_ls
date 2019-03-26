@@ -6,12 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/24 19:17:28 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/25 19:36:22 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "info.h"
 #include "ft_ls.h"
+#include <pwd.h>
 #include "colors.h"
 #include "ft_utils.h"
 #include "ft_string.h"
@@ -180,6 +181,40 @@ static char		*get_size_majmin_nbr(struct stat *stats)
 	return (maj_min_nbrs);
 }
 
+char			*get_file_user(struct stat *stats)
+{
+	struct passwd	*id;
+	char			*username;
+
+	id = getpwuid(stats->st_uid);
+	if (id)
+	{
+		username = ft_strdup(id->pw_name);
+	}
+	else
+	{
+		username = ft_itoa(stats->st_uid);
+	}
+	return (username);
+}
+
+char			*get_file_group(struct stat *stats)
+{
+	struct group	*id;
+	char			*groupname;
+
+	id = getgrgid(stats->st_gid);
+	if (id)
+	{
+		groupname = ft_strdup(id->gr_name);
+	}
+	else
+	{
+		groupname = ft_itoa(stats->st_gid);
+	}
+	return (groupname);
+}
+
 int				get_file_info(t_file *file, int options, int link)
 {
 	struct stat		stats;
@@ -198,8 +233,8 @@ int				get_file_info(t_file *file, int options, int link)
 			file->ex_attr = get_extended_attributes(file->path);
 #endif
 			file->links = stats.st_nlink;
-			file->user = ft_strdup((getpwuid(stats.st_uid))->pw_name);
-			file->group = ft_strdup((getgrgid(stats.st_gid))->gr_name);
+			file->user = get_file_user(&stats);
+			file->group = get_file_group(&stats);
 			file->size = get_size_majmin_nbr(&stats);
 			file->date = get_date(&stats);
 			file->blocks = stats.st_blocks;
