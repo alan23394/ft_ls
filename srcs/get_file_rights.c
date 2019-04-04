@@ -6,7 +6,7 @@
 /*   By: abarnett <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 14:54:42 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 15:07:52 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:25:55 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ static char	type_letter(int mode)
 	else if (S_ISBLK(mode))
 		mode_char = 'b';
 	else if (S_ISCHR(mode))
-	 	mode_char = 'c';
+		mode_char = 'c';
 	else if (S_ISDIR(mode))
-	 	mode_char = 'd';
+		mode_char = 'd';
 	else if (S_ISLNK(mode))
-	 	mode_char = 'l';
+		mode_char = 'l';
 	else if (S_ISFIFO(mode))
-	 	mode_char = 'p';
+		mode_char = 'p';
 	else if (S_ISSOCK(mode))
 		mode_char = 's';
 	else
