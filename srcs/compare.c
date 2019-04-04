@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 05:27:05 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 15:53:35 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 00:13:36 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,7 @@ int		cmp_name(t_cmp *c1, t_cmp *c2)
 		++s1;
 		++s2;
 	}
-	if (*s1 == '/')
-		return (-1);
-	else if (*s2 == '/')
-		return (1);
-	else
-		return ((unsigned char)*s1 - (unsigned char)*s2);
+	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
 int		cmp_name_rev(t_cmp *c1, t_cmp *c2)
