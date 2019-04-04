@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:53:28 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 12:36:07 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:32:29 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define T_DIR(t) ((t_dir *)((t)->content))
 
-typedef struct		s_binarytree	t_binarytree;
+typedef struct s_binarytree	t_binarytree;
 
 typedef struct		s_dir
 {
