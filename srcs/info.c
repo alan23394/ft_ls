@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/30 23:44:03 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 11:17:58 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 #include <pwd.h>
 //#include <uuid/uuid.h>
 #include <grp.h>
-#include <sys/xattr.h>
-#include <sys/acl.h>
 #include <time.h>
 
 /*
@@ -95,33 +93,6 @@ static char		type_letter(int mode)
 	return (mode_char);
 }
 
-#ifdef __APPLE__
-static char		get_extended_attributes(char *filename)
-{
-	acl_t		acl;
-	acl_entry_t	dummy;
-	ssize_t		xattr;
-
-	acl = acl_get_link_np(filename, ACL_TYPE_EXTENDED);
-	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &dummy) == -1)
-	{
-		acl_free(acl);
-		acl = 0;
-	}
-	xattr = listxattr(filename, 0, 0, XATTR_NOFOLLOW);
-	if (xattr < 0)
-	{
-		xattr = 0;
-	}
-	if (xattr > 0)
-		return ('@');
-	else if (acl != NULL)
-		return ('+');
-	else
-		return (' ');
-}
-#endif
-
 static char		*get_rights(struct stat *stats)
 {
 	char			*rights;
@@ -164,10 +135,10 @@ static void		get_time(t_file *file, struct stat *stats)
 #ifdef __linux__
 	file->tv_sec = stats->st_mtim.tv_sec;
 	file->tv_nsec = stats->st_mtim.tv_nsec;
-# elif defined __APPLE__
+#elif defined __APPLE__
 	file->tv_sec = stats->st_mtimespec.tv_sec;
 	file->tv_nsec = stats->st_mtimespec.tv_nsec;
-# else
+#else
 	file->tv_sec = 0;
 	file->tv_nsec = 0;
 #endif
@@ -237,9 +208,7 @@ int				get_file_info(t_file *file, int options, int link)
 			file->color = get_color(file);
 		if (options & (OP_LONG))
 		{
-#ifdef __APPLE__
 			file->ex_attr = get_extended_attributes(file->path);
-#endif
 			file->links = stats.st_nlink;
 			file->user = get_file_user(&stats);
 			file->group = get_file_group(&stats);
