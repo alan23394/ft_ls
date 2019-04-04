@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 15:02:24 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:15:28 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 #include "file.h"
 #include "flags.h"
 #include "colors.h"
-#include "ft_utils.h"
-#include "ft_mem.h"
-#include "ft_string.h"
 #include "ft_printf.h"
 #include <sys/stat.h>
 #include <time.h>
