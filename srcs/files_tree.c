@@ -6,16 +6,24 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/03/23 07:32:55 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/28 00:06:12 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
 #include "info.h"
+#include "dir.h"
+#include "file.h"
+#include "flags.h"
 #include "ft_utils.h"
 #include "ft_string.h"
 #include "ft_binarytree.h"
+#include <dirent.h>
 #include <errno.h>
+#include <string.h>
+
+/*
+** string.h: strerror
+*/
 
 /*
 ** This function takes the old path and the new foldername and combines them,

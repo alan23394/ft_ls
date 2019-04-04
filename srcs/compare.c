@@ -6,11 +6,11 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 05:27:05 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/09 15:53:35 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/26 00:49:31 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "compare.h"
 
 int		cmp_name(t_cmp *c1, t_cmp *c2)
 {
