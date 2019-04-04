@@ -6,14 +6,36 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:28:15 by alan              #+#    #+#             */
-/*   Updated: 2019/04/04 11:30:49 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 12:13:23 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem.h"
 #include "ft_string.h"
 #include <sys/xattr.h>
-#include <sys/acl.h>
+
+# define ACL_FLAG (0x1)
+# define EXTENDED_FLAG (0x2)
+
+static char	get_symbol_char(int type_bits)
+{
+	char	symbol;
+
+	if (type_bits == ACL_FLAG)
+		symbol = '+';
+	else if (type_bits == EXTENDED_FLAG)
+		symbol = '@';
+	else if (type_bits == (ACL_FLAG | EXTENDED_FLAG))
+		symbol = '*';
+	else
+		symbol = ' ';
+	return (symbol);
+}
+
+
+#ifdef __APPLE__
+
+# include <sys/acl.h>
 
 /*
 ** Extended attributes
@@ -24,11 +46,26 @@
 ** 	if this works, return a @
 */
 
-#ifdef __APPLE__
-#elif defined __linux__
+char		get_extended_attributes(char *filename)
+{
+	acl_t	acl;
+	ssize_t	xattr;
+	uint8_t	type_bits;
+	char	symbol;
 
-# define EXTENDED_FLAG (0x1)
-# define ACL_FLAG (0x2)
+	type_bits = 0;
+	acl = acl_get_link_np(filename, ACL_TYPE_EXTENDED);
+	if (acl)
+		type_bits |= ACL_FLAG;
+	xattr = listxattr(filename, 0, 0, XATTR_NOFOLLOW);
+	if (xattr)
+		type_bits |= EXTENDED_FLAG;
+	symbol = get_symbol_char(type_bits);
+	acl_free(acl);
+	return (symbol);
+}
+
+#elif defined __linux__
 
 /*
 ** This function takes xattrs, which is a list returned by listxattr, and len,
@@ -45,11 +82,11 @@
 ** with just a single space.
 */
 
-static char		check_acl_extended(char *xattrs, int len)
+static char	check_acl_extended(char *xattrs, int len)
 {
 	int			single_len;
 	u_int8_t	type_bits;
-	char		type_char;
+	char		symbol;
 
 	while (len)
 	{
@@ -61,15 +98,8 @@ static char		check_acl_extended(char *xattrs, int len)
 		xattrs += (single_len + 1);
 		len -= (single_len + 1);
 	}
-	if (type_bits == ACL_FLAG)
-		type_char = '+';
-	else if (type_bits == EXTENDED_FLAG)
-		type_char = '@';
-	else if (type_bits == (EXTENDED_FLAG | ACL_FLAG))
-		type_char = '*';
-	else
-		type_char = ' ';
-	return (type_char);
+	symbol = get_symbol_char(type_bits);
+	return (symbol);
 }
 
 char		get_extended_attributes(char *filename)
@@ -95,9 +125,12 @@ char		get_extended_attributes(char *filename)
 	}
 	return (symbol);
 }
+
 #else
-char	get_extended_attributes(char *filename)
+
+char		get_extended_attributes(char *filename)
 {
 	return (' ');
 }
+
 #endif
