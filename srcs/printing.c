@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 14:16:52 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:14:42 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 14:52:36 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	print_file_long_color(t_file *file, t_dir *dir)
 		}
 		else
 			ft_printf("%s%c %*u %-*s  %-*s  %*s %s %s%s%s\n",
-				file->rights, file->ex_attr,dir->links_maxlen, file->links,
+				file->rights, file->ex_attr, dir->links_maxlen, file->links,
 				dir->user_maxlen, file->user, dir->group_maxlen, file->group,
 				dir->size_maxlen, file->size, file->date, file->color,
 				file->name, COLOR_NORM);

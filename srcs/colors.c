@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 15:17:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:31:11 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 15:36:29 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,21 @@ static int		check_extension_list(char *filename,
 	return (0);
 }
 
-static char 	*check_extension(char *filename)
+static char		*check_extension(char *filename)
 {
-	if (check_extension_list(filename, zip_extensions))
+	if (check_extension_list(filename, g_zip_extensions))
 	{
 		return (COLOR_ZIP);
 	}
-	if (check_extension_list(filename, picture_extensions))
+	if (check_extension_list(filename, g_picture_extensions))
 	{
 		return (COLOR_PICTURE);
 	}
-	if (check_extension_list(filename, video_extensions))
+	if (check_extension_list(filename, g_video_extensions))
 	{
 		return (COLOR_VIDEO);
 	}
-	if (check_extension_list(filename, audio_extensions))
+	if (check_extension_list(filename, g_audio_extensions))
 	{
 		return (COLOR_AUDIO);
 	}

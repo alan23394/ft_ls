@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 16:52:34 by alan              #+#    #+#             */
-/*   Updated: 2019/03/01 21:13:30 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 15:36:04 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define COLOR_VIDEO "\e[0;33m"
 # define COLOR_NORM "\e[m"
 
-static const char	*zip_extensions[] = {
+static const char	*g_zip_extensions[] = {
 	".zip",
 	".rar",
 	".7z",
@@ -32,7 +32,7 @@ static const char	*zip_extensions[] = {
 	0
 };
 
-static const char	*picture_extensions[] = {
+static const char	*g_picture_extensions[] = {
 	".png",
 	".jpg",
 	".jpeg",
@@ -41,13 +41,13 @@ static const char	*picture_extensions[] = {
 	0
 };
 
-static const char	*video_extensions[] = {
+static const char	*g_video_extensions[] = {
 	".webm",
 	".mp4",
 	0
 };
 
-static const char	*audio_extensions[] = {
+static const char	*g_audio_extensions[] = {
 	".mp3",
 	".wav",
 	".flac",
