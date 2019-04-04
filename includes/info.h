@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 22:46:27 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 11:15:56 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 15:06:48 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,14 @@
 # define MAJ(num) (((num) & 0xFF000000) >> 24)
 # define MIN(num) ((num) & 0x00FFFFFF)
 
+struct	stat;
+
 typedef struct s_file	t_file;
 
 char	get_extended_attributes(char *filename);
+char	*get_rights(struct stat *stats);
+char	*get_file_user(struct stat *stats);
+char	*get_file_group(struct stat *stats);
 int		get_file_info(t_file *file, int options, int link);
 
 #endif

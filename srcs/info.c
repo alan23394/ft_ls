@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 12:13:29 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:02:24 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,107 +19,9 @@
 #include "ft_string.h"
 #include "ft_printf.h"
 #include <sys/stat.h>
-#include <sys/types.h>
-#include <pwd.h>
-//#include <uuid/uuid.h>
-#include <grp.h>
 #include <time.h>
 
-/*
-** The file mode printed under the -l option consists of the entry type, owner
-** permissions, and group permissions.  The entry type character describes the
-** type of file, as follows:
-**
-** 		b	Block special file
-** 		c	Character special file
-** 		d	Directory
-** 		l	Symbolic link
-** 		s	Socket link
-** 		p	FIFO
-** 		-	Regular file
-**
-** The next three fields are three characters each: owner permissions, group
-** permissions, and other permissions.  Each field has three character
-** positions:
-**
-** 		1.	If r, the file is readable; if -, it is not readable.
-**
-** 		2.	If w, the file is writable; if -, it is not writable.
-**
-** 		3.	The first of the following that applies:
-**
-** 			S	If in the owner permissions, the file is not executable
-** 				and set-user-ID mode is set.  If in the group permissions, the
-** 				file is not executable and set-group-ID mode is set.
-**
-** 			s	If in the owner permissions, the file is executable and
-** 				set-user-ID mode is set.  If in the group permissions, the file
-** 				is executable and setgroup-ID mode is set.
-**
-** 			x	The file is executable or the directory is searchable.
-**
-** 			-	The file is neither readable, writable, executable, nor
-** 				set-user-ID nor set-group-ID mode, nor sticky.	(See below.)
-**
-** 			These next two apply only to the third character in the last group
-** 			(other permissions).
-**
-** 			T	The sticky bit is set (mode 1000), but not execute or
-** 				search permission.	(See chmod(1) or sticky(8).)
-**
-** 			t	The sticky bit is set (mode 1000), and is searchable or
-** 				executable.  (See chmod(1) or sticky(8).)
-*/
-
-static char		type_letter(int mode)
-{
-	char	mode_char;
-
-	if (S_ISREG(mode))
-		mode_char = '-';
-	else if (S_ISBLK(mode))
-		mode_char = 'b';
-	else if (S_ISCHR(mode))
-	 	mode_char = 'c';
-	else if (S_ISDIR(mode))
-	 	mode_char = 'd';
-	else if (S_ISLNK(mode))
-	 	mode_char = 'l';
-	else if (S_ISFIFO(mode))
-	 	mode_char = 'p';
-	else if (S_ISSOCK(mode))
-		mode_char = 's';
-	else
-		mode_char = '?';
-	return (mode_char);
-}
-
-static char		*get_rights(struct stat *stats)
-{
-	char			*rights;
-	unsigned int	bits;
-	int				i;
-
-	rights = ft_strdup("-rwxrwxrwx");
-	bits = (stats->st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO);
-	i = 0;
-	while (i < 9)
-	{
-		if (!(bits & (1 << i)))
-			rights[9 - i] = '-';
-		++i;
-	}
-	rights[0] = type_letter(stats->st_mode);
-	if (S_ISUID & stats->st_mode)
-		rights[3] = (rights[3] == '-') ? 'S' : 's';
-	if (S_ISGID & stats->st_mode)
-		rights[6] = (rights[6] == '-') ? 'S' : 's';
-	if (S_ISVTX & stats->st_mode)
-		rights[9] = (rights[9] == '-') ? 'T' : 't';
-	return (rights);
-}
-
-static char		*get_date(struct stat *stats)
+static char		*get_file_date(struct stat *stats)
 {
 	char	*date;
 
@@ -161,40 +63,6 @@ static char		*get_size_majmin_nbr(struct stat *stats)
 	return (maj_min_nbrs);
 }
 
-char			*get_file_user(struct stat *stats)
-{
-	struct passwd	*id;
-	char			*username;
-
-	id = getpwuid(stats->st_uid);
-	if (id)
-	{
-		username = ft_strdup(id->pw_name);
-	}
-	else
-	{
-		username = ft_itoa(stats->st_uid);
-	}
-	return (username);
-}
-
-char			*get_file_group(struct stat *stats)
-{
-	struct group	*id;
-	char			*groupname;
-
-	id = getgrgid(stats->st_gid);
-	if (id)
-	{
-		groupname = ft_strdup(id->gr_name);
-	}
-	else
-	{
-		groupname = ft_itoa(stats->st_gid);
-	}
-	return (groupname);
-}
-
 int				get_file_info(t_file *file, int options, int link)
 {
 	struct stat		stats;
@@ -214,7 +82,7 @@ int				get_file_info(t_file *file, int options, int link)
 			file->user = get_file_user(&stats);
 			file->group = get_file_group(&stats);
 			file->size = get_size_majmin_nbr(&stats);
-			file->date = get_date(&stats);
+			file->date = get_file_date(&stats);
 			file->blocks = stats.st_blocks;
 		}
 		if (options & (OP_TIME))
