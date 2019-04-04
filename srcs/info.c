@@ -6,17 +6,25 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/25 19:36:22 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/30 23:44:03 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "info.h"
-#include "ft_ls.h"
-#include <pwd.h>
+#include "file.h"
+#include "flags.h"
 #include "colors.h"
 #include "ft_utils.h"
 #include "ft_string.h"
 #include "ft_printf.h"
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <pwd.h>
+//#include <uuid/uuid.h>
+#include <grp.h>
+#include <sys/xattr.h>
+#include <sys/acl.h>
+#include <time.h>
 
 /*
 ** The file mode printed under the -l option consists of the entry type, owner
