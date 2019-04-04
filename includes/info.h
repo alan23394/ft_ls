@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 22:46:27 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 15:06:48 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:21:19 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	get_extended_attributes(char *filename);
 char	*get_rights(struct stat *stats);
 char	*get_file_user(struct stat *stats);
 char	*get_file_group(struct stat *stats);
+void	get_time(t_file *file, struct stat *stats);
 int		get_file_info(t_file *file, int options, int link);
 
 #endif

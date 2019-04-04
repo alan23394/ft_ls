@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 15:15:28 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:20:30 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,6 @@ static char		*get_file_date(struct stat *stats)
 	else
 		ft_sprintf(&date, "%.12s", date + 4);
 	return (date);
-}
-
-static void		get_time(t_file *file, struct stat *stats)
-{
-#ifdef __linux__
-	file->tv_sec = stats->st_mtim.tv_sec;
-	file->tv_nsec = stats->st_mtim.tv_nsec;
-#elif defined __APPLE__
-	file->tv_sec = stats->st_mtimespec.tv_sec;
-	file->tv_nsec = stats->st_mtimespec.tv_nsec;
-#else
-	file->tv_sec = 0;
-	file->tv_nsec = 0;
-#endif
 }
 
 static char		*get_size_majmin_nbr(struct stat *stats)
