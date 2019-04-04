@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/21 17:20:07 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/27 20:03:18 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct		s_file
 	unsigned int	links;
 	char			*user;
 	char			*group;
-	char			*date;
 	char			*size;
+	char			*date;
 	unsigned long	blocks;
 	char			*color;
 }					t_file;

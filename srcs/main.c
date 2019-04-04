@@ -6,11 +6,13 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/24 20:09:08 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/26 01:03:11 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "dir.h"
+#include "flags.h"
 #include "ft_string.h"
 #include "ft_printf.h"
 #include "ft_binarytree.h"

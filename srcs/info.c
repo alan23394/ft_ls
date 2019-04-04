@@ -6,18 +6,24 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 11:52:22 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 12:13:29 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "info.h"
-#include "ft_ls.h"
-#include <pwd.h>
+#include "file.h"
+#include "flags.h"
 #include "colors.h"
 #include "ft_utils.h"
 #include "ft_mem.h"
 #include "ft_string.h"
 #include "ft_printf.h"
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <pwd.h>
+//#include <uuid/uuid.h>
+#include <grp.h>
+#include <time.h>
 
 /*
 ** The file mode printed under the -l option consists of the entry type, owner
@@ -88,35 +94,6 @@ static char		type_letter(int mode)
 	return (mode_char);
 }
 
-# define ACL_FLAG (0x1)
-# define EXTENDED_FLAG (0x2)
-
-static char		get_extended_attributes(char *filename)
-{
-	acl_t	acl;
-	ssize_t	xattr;
-	uint8_t	type_bits;
-	char	symbol;
-
-	type_bits = 0;
-	acl = acl_get_link_np(filename, ACL_TYPE_EXTENDED);
-	if (acl)
-		type_bits |= ACL_FLAG;
-	xattr = listxattr(filename, 0, 0, XATTR_NOFOLLOW);
-	if (xattr)
-		type_bits |= EXTENDED_FLAG;
-	if (type_bits == ACL_FLAG)
-		symbol = '+';
-	else if (type_bits == EXTENDED_FLAG)
-		symbol = '@';
-	else if (type_bits == (ACL_FLAG | EXTENDED_FLAG))
-		symbol = '*';
-	else
-		symbol = ' ';
-	acl_free(acl);
-	return (symbol);
-}
-
 static char		*get_rights(struct stat *stats)
 {
 	char			*rights;
@@ -159,10 +136,10 @@ static void		get_time(t_file *file, struct stat *stats)
 #ifdef __linux__
 	file->tv_sec = stats->st_mtim.tv_sec;
 	file->tv_nsec = stats->st_mtim.tv_nsec;
-# elif defined __APPLE__
+#elif defined __APPLE__
 	file->tv_sec = stats->st_mtimespec.tv_sec;
 	file->tv_nsec = stats->st_mtimespec.tv_nsec;
-# else
+#else
 	file->tv_sec = 0;
 	file->tv_nsec = 0;
 #endif

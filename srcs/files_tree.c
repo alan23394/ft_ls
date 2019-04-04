@@ -6,16 +6,24 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/03/23 07:32:55 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/28 00:06:12 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
 #include "info.h"
+#include "dir.h"
+#include "file.h"
+#include "flags.h"
 #include "ft_utils.h"
 #include "ft_string.h"
 #include "ft_binarytree.h"
+#include <dirent.h>
 #include <errno.h>
+#include <string.h>
+
+/*
+** string.h: strerror
+*/
 
 /*
 ** This function takes the old path and the new foldername and combines them,
@@ -75,7 +83,7 @@ static void		process_file(char *filename, t_binarytree **files,
 	t_file	*file;
 	t_dir	*dir;
 
-	if (!F_ALL(flags->options) && filename[0] == '.')
+	if (!(flags->options & OP_ALL) && filename[0] == '.')
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
 	file = new_file(path);
@@ -84,10 +92,10 @@ static void		process_file(char *filename, t_binarytree **files,
 		delete_file(file);
 		return ;
 	}
-	if (F_LONG(flags->options))
+	if (flags->options & OP_LONG)
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
-	if (F_RECUR(flags->options) && file->rights[0] == 'd' &&
+	if ((flags->options & OP_RECUR) && file->rights[0] == 'd' &&
 		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
 	{
 		dir = new_dir(ft_strdup(path));

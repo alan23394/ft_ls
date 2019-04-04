@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:20:13 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/16 22:54:00 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 06:59:45 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ enum {
 	OP_REV = 0x8,
 	OP_RECUR = 0x10,
 	OP_TIME = 0x20,
-	OP_MAX_OPS = 0x40,
-	FLAG_CLI = 0x80,
+	FLAG_CLI = 0x40,
 };
 
 /*
@@ -44,14 +43,15 @@ enum {
 ** the specific option. They exist to be convenient; even though they don't
 ** really assist much, I like using them, and I think they help produce
 ** readable code.
+** I'm actually removing them because they add nothing and are annoying.
 */
 
-# define F_ALL(f) (f & OP_ALL)
-# define F_COLOR(f) (f & OP_COLOR)
-# define F_LONG(f) (f & OP_LONG)
-# define F_REV(f) (f & OP_REV)
-# define F_RECUR(f) (f & OP_RECUR)
-# define F_TIME(f) (f & OP_TIME)
+//# define F_ALL(f) (f & OP_ALL)
+//# define F_COLOR(f) (f & OP_COLOR)
+//# define F_LONG(f) (f & OP_LONG)
+//# define F_REV(f) (f & OP_REV)
+//# define F_RECUR(f) (f & OP_RECUR)
+//# define F_TIME(f) (f & OP_TIME)
 
 typedef struct	s_flags
 {

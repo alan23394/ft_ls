@@ -6,11 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/24 21:08:34 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/28 00:06:29 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "dir.h"
+#include "file.h"
+#include "bad.h"
 #include "printing.h"
 #include "info.h"
 #include "flags.h"
@@ -41,7 +44,7 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 		print_error(T_DIR(dirs)->name, error);
 	else if (folder)
 	{
-		if (F_LONG(flags->options))
+		if (flags->options & OP_LONG)
 			ft_printf("total %lu\n", T_DIR(dirs)->total_size);
 		print_dir(T_DIR(dirs), folder, flags->print);
 	}
