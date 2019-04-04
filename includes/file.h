@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:21:14 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/27 20:03:18 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 15:35:09 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define T_FILE(t) ((t_file *)((t)->content))
 
-typedef struct 		s_binarytree t_binarytree;
+typedef struct s_binarytree	t_binarytree;
 
 typedef struct		s_file
 {
