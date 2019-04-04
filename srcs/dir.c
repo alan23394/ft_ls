@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/16 05:46:31 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:07:58 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 14:25:39 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_dir	*new_dir(char *new_dirname)
 
 	dir = (t_dir *)ft_memalloc(sizeof(t_dir));
 	dir->name = new_dirname;
+	dir->subdir_level = 0;
 	dir->user_maxlen = 0;
 	dir->group_maxlen = 0;
 	dir->links_maxlen = 0;
@@ -52,13 +53,18 @@ void	insert_dir(t_binarytree **dirs, t_dir *new_dir, int (*compare)())
 	}
 	else
 	{
-		if (compare(new_dir, T_DIR(*dirs)) >= 0)
-		{
-			insert_dir(&(*dirs)->right, new_dir, compare);
-		}
+		if (new_dir->subdir_level > T_DIR(*dirs)->subdir_level)
+			insert_dir(&(*dirs)->left, new_dir, compare);
 		else
 		{
-			insert_dir(&(*dirs)->left, new_dir, compare);
+			if (compare(new_dir, T_DIR(*dirs)) >= 0)
+			{
+				insert_dir(&(*dirs)->right, new_dir, compare);
+			}
+			else
+			{
+				insert_dir(&(*dirs)->left, new_dir, compare);
+			}
 		}
 	}
 }

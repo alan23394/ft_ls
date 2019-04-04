@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/03/28 00:06:12 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 12:36:04 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ static void		process_file(char *filename, t_binarytree **files,
 		dir = new_dir(ft_strdup(path));
 		dir->tv_sec = file->tv_sec;
 		dir->tv_nsec = file->tv_nsec;
+		dir->subdir_level = T_DIR(dirtree)->subdir_level + 1;
 		insert_dir(&(dirtree->right), dir, flags->compare);
 	}
 }

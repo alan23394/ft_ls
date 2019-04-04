@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/29 11:53:28 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/21 17:36:45 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 12:36:07 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct		s_dir
 	char			*name;
 	unsigned long	tv_sec;
 	unsigned long	tv_nsec;
+	unsigned int	subdir_level;
 	unsigned int	links_maxlen;
 	unsigned int	user_maxlen;
 	unsigned int	group_maxlen;
