@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:28:15 by alan              #+#    #+#             */
-/*   Updated: 2019/04/04 12:21:09 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 12:37:47 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static char	get_symbol_char(int type_bits)
 #ifdef __APPLE__
 
 # include <sys/acl.h>
+# define uint8_t char
 
 /*
 ** Extended attributes
