@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:28:15 by alan              #+#    #+#             */
-/*   Updated: 2019/04/04 12:13:23 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 12:21:09 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static char	check_acl_extended(char *xattrs, int len)
 	u_int8_t	type_bits;
 	char		symbol;
 
+	type_bits = 0;
 	while (len)
 	{
 		single_len = ft_strlen(xattrs);
