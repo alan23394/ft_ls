@@ -6,11 +6,14 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 05:51:15 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/24 21:08:34 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/28 00:06:29 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "dir.h"
+#include "file.h"
+#include "bad.h"
 #include "printing.h"
 #include "info.h"
 #include "flags.h"

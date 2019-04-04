@@ -6,19 +6,29 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 21:59:01 by alan              #+#    #+#             */
-/*   Updated: 2019/03/23 07:16:37 by alan             ###   ########.fr       */
+/*   Updated: 2019/03/28 00:05:21 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "args.h"
 #include "ft_ls.h"
 #include "file.h"
+#include "dir.h"
+#include "bad.h"
 #include "info.h"
-#include "args.h"
+#include "flags.h"
 #include "ft_string.h"
+
 #include <errno.h>
+#include <string.h>
 
 /*
-** sort incoming parameters into trees
+** errno.h:		errno
+** string.h:	strerror
+*/
+
+/*
+** This function is used to process each filename argument to ft_ls.
 ** put files into a directory with a files tree
 ** put directories into the starting directory tree
 ** put bad folders into a bad tree to print alphabetically
