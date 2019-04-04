@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/22 07:49:12 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/25 19:36:22 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/03 22:59:14 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,32 +87,23 @@ static char		type_letter(int mode)
 	return (mode_char);
 }
 
-#ifdef __APPLE__
 static char		get_extended_attributes(char *filename)
 {
 	acl_t		acl;
-	acl_entry_t	dummy;
 	ssize_t		xattr;
+	char		symbol;
 
 	acl = acl_get_link_np(filename, ACL_TYPE_EXTENDED);
-	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &dummy) == -1)
-	{
-		acl_free(acl);
-		acl = 0;
-	}
 	xattr = listxattr(filename, 0, 0, XATTR_NOFOLLOW);
-	if (xattr < 0)
-	{
-		xattr = 0;
-	}
 	if (xattr > 0)
-		return ('@');
+		symbol =  '@';
 	else if (acl != NULL)
-		return ('+');
+		symbol =  '+';
 	else
-		return (' ');
+		symbol =  ' ';
+	acl_free(acl);
+	return (symbol);
 }
-#endif
 
 static char		*get_rights(struct stat *stats)
 {
@@ -229,9 +220,7 @@ int				get_file_info(t_file *file, int options, int link)
 			file->color = get_color(file);
 		if (options & (OP_LONG))
 		{
-#ifdef __APPLE__
 			file->ex_attr = get_extended_attributes(file->path);
-#endif
 			file->links = stats.st_nlink;
 			file->user = get_file_user(&stats);
 			file->group = get_file_group(&stats);
