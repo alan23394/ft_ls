@@ -6,16 +6,18 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:28:15 by alan              #+#    #+#             */
-/*   Updated: 2019/04/04 12:21:09 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 14:47:16 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_mem.h"
 #include "ft_string.h"
+#include <stdint.h>
 #include <sys/xattr.h>
+#include <sys/acl.h>
 
-# define ACL_FLAG (0x1)
-# define EXTENDED_FLAG (0x2)
+#define ACL_FLAG (0x1)
+#define EXTENDED_FLAG (0x2)
 
 static char	get_symbol_char(int type_bits)
 {
@@ -32,10 +34,7 @@ static char	get_symbol_char(int type_bits)
 	return (symbol);
 }
 
-
 #ifdef __APPLE__
-
-# include <sys/acl.h>
 
 /*
 ** Extended attributes
