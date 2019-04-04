@@ -41,7 +41,7 @@ void			recurse_dirs(t_binarytree *dirs, t_flags *flags)
 		print_error(T_DIR(dirs)->name, error);
 	else if (folder)
 	{
-		if (F_LONG(flags->options))
+		if (flags->options & OP_LONG)
 			ft_printf("total %lu\n", T_DIR(dirs)->total_size);
 		print_dir(T_DIR(dirs), folder, flags->print);
 	}

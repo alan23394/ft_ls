@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/24 21:40:05 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/03/28 00:04:37 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void			*get_cmp_function(int flags)
 		[OP_REV | OP_TIME] = cmp_time_rev,
 	};
 
-	func = funcs[F_REV(flags) | F_TIME(flags)];
+	func = funcs[flags & (OP_REV | OP_TIME)];
 	return (func);
 }
 
@@ -76,9 +76,9 @@ void			*get_print_func(int flags)
 		[0] = print_file,
 		[OP_COLOR] = print_file_color,
 		[OP_LONG] = print_file_long,
-		[OP_LONG | OP_COLOR] = print_file_long_color
+		[OP_COLOR | OP_LONG] = print_file_long_color
 	};
 
-	func = funcs[F_LONG(flags) | F_COLOR(flags)];
+	func = funcs[flags & (OP_COLOR | OP_LONG)];
 	return (func);
 }

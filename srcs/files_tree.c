@@ -75,7 +75,7 @@ static void		process_file(char *filename, t_binarytree **files,
 	t_file	*file;
 	t_dir	*dir;
 
-	if (!F_ALL(flags->options) && filename[0] == '.')
+	if (!(flags->options & OP_ALL) && filename[0] == '.')
 		return ;
 	path = get_dirname(T_DIR(dirtree)->name, filename);
 	file = new_file(path);
@@ -84,10 +84,10 @@ static void		process_file(char *filename, t_binarytree **files,
 		delete_file(file);
 		return ;
 	}
-	if (F_LONG(flags->options))
+	if (flags->options & OP_LONG)
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
-	if (F_RECUR(flags->options) && file->rights[0] == 'd' &&
+	if ((flags->options & OP_RECUR) && file->rights[0] == 'd' &&
 		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
 	{
 		dir = new_dir(ft_strdup(path));

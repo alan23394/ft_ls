@@ -37,7 +37,7 @@ void	process_arg(char *arg, t_args *trees, t_flags *flags, t_dir *files_dir)
 		delete_file(file);
 		return ;
 	}
-	if (F_LONG(flags->options))
+	if (flags->options & OP_LONG)
 		update_dir(files_dir, file);
 	if (file->rights[0] == 'd')
 	{
