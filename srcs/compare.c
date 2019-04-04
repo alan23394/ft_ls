@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 05:27:05 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 12:13:48 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 13:06:25 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@ int		cmp_name(t_cmp *c1, t_cmp *c2)
 
 	s1 = c1->name;
 	s2 = c2->name;
-	while (s1 && s2 && *s1 == *s2)
+	if (s1 && s2)
 	{
-		++s1;
-		++s2;
+		while (*s1 && *s2 && *s1 == *s2)
+		{
+			++s1;
+			++s2;
+		}
 	}
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
