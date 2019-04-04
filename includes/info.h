@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 22:46:27 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 15:21:19 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 15:28:18 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define MAJ(num) (((num) & 0xFF000000) >> 24)
 # define MIN(num) ((num) & 0x00FFFFFF)
 
-struct	stat;
+struct stat;
 
 typedef struct s_file	t_file;
 
