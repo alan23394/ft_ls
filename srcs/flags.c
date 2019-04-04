@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/28 00:04:37 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 14:42:38 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int				get_options(char ***argv)
 void			*get_cmp_function(int flags)
 {
 	int			(*func)();
-	static int	(*funcs[])() =
-	{
+	static int	(*funcs[])() = {
 		[0] = cmp_name,
 		[OP_REV] = cmp_name_rev,
 		[OP_TIME] = cmp_time,
@@ -71,8 +70,7 @@ void			*get_cmp_function(int flags)
 void			*get_print_func(int flags)
 {
 	void		(*func)();
-	static void	(*funcs[])() =
-	{
+	static void	(*funcs[])() = {
 		[0] = print_file,
 		[OP_COLOR] = print_file_color,
 		[OP_LONG] = print_file_long,
