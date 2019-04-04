@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:20:13 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 06:59:45 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 15:41:24 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,6 @@ enum {
 	OP_TIME = 0x20,
 	FLAG_CLI = 0x40,
 };
-
-/*
-** These are a set of macros to apply a bitwise AND to the flags variable with
-** the specific option. They exist to be convenient; even though they don't
-** really assist much, I like using them, and I think they help produce
-** readable code.
-** I'm actually removing them because they add nothing and are annoying.
-*/
-
-//# define F_ALL(f) (f & OP_ALL)
-//# define F_COLOR(f) (f & OP_COLOR)
-//# define F_LONG(f) (f & OP_LONG)
-//# define F_REV(f) (f & OP_REV)
-//# define F_RECUR(f) (f & OP_RECUR)
-//# define F_TIME(f) (f & OP_TIME)
 
 typedef struct	s_flags
 {
