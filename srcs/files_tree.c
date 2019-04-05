@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/04/04 12:36:04 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 20:19:33 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,16 @@ void			update_dir(t_dir *dir, t_file *file)
 		dir->size_maxlen = temp;
 }
 
-static void		process_file(char *filename, t_binarytree **files,
+static void		process_file(char *f_name, t_binarytree **files,
 					t_flags *flags, t_binarytree *dirtree)
 {
 	char	*path;
 	t_file	*file;
 	t_dir	*dir;
 
-	if (!(flags->options & OP_ALL) && filename[0] == '.')
+	if (!(flags->options & OP_ALL) && f_name[0] == '.')
 		return ;
-	path = get_dirname(T_DIR(dirtree)->name, filename);
+	path = get_dirname(T_DIR(dirtree)->name, f_name);
 	file = new_file(path);
 	if (get_file_info(file, flags->options, 1) == -1)
 	{
@@ -96,7 +96,7 @@ static void		process_file(char *filename, t_binarytree **files,
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
 	if ((flags->options & OP_RECUR) && file->rights[0] == 'd' &&
-		!(ft_strequ(filename, ".") || ft_strequ(filename, "..")))
+		f_name[0] == '.' && (!f_name[1] || (f_name[1] == '.' && !f_name[2])))
 	{
 		dir = new_dir(ft_strdup(path));
 		dir->tv_sec = file->tv_sec;
