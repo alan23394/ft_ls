@@ -6,13 +6,13 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 16:40:36 by alan              #+#    #+#             */
-/*   Updated: 2019/02/24 18:25:17 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 20:09:40 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COLORS_H
 # define COLORS_H
 
-char			*get_color(t_file *file);
+char	*get_color(t_file *file);
 
 #endif
