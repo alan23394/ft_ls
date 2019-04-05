@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 18:39:06 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 20:50:51 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,12 @@ enum e_ops		get_options(char ***argv)
 		{
 			++(**argv);
 			cur = ft_strchr(ALL_OPTIONS, (***argv));
-			options = (cur) ? options |= (1 << (cur - ALL_OPTIONS)) : 0;
+			if (cur)
+			{
+				options = options | (1 << (cur - ALL_OPTIONS));
+			}
+			else
+				options = 0;
 			update_print(&options, cur);
 		}
 	}
