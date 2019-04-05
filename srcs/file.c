@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 00:05:47 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/23 07:25:23 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 20:24:50 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 ** to the last part of the path; if it does not, it sets it to the beginning.
 */
 
-t_file			*new_file(char *path_to_file)
+t_file	*new_file(char *path_to_file)
 {
 	t_file	*file;
 
@@ -50,7 +50,7 @@ t_file			*new_file(char *path_to_file)
 ** (when the file was grabbed from the command line, for instance).
 */
 
-t_file			*new_file_full_name(char *path_to_file)
+t_file	*new_file_full_name(char *path_to_file)
 {
 	t_file	*file;
 
@@ -76,7 +76,7 @@ t_file			*new_file_full_name(char *path_to_file)
 ** file->path variable.
 */
 
-void			delete_file(t_file *file)
+void	delete_file(t_file *file)
 {
 	if (file)
 	{
@@ -105,7 +105,7 @@ void			delete_file(t_file *file)
 ** Return name
 */
 
-char			*get_name_from_path(char *path)
+char	*get_name_from_path(char *path)
 {
 	char	*name;
 
@@ -121,8 +121,7 @@ char			*get_name_from_path(char *path)
 	return (name);
 }
 
-void			insert_file(t_binarytree **files, t_file *new_file,
-					int (*compare)())
+void	insert_file(t_binarytree **files, t_file *new_file, int (*compare)())
 {
 	if (!*files)
 	{
