@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 14:42:38 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:29:23 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,39 @@
 #include "ft_string.h"
 
 /*
+** This function updates the "base" print type. By base, I mean the print types
+** that cannot conflict. For example, long printing vs single column printing
+** vs horizontal vs vertical etc. This function tests the cursor against the
+** ALL_OPTIONS macro, and then checks if the option fits with one of the base
+** print types, and sets the base_print pointer to it if it does. If it doesn't
+** match, it does nothing.
+**
+** It sets the base print type by checking the recieved option against a
+** bitmask of base_types, and if the new option is in the base_types, it:
+** and-equals the inverse of the base types
+** 	this applies a 1 everywhere there isn't a base type, and applies a 0
+** 	everywhere there is. this is to clear all base types already applied.
+** or-equals the new option
+** 	this simply applies it to the bits
+*/
+
+static void		update_print(enum OPS *base_print, char *cursor)
+{
+	enum OPS	op;
+	enum OPS	base_types;
+
+	op = (enum OPS)(1 << (cursor - ALL_OPTIONS));
+	base_types = (OP_LONG | OP_ONE);
+	if (op & base_types)
+	{
+		*base_print &= ~base_types;
+		*base_print |= op;
+	}
+}
+
+/*
+** This function gets the options out of the argv string.
+**
 ** while ((options != -1) && *(++(*argv)) && (***argv == '-' && (**argv)[1]))
 ** 	if options is -1,
 ** 		we've hit a failure, quit
@@ -30,24 +63,25 @@
 ** 			directory), and the start of a flag.
 */
 
-int				get_options(char ***argv)
+enum OPS		get_options(char ***argv)
 {
-	int		options;
-	char	*cur;
+	enum OPS	options;
+	char		*cur;
 
-	options = 0;
-	while ((options != -1) && *(++(*argv)) && (***argv == '-' && (**argv)[1]))
+	options = OP_ONE;
+	while (options && *(++(*argv)) && (***argv == '-' && (**argv)[1]))
 	{
 		if (ft_strequ(**argv, "--"))
 		{
 			++(*argv);
 			return (options);
 		}
-		while (*(**argv + 1) && (options != -1))
+		while (*(**argv + 1) && options)
 		{
 			++(**argv);
 			cur = ft_strchr(ALL_OPTIONS, (***argv));
-			options = (cur) ? (options | (1 << (cur - ALL_OPTIONS))) : -1;
+			options = (cur) ? options |= (1 << (cur - ALL_OPTIONS)) : 0;
+			update_print(&options, cur);
 		}
 	}
 	return (options);
@@ -71,12 +105,12 @@ void			*get_print_func(int flags)
 {
 	void		(*func)();
 	static void	(*funcs[])() = {
-		[0] = print_file,
-		[OP_COLOR] = print_file_color,
+		[OP_ONE] = print_file,
+		[OP_ONE | OP_COLOR] = print_file_color,
 		[OP_LONG] = print_file_long,
 		[OP_COLOR | OP_LONG] = print_file_long_color
 	};
 
-	func = funcs[flags & (OP_COLOR | OP_LONG)];
+	func = funcs[flags & (OP_COLOR | OP_LONG | OP_ONE)];
 	return (func);
 }
