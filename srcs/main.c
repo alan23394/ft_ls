@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/07 18:25:08 by abarnett          #+#    #+#             */
-/*   Updated: 2019/03/26 01:03:11 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 18:22:06 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(int argc, char **argv)
 
 	(void)argc;
 	flags.options = get_options(&argv);
-	if (flags.options == -1)
+	if (flags.options == 0)
 		return (print_illegal_option(**argv));
 	flags.compare = get_cmp_function(flags.options);
 	flags.print = get_print_func(flags.options);
