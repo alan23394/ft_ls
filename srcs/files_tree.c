@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 22:07:13 by alan              #+#    #+#             */
-/*   Updated: 2019/04/04 20:19:33 by alan             ###   ########.fr       */
+/*   Updated: 2019/04/04 20:46:44 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void		process_file(char *f_name, t_binarytree **files,
 		update_dir(T_DIR(dirtree), file);
 	insert_file(files, file, flags->compare);
 	if ((flags->options & OP_RECUR) && file->rights[0] == 'd' &&
-		f_name[0] == '.' && (!f_name[1] || (f_name[1] == '.' && !f_name[2])))
+		!(f_name[0] == '.' && (!f_name[1] || (f_name[1] == '.' && !f_name[2]))))
 	{
 		dir = new_dir(ft_strdup(path));
 		dir->tv_sec = file->tv_sec;
