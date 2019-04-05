@@ -6,7 +6,7 @@
 /*   By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 21:21:01 by abarnett          #+#    #+#             */
-/*   Updated: 2019/04/04 18:29:23 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:39:06 by abarnett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@
 ** 	this simply applies it to the bits
 */
 
-static void		update_print(enum OPS *base_print, char *cursor)
+static void		update_print(enum e_ops *base_print, char *cursor)
 {
-	enum OPS	op;
-	enum OPS	base_types;
+	enum e_ops	op;
+	enum e_ops	base_types;
 
-	op = (enum OPS)(1 << (cursor - ALL_OPTIONS));
+	op = (enum e_ops)(1 << (cursor - ALL_OPTIONS));
 	base_types = (OP_LONG | OP_ONE);
 	if (op & base_types)
 	{
@@ -63,9 +63,9 @@ static void		update_print(enum OPS *base_print, char *cursor)
 ** 			directory), and the start of a flag.
 */
 
-enum OPS		get_options(char ***argv)
+enum e_ops		get_options(char ***argv)
 {
-	enum OPS	options;
+	enum e_ops	options;
 	char		*cur;
 
 	options = OP_ONE;
