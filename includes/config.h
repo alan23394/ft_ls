@@ -6,7 +6,7 @@
 /*   By: alan <alanbarnett328@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/24 16:52:34 by alan              #+#    #+#             */
-/*   Updated: 2019/04/04 15:36:04 by abarnett         ###   ########.fr       */
+/*   Updated: 2019/04/05 19:46:12 by alan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ static const char	*g_zip_extensions[] = {
 	".tar",
 	".gz",
 	".tar.gz",
+	".tar.xz",
+	".tar.bz2",
+	".gzip",
 	0
 };
 
@@ -44,6 +47,7 @@ static const char	*g_picture_extensions[] = {
 static const char	*g_video_extensions[] = {
 	".webm",
 	".mp4",
+	".mov",
 	0
 };
 
