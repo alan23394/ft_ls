@@ -6,7 +6,7 @@
 #    By: abarnett <alanbarnett328@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/07 18:13:28 by abarnett          #+#    #+#              #
-#    Updated: 2019/03/24 20:43:15 by abarnett         ###   ########.fr        #
+#    Updated: 2019/08/05 15:11:30 by abarnett         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,9 @@ $(LIB): $(LIB_SRCS)
 	@ $(MAKE_LIBRARY)
 
 $(NAME): $(LIB) $(C_OBJS)
+	$(CC) $(CFLAGS) $(C_OBJS) -o $(NAME) $(LDFLAGS)
+
+systemlibft: $(C_OBJS)
 	$(CC) $(CFLAGS) $(C_OBJS) -o $(NAME) $(LDFLAGS)
 
 %.o: %.c Makefile
